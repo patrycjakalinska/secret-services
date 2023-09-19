@@ -34,7 +34,7 @@ const Navbar = ({ isLogged }) => {
   }
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#F1F0F0' }} elevation={0}>
+    <AppBar position="static" sx={{ backgroundColor: '#F1F0F0', zIndex: 1000, left: 0, top: 0, position: 'sticky' }} elevation={0}>
       <Container maxWidth="xl">
         <Toolbar
           disableGutters
@@ -51,7 +51,7 @@ const Navbar = ({ isLogged }) => {
             href="/"
             sx={{
               display: { xs: 'none', md: 'flex' },
-              font: 'Inter',
+              fontFamily: 'Inter',
               fontWeight: 700,
               color: '#313131',
               textDecoration: 'none',

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactFullpage from '@fullpage/react-fullpage'
-import Navbar from './Navbar'
+import AboutSection from './sections/AboutSection'
 import WelcomeSection from './sections/WelcomeSection'
 import LogoSection from './sections/LogoSection'
 
@@ -47,7 +47,7 @@ const FullpageWrapper = () => {
                 <WelcomeSection />
               </div>
               <div className="section section3">
-                <WelcomeSection />
+                <AboutSection />
               </div>
             </div>
           )

@@ -1,19 +1,43 @@
 import '../../styles.css'
+import Typography from '@mui/material/Typography'
+import { Container } from '@mui/system'
 
+import { createTheme } from '@mui/material/styles'
+import { ThemeProvider } from 'styled-components'
+
+import background from '../../img/background.jpg'
+
+// TODO:
+// * responsive Typography
 const LogoSection = () => {
+  let theme = createTheme()
+  theme.typography.h1 = {
+    fontSize: '30rem',
+    '@media (min-width:600px)': {
+      fontSize: '25rem',
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '20rem',
+    },
+  }
+
   return (
-    <div className="Section">
-      <div className="LogoSection">
-        <div className="LogoSection__Text">
-          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt.
-        </div>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container
+      maxWidth='md'
+        sx={{
+          // backgroundImage:`url(${background})`,
+          // backgroundSize: "cover",
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <Typography variant="h1">SECRET</Typography>
+      </Container>
+    </ThemeProvider>
   )
 }
 
