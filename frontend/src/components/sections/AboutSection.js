@@ -1,17 +1,13 @@
-import '../../styles.css'
+import '../../styles/styles.css'
 import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import logo from '../../img/access.png'
 
-// TODO:
-// * naprawic widok np. na iPhone Se - text za duzy
 const AboutSection = () => {
   return (
     <div>
       <Container
-        className="WelcomeSection"
         maxWidth="xl"
         sx={{
           display: 'flex',

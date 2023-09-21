@@ -1,12 +1,10 @@
-import '../../styles.css'
+import '../../styles/styles.css'
 import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import logo from '../../img/lady.png'
 
-// TODO:
-// * naprawic widok np. na iPhone Se - text za duzy
 const WelcomeSection = () => {
   return (
     <div>
@@ -26,19 +24,18 @@ const WelcomeSection = () => {
         <Box sx={{ display: { md: 'flex', sm: 'none', xs: 'none' } }}>
           <img src={logo} alt="logo" className="WelcomeSection__Icon" />
         </Box>
-
         <Container
           sx={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-evenly',
             textAlign: 'left',
-            marginLeft: { lg: '8rem', md: '5rem', sm: '2.5rem', xs: '0.8rem' },
             backgroundColor: '#3C404A',
             borderRadius: '100px 0 100px 0',
             color: '#F1F0F0',
             width: '85%',
             height: '30rem',
+            marginLeft: { lg: '8rem', md: '5rem', sm: '2.5rem', xs: '0.8rem' },
           }}
         >
           <Container>

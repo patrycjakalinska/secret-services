@@ -3,6 +3,7 @@ import ReactFullpage from '@fullpage/react-fullpage'
 import AboutSection from './sections/AboutSection'
 import WelcomeSection from './sections/WelcomeSection'
 import LogoSection from './sections/LogoSection'
+import ServicesSection from './sections/ServicesSection'
 
 const FullpageWrapper = () => {
   const onLeave = (origin, destination, direction) => {
@@ -48,6 +49,9 @@ const FullpageWrapper = () => {
               </div>
               <div className="section section3">
                 <AboutSection />
+              </div>
+              <div className="section section4">
+                <ServicesSection />
               </div>
             </div>
           )
