@@ -36,7 +36,7 @@ const tiers = [
 ]
 const ServicesSection = () => {
   return (
-    <div>
+    <div id="services">
       <Container
         sx={{
           display: 'flex',

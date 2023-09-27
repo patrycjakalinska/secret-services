@@ -7,6 +7,7 @@ import { Container } from '@mui/system'
 const LogoSection = () => {
   return (
     <Container
+      id="home"
       sx={{
         margin: '0px',
         display: 'flex',
