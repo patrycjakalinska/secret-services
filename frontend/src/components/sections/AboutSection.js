@@ -1,12 +1,14 @@
-import '../../styles/styles.css'
+import React from 'react'
 import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import logo from '../../img/access.png'
+import '../../styles/styles.css'
+
 
 const AboutSection = () => {
   return (
-    <div>
+    <div id='about'>
       <Container
         maxWidth="xl"
         sx={{
@@ -80,7 +82,7 @@ const AboutSection = () => {
             marginLeft: '4rem',
           }}
         >
-          <img src={logo} alt="logo" className="AboutSection__Icon" />
+          <img src={logo} alt="logo" className="Logo" />
         </Box>
       </Container>
     </div>
