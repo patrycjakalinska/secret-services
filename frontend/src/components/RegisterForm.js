@@ -1,23 +1,26 @@
 import {
   Container,
   Box,
-  Grid,
+  FormControl,
   TextField,
   Typography,
   Button,
+  Grid,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import '../styles/styles.css'
 import signLogo from '../img/sign.png'
 
-const LoginForm = () => {
+const RegisterForm = () => {
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = async (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault()
-    console.log('login')
+    console.log('register')
   }
 
   return (
@@ -48,7 +51,7 @@ const LoginForm = () => {
       >
         <Box
           sx={{
-            paddingY: '5em',
+            paddingY: '3em',
             paddingX: { lg: '5em', md: '3.5em', sm: '3em', xs: '2em' },
             width: { lg: '30%', md: '30%', sm: '60%', xs: '100%' },
             display: 'flex',
@@ -67,43 +70,25 @@ const LoginForm = () => {
                 textAlign: 'center',
               }}
             >
-              Sign in
+              Sign up
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                textAlign: 'center',
-                marginTop: '1em',
-                paddingX: { xs: '1em', md: '2em' },
-                fontFamily: 'Raleway',
-                fontWeight: '400',
-                fontSize: {
-                  xs: '15px',
-                  sm: '18px',
-                  md: '20px',
-                },
-              }}
-            >
-              Enter your details to login to your account
-            </Typography>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleRegister}>
               <Grid container spacing={2} sx={{ marginTop: '2em' }}>
-                <Grid item xs={12}>
-                  <TextField
-                    autoFocus
-                    placeholder="jane.doe@mail.com"
-                    required
-                    fullWidth
-                    color="grey"
-                  />
+                <Grid item xs={12} md={6}>
+                  <TextField required fullWidth autoFocus placeholder="Jane" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField required fullWidth placeholder="Doe" />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    placeholder="●●●●●●●●●●"
-                    fullWidth
                     required
-                    color="grey"
+                    fullWidth
+                    placeholder="jane.doe@mail.com"
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField required fullWidth placeholder="●●●●●●●●●●" />
                 </Grid>
                 <Grid item xs={12}>
                   <Typography
@@ -113,13 +98,13 @@ const LoginForm = () => {
                       fontSize: '.8rem',
                     }}
                   >
-                    Don’t have account yet?{' '}
+                    Already have an account?{' '}
                     <strong style={{ color: '#313131' }}>
                       <Link
-                        to="/register"
+                        to="/login"
                         style={{ textDecoration: 'none', color: '#313131' }}
                       >
-                        Register now.
+                        Login in.
                       </Link>
                     </strong>
                   </Typography>
@@ -151,7 +136,6 @@ const LoginForm = () => {
         <Box
           sx={{
             display: { lg: 'flex', md: 'flex', sm: 'none', xs: 'none' },
-            //padding: { lg: '2em', md: '2em', sm: '0', xs: '0' },
           }}
         >
           <img
@@ -165,4 +149,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm
