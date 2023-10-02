@@ -11,6 +11,7 @@ usersRouter.get('/', async (req, res) => {
 
 usersRouter.post('/', async (req, res) => {
   const { mail, password, name, surname } = req.body
+  console.log(req.body)
   if (!(password && mail)) {
     res.status(400).json({ error: 'Invalid credentials.' }).end()
   } else if (password.length < 3 || mail.length < 3) {
@@ -39,17 +40,17 @@ usersRouter.post('/', async (req, res) => {
       surname,
       cases: [],
     })
+    console.log(newUser)
 
     // const token = jwt.sign(
     //   { userId: newUser._id, mail: newUser.mail },
     //   { expiresIn: 365 * 24 * 60 * 60 }
     // )
 
-    const savedUser = newUser.save()
+    const savedUser = await newUser.save()
 
     return res.status(200).json({ savedUser })
   } catch (err) {
-    console.log(err)
     res.status(500).json({ message: 'Something went wrong.' })
   }
 })

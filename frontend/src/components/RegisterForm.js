@@ -6,22 +6,37 @@ import {
   Button,
   Grid,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import '../styles/styles.css'
 import signLogo from '../img/sign.png'
 import users from '../services/users'
 
-const RegisterForm = () => {
+const RegisterForm = ({ setIsLogged }) => {
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleRegister = async (event) => {
-    const user = await users.register({ name, surname, mail, password })
+  const navigate = useNavigate()
 
-    //window.localStorage.setItem('user-token', user.token)
+  const handleRegister = async (event) => {
+    event.preventDefault()
+    try {
+      const user = await users.register({ name, surname, mail, password })
+      console.log(user)
+      window.localStorage.setItem('user-token', user.token)
+
+      setIsLogged(true)
+
+      setName('')
+      setSurname('')
+      setMail('')
+      setPassword('')
+      navigate('/')
+    } catch (err) {
+      console.log('Something went wrong.')
+    }
   }
 
   return (
@@ -76,13 +91,25 @@ const RegisterForm = () => {
             <form onSubmit={handleRegister}>
               <Grid container spacing={2} sx={{ marginTop: '2em' }}>
                 <Grid item xs={12} md={6}>
-                  <TextField required fullWidth autoFocus placeholder="Jane" />
+                  <TextField
+                    onChange={({ target }) => setName(target.value)}
+                    required
+                    fullWidth
+                    autoFocus
+                    placeholder="Jane"
+                  />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextField required fullWidth placeholder="Doe" />
+                  <TextField
+                    onChange={({ target }) => setSurname(target.value)}
+                    required
+                    fullWidth
+                    placeholder="Doe"
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    onChange={({ target }) => setMail(target.value)}
                     required
                     fullWidth
                     placeholder="jane.doe@mail.com"
@@ -90,6 +117,7 @@ const RegisterForm = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    onChange={({ target }) => setPassword(target.value)}
                     type="password"
                     required
                     fullWidth

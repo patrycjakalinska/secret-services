@@ -24,14 +24,21 @@ function App() {
       <div
         style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '140%' }}
       >
-        <Navbar isLogged={token} fullpageApi={fullpageApiRef} setIsLogged={setToken} />
+        <Navbar
+          isLogged={token}
+          fullpageApi={fullpageApiRef}
+          setIsLogged={setToken}
+        />
         <Routes>
           <Route
             path="/"
             element={<FullpageWrapper fullpageApi={fullpageApiRef} />}
           />
           <Route path="/login" element={<LoginForm setIsLogged={setToken} />} />
-          <Route path="/register" element={<RegisterForm />} />
+          <Route
+            path="/register"
+            element={<RegisterForm setIsLogged={setToken} />}
+          />
         </Routes>
       </div>
     </Router>

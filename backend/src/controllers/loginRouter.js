@@ -13,7 +13,6 @@ loginRouter.post('/', async (req, res) => {
       return res.status(401).json({ message: 'Wrong credentials' })
     }
 
-    console.log(password)
     const passwordMatch = await bcrypt.compare(password, user.passwordHash)
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Wrong credentials' })
@@ -33,7 +32,6 @@ loginRouter.post('/', async (req, res) => {
       cases: user.cases,
     })
   } catch (err) {
-    console.log(err)
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
