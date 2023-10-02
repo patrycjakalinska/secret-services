@@ -1,0 +1,57 @@
+const express = require('express')
+const usersRouter = express.Router()
+const User = require('../models/user')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+usersRouter.get('/', async (req, res) => {
+  const users = await User.find({}).populate('cases')
+  res.json(users)
+})
+
+usersRouter.post('/', async (req, res) => {
+  const { mail, password, name, surname } = req.body
+  if (!(password && mail)) {
+    res.status(400).json({ error: 'Invalid credentials.' }).end()
+  } else if (password.length < 3 || mail.length < 3) {
+    res
+      .status(400)
+      .json({
+        error: 'Password and/or mail should be at least 3 characters long',
+      })
+      .end()
+  }
+
+  try {
+    const existingUser = await User.findOne({ mail })
+    if (existingUser) {
+      res
+        .status(400)
+        .json({ message: 'User is already registered with that e-mail' })
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10)
+
+    const newUser = new User({
+      mail,
+      passwordHash,
+      name,
+      surname,
+      cases: [],
+    })
+
+    // const token = jwt.sign(
+    //   { userId: newUser._id, mail: newUser.mail },
+    //   { expiresIn: 365 * 24 * 60 * 60 }
+    // )
+
+    const savedUser = newUser.save()
+
+    return res.status(200).json({ savedUser })
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ message: 'Something went wrong.' })
+  }
+})
+
+module.exports = usersRouter

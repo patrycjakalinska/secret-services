@@ -1,7 +1,6 @@
 import {
   Container,
   Box,
-  FormControl,
   TextField,
   Typography,
   Button,
@@ -11,16 +10,18 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import '../styles/styles.css'
 import signLogo from '../img/sign.png'
+import users from '../services/users'
 
 const RegisterForm = () => {
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
-  const [username, setUsername] = useState('')
+  const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
 
   const handleRegister = async (event) => {
-    event.preventDefault()
-    console.log('register')
+    const user = await users.register({ name, surname, mail, password })
+
+    //window.localStorage.setItem('user-token', user.token)
   }
 
   return (
@@ -88,7 +89,12 @@ const RegisterForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField required fullWidth placeholder="●●●●●●●●●●" />
+                  <TextField
+                    type="password"
+                    required
+                    fullWidth
+                    placeholder="●●●●●●●●●●"
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <Typography

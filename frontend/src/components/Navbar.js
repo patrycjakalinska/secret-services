@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -15,10 +16,12 @@ import MenuItem from '@mui/material/MenuItem'
 import '../styles/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
-const Navbar = ({ isLogged, fullpageApi }) => {
+const settings = ['Account', 'My cases', 'Bookmarks']
+const Navbar = ({ isLogged, fullpageApi, setIsLogged }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
+
+  const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -33,6 +36,12 @@ const Navbar = ({ isLogged, fullpageApi }) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('user-token')
+    setIsLogged(false)
+    navigate('/')
   }
 
   const handleMoveToSection = (section) => {
@@ -144,7 +153,7 @@ const Navbar = ({ isLogged, fullpageApi }) => {
             </Menu>
           </Box>
           <div className="Navbar__Items">
-            <Link to="/" style={{textDecoration:'none', display:'flex'}}>
+            <Link to="/" style={{ textDecoration: 'none', display: 'flex' }}>
               <Typography
                 variant="h5"
                 noWrap
@@ -211,11 +220,30 @@ const Navbar = ({ isLogged, fullpageApi }) => {
           </Box>
 
           {isLogged ? (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, paddingRight: '.5em' }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
+                <Box
+                  onClick={handleOpenUserMenu}
+                  sx={{ display: 'flex', flexDirection: 'row' }}
+                >
+                  <IconButton sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      paddingX: '1em',
+                    }}
+                  >
+                    <Typography sx={{ fontSize: '0.875rem', color: '#313131' }}>
+                      Jane Doe
+                    </Typography>
+                  </Box>
+                </Box>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
@@ -238,6 +266,11 @@ const Navbar = ({ isLogged, fullpageApi }) => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={handleLogout}>
+                    Logout
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           ) : (
