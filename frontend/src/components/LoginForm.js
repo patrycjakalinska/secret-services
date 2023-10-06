@@ -8,16 +8,33 @@ import {
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../styles/styles.css'
 import signLogo from '../img/sign.png'
+import login from '../services/login'
 
-const LoginForm = () => {
-  const [username, setUsername] = useState('')
+const LoginForm = ({ setIsLogged }) => {
+  const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
+  const navigate = useNavigate()
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('login')
+    try {
+      const user = await login.login({ mail, password })
+      window.localStorage.setItem('user-token', user.token)
+
+      setIsLogged(true)
+      setMail('')
+      setPassword('')
+      setError('')
+
+      navigate('/')
+    } catch (e) {
+      setError('Bad credentials.')
+    }
   }
 
   return (
@@ -91,6 +108,7 @@ const LoginForm = () => {
                 <Grid item xs={12}>
                   <TextField
                     autoFocus
+                    onChange={({ target }) => setMail(target.value)}
                     placeholder="jane.doe@mail.com"
                     required
                     fullWidth
@@ -100,6 +118,8 @@ const LoginForm = () => {
                 <Grid item xs={12}>
                   <TextField
                     placeholder="●●●●●●●●●●"
+                    type="password"
+                    onChange={({ target }) => setPassword(target.value)}
                     fullWidth
                     required
                     color="grey"
@@ -151,7 +171,6 @@ const LoginForm = () => {
         <Box
           sx={{
             display: { lg: 'flex', md: 'flex', sm: 'none', xs: 'none' },
-            //padding: { lg: '2em', md: '2em', sm: '0', xs: '0' },
           }}
         >
           <img
