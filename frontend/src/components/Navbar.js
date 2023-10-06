@@ -17,7 +17,7 @@ import '../styles/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
 const settings = ['Account', 'My cases', 'Bookmarks']
-const Navbar = ({ isLogged, fullpageApi, setIsLogged }) => {
+const Navbar = ({ isLogged, user, fullpageApi, setIsLogged }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
 
@@ -240,7 +240,7 @@ const Navbar = ({ isLogged, fullpageApi, setIsLogged }) => {
                     }}
                   >
                     <Typography sx={{ fontSize: '0.875rem', color: '#313131' }}>
-                      Jane Doe
+                      {user.name} {user.surname}
                     </Typography>
                   </Box>
                 </Box>

@@ -3,10 +3,15 @@ const usersRouter = express.Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const verifyToken = require('../utils/auth')
 
-usersRouter.get('/', async (req, res) => {
-  const users = await User.find({}).populate('cases')
-  res.json(users)
+usersRouter.get('/', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findOne({ mail: req.user.mail })
+    res.json(user)
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 usersRouter.post('/', async (req, res) => {

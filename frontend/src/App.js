@@ -4,9 +4,11 @@ import FullpageWrapper from './components/FullpageWrapper'
 import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm.js'
+import users from '../src/services/users'
 
 function App() {
   const [token, setToken] = useState(false)
+  const [user, setUser] = useState({})
 
   const fullpageApiRef = useRef(null)
 
@@ -19,6 +21,19 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (token && Object.keys(user).length === 0) {
+      users
+        .getUserInfo()
+        .then((data) => {
+          setUser(data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [token, user])
+
   return (
     <Router>
       <div
@@ -27,6 +42,7 @@ function App() {
         <Navbar
           isLogged={token}
           fullpageApi={fullpageApiRef}
+          user = {user}
           setIsLogged={setToken}
         />
         <Routes>
