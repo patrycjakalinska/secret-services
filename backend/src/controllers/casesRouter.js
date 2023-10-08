@@ -13,27 +13,18 @@ casesRouter.get("/", async (req, res) => {
 casesRouter.post("/", verifyToken, async (req, res) => {
   const cas = new Case(req.body);
   console.log(req.user.userId);
-  //   console.log(req.mail);
-  //   console.log(req.decoded);
-  //   console.log(req.user);
-  //   console.log(req.user._id);
-  //   console.log(user._id);
-  //const authHeader = req.headers["authorization"];
-  //console.log(authHeader);
-  //const user = await User.find({});
-  //console.log(req.user);
-  //console.log(cas);
+  //const user = await User.findById(req.user.userId);
   //cas.photos = req.files.map((f) => ({ url: f.path, filename: f.filename }));
-  //user.cases.push(cas);
-  //const savedCase = await cas.save();
-  //return res.status(200).json({ savedCase });
-  // await user.save();
-  // res.redirect(`/${cas._id}`);
+  user.cases.push(cas);
+  await user.save();
+  const savedCase = await cas.save();
+  return res.status(200).json({ savedCase });
+  //res.redirect(`/${cas._id}`);
 });
 
-casesRouter.get("/:id", verifyToken, async (req, res) => {
+casesRouter.get("/:id", verifyToken, async (req, sres) => {
   const cas = await Case.findById(req.params.id);
-  //const user = await User.find({});
+  //const user = await User.findById(req.user.userId);
   if (user.cases.includes(cas._id)) {
     res.render("", { cas });
   } else {
