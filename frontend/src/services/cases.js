@@ -28,6 +28,7 @@ const addNew = async (caseDetails) => {
   try {
     const token = getToken()
 
+    console.log(caseDetails)
     const res = await axios.post(baseUrl, caseDetails, {
       headers: { Authorization: `Bearer ${token}` },
     })

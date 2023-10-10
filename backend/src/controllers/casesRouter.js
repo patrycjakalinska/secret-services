@@ -27,7 +27,7 @@ casesRouter.post('/', verifyToken, async (req, res) => {
   )
   await updatedUser.save()
   const savedCaseForUser = await newCase.save()
-  return res.status(200).json({ savedCaseForUser })
+  return res.status(200).json(savedCaseForUser)
 })
 
 casesRouter.delete('/:id', verifyToken, async (req, res) => {

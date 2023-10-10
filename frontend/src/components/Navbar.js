@@ -261,9 +261,9 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem key="account" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={handleLogout}>
-                    Account
-                  </Typography>
+                  <Link to="/account">
+                    <Typography textAlign="center">Account</Typography>
+                  </Link>
                 </MenuItem>
                 <MenuItem key="cases" onClick={handleCloseUserMenu}>
                   <Link to="/cases">
@@ -276,9 +276,9 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                   </Link>
                 </MenuItem>
                 <MenuItem key="bookmarks" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={handleLogout}>
-                    Bookmarks
-                  </Typography>
+                  <Link to={'/bookmarks'}>
+                    <Typography textAlign="center">Bookmarks</Typography>
+                  </Link>
                 </MenuItem>
                 <MenuItem key="logout" onClick={handleCloseUserMenu}>
                   <Typography textAlign="center" onClick={handleLogout}>

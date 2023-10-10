@@ -1,24 +1,20 @@
-import { useEffect, useState } from 'react'
-import cases from '../services/cases'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
+import { Link } from 'react-router-dom'
 
-const Cases = () => {
-  const [casesForUser, setCasesForUser] = useState([])
-  const fetchCases = async () => {
-    const cases_ = await cases.getAll()
-    setCasesForUser(cases_)
-  }
-
-  useEffect(() => {
-    fetchCases()
-  }, [])
-
+const Cases = ({ cases }) => {
   return (
     <div>
       <Box>
-        {casesForUser.map((c) => (
+        <div>
+          <Button>
+            <Link to="/newcase">Create new case</Link>
+          </Button>
+        </div>
+        {cases.map((c) => (
           <div id={c._id}>
-            <h1>{c.name}</h1>
+            <h1>
+              <Link to={`/cases/${c._id}`}>{c.name}</Link>
+            </h1>
           </div>
         ))}
       </Box>

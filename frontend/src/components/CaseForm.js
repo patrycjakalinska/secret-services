@@ -25,7 +25,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 })
 
-const CaseForm = () => {
+const CaseForm = ({ updateCases }) => {
   const [name, setName] = useState('')
   const [interest, setInterest] = useState('')
   const [location, setLocation] = useState('')
@@ -53,6 +53,10 @@ const CaseForm = () => {
       setLocation('')
       setImage('')
       setLocation('')
+      setDescription('')
+
+
+      updateCases((prevCase) => [...prevCase, newCase])
 
       navigate(`/cases/${newCase._id}`)
     } catch (err) {
