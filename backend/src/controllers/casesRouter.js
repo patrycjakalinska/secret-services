@@ -6,10 +6,11 @@ const verifyToken = require('../utils/auth')
 
 casesRouter.get('/', verifyToken, async (req, res) => {
   const casesForUser = await Case.find({ userId: req.user.userId })
-  res.status(200).json({ casesForUser })
+  res.status(200).json(casesForUser)
 })
 
 casesRouter.post('/', verifyToken, async (req, res) => {
+  console.log(req.body)
   const newCase = new Case({
     name: req.body.name,
     location: req.body.location,

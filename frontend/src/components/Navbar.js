@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 import '../styles/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
-const Navbar = ({ isLogged, user, fullpageApi, setIsLogged }) => {
+const Navbar = ({ user, fullpageApi, setUser }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
 
@@ -39,7 +39,7 @@ const Navbar = ({ isLogged, user, fullpageApi, setIsLogged }) => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('user-token')
-    setIsLogged(false)
+    setUser({})
     navigate('/')
   }
 
@@ -218,7 +218,7 @@ const Navbar = ({ isLogged, user, fullpageApi, setIsLogged }) => {
             ))}
           </Box>
 
-          {isLogged ? (
+          {Object.keys(user).length !== 0 ? (
             <Box sx={{ flexGrow: 0, paddingRight: '.5em' }}>
               <Tooltip title="Open settings">
                 <Box

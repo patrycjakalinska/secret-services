@@ -5,6 +5,8 @@ import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm.js'
 import Cases from './components/Cases'
+import CaseForm from './components/CaseForm'
+import Account from './components/Account'
 import users from '../src/services/users'
 
 function App() {
@@ -38,13 +40,12 @@ function App() {
   return (
     <Router>
       <div
-        style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '140%' }}
+        style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '120%' }}
       >
         <Navbar
-          isLogged={token}
           fullpageApi={fullpageApiRef}
           user={user}
-          setIsLogged={setToken}
+          setUser={setUser}
         />
         <Routes>
           <Route
@@ -57,6 +58,8 @@ function App() {
             element={<RegisterForm setIsLogged={setToken} />}
           />
           <Route path="/cases" element={<Cases />} />
+          <Route path='/newcase' element={<CaseForm/>}/>
+          <Route path='/account' element={<Account user={user}/>}/>
         </Routes>
       </div>
     </Router>
