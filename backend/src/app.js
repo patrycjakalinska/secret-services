@@ -6,7 +6,9 @@ const config = require("./utils/config");
 const logger = require("./utils/logger");
 const usersRouter = require("./controllers/usersRouter");
 const loginRouter = require("./controllers/loginRouter");
+const blogsRouter = require("./controllers/blogsRouter");
 const casesRouter = require("./controllers/casesRouter");
+
 
 logger.info(`Connecting to ${config.MONGODB_URI}`);
 
@@ -24,6 +26,7 @@ app.use(express.json());
 
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/blogs", blogsRouter);
 app.use("/api/cases", casesRouter);
 
 module.exports = app;
