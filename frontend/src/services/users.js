@@ -20,8 +20,6 @@ const getUserInfo = async () => {
     const res = await axios.get(baseUrl, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    console.log('USERS')
-    console.log(res.data)
     return res.data
   } catch (err) {
     console.log('Error fetching user info: ', err)

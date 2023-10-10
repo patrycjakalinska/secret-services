@@ -12,11 +12,13 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/styles.css'
 import signLogo from '../img/sign.png'
 import login from '../services/login'
+import AlertDialog from './AlertDialog'
 
 const LoginForm = ({ setIsLogged }) => {
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [openDialog, setOpenDialog] = useState(false)
 
   const navigate = useNavigate()
 
@@ -34,6 +36,7 @@ const LoginForm = ({ setIsLogged }) => {
       navigate('/')
     } catch (e) {
       setError('Bad credentials.')
+      setOpenDialog(true)
     }
   }
 
@@ -166,6 +169,12 @@ const LoginForm = ({ setIsLogged }) => {
                 </Grid>
               </Grid>
             </form>
+            {openDialog && (
+              <AlertDialog
+                open={openDialog}
+                close={() => setOpenDialog(false)}
+              />
+            )}
           </Box>
         </Box>
         <Box

@@ -4,6 +4,7 @@ import FullpageWrapper from './components/FullpageWrapper'
 import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm.js'
+import Cases from './components/Cases'
 import users from '../src/services/users'
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
         <Navbar
           isLogged={token}
           fullpageApi={fullpageApiRef}
-          user = {user}
+          user={user}
           setIsLogged={setToken}
         />
         <Routes>
@@ -55,6 +56,7 @@ function App() {
             path="/register"
             element={<RegisterForm setIsLogged={setToken} />}
           />
+          <Route path="/cases" element={<Cases />} />
         </Routes>
       </div>
     </Router>

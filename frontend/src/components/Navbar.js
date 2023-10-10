@@ -16,7 +16,6 @@ import MenuItem from '@mui/material/MenuItem'
 import '../styles/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
-const settings = ['Account', 'My cases', 'Bookmarks']
 const Navbar = ({ isLogged, user, fullpageApi, setIsLogged }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -261,11 +260,26 @@ const Navbar = ({ isLogged, user, fullpageApi, setIsLogged }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem key="account" onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={handleLogout}>
+                    Account
+                  </Typography>
+                </MenuItem>
+                <MenuItem key="cases" onClick={handleCloseUserMenu}>
+                  <Link to="/cases">
+                    <Typography
+                      textAlign="center"
+                      sx={{ textDecoration: 'none', textTransform: 'none' }}
+                    >
+                      My cases
+                    </Typography>
+                  </Link>
+                </MenuItem>
+                <MenuItem key="bookmarks" onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={handleLogout}>
+                    Bookmarks
+                  </Typography>
+                </MenuItem>
                 <MenuItem key="logout" onClick={handleCloseUserMenu}>
                   <Typography textAlign="center" onClick={handleLogout}>
                     Logout
