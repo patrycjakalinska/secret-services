@@ -15,9 +15,11 @@ import example from '../img/example.jpg'
 
 const Cases = ({ cases }) => {
   return (
-    <div style={{
-      overflow:'visible'
-    }}>
+    <div
+      style={{
+        height:'100vh'
+      }}
+    >
       <Container
         maxWidth="lg"
         sx={{
@@ -85,52 +87,54 @@ const Cases = ({ cases }) => {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  borderRadius:'20px'
+                  borderRadius: '20px',
                 }}
               >
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={example}
-                    alt="green iguana"
-                  />
-                  <CardContent
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: '100%',
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      noWrap
-                      variant="h5"
-                      component="div"
+                <Link to={`/cases/${c._id}`} style={{textDecoration:'none', color:'#313131'}}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={example}
+                      alt="green iguana"
+                    />
+                    <CardContent
                       sx={{
-                        fontFamily: 'Raleway',
-                        fontWeight: '500',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
                       }}
                     >
-                      {c.name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{
-                        fontFamily: 'Raleway',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                      }}
-                    >
-                      {c.description}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
+                      <Typography
+                        gutterBottom
+                        noWrap
+                        variant="h5"
+                        component="div"
+                        sx={{
+                          fontFamily: 'Raleway',
+                          fontWeight: '500',
+                        }}
+                      >
+                        {c.name}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          fontFamily: 'Raleway',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                        }}
+                      >
+                        {c.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
+                {/* <CardActions>
                   <Button
                     size="small"
                     sx={{
@@ -147,7 +151,7 @@ const Cases = ({ cases }) => {
                       View more
                     </Link>
                   </Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Grid>
           ))}

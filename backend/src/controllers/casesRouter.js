@@ -34,15 +34,16 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const caseId = req.params.id
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user.userId,
-      { $pull: { cases: caseId } },
-      { new: true }
-    )
+    const user = await User.findById(req.user.userId)
+    console.log(user)
 
-    if (!updatedUser) {
+    if (!user) {
       return res.status(404).json({ error: 'User not found.' })
+    } else if (!user.cases.includes(caseId)) {
+      return res.status(401).json({ message: 'Unauthorized' })
     }
+    user.cases.pull(caseId)
+    await user.save()
 
     const removedCase = await Case.findByIdAndRemove(caseId)
 
