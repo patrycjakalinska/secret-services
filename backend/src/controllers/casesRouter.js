@@ -46,6 +46,7 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
     await user.save()
 
     const removedCase = await Case.findByIdAndRemove(caseId)
+    console.log(removedCase)
 
     if (!removedCase) {
       return res.json(404).json({ error: 'Case not found.' })

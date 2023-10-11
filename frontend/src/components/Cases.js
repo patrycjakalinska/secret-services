@@ -12,12 +12,15 @@ import {
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import example from '../img/example.jpg'
+import { useNavigate } from 'react-router-dom'
 
 const Cases = ({ cases }) => {
+  const navigate = useNavigate()
+
   return (
     <div
       style={{
-        height:'100vh'
+        height: '100vh',
       }}
     >
       <Container
@@ -90,7 +93,10 @@ const Cases = ({ cases }) => {
                   borderRadius: '20px',
                 }}
               >
-                <Link to={`/cases/${c._id}`} style={{textDecoration:'none', color:'#313131'}}>
+                <Link
+                  to={`/cases/${c._id}`}
+                  style={{ textDecoration: 'none', color: '#313131' }}
+                >
                   <CardActionArea>
                     <CardMedia
                       component="img"

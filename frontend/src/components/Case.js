@@ -5,13 +5,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import cases from '../services/cases'
 
 const Case = ({ casesForUser, updateCases }) => {
+  const id = useParams().id
   const navigate = useNavigate()
 
-  const id = useParams().id
   const currentCase = casesForUser.find((c) => c._id === id)
 
   const handleDelete = async () => {
     const deletedCase = await cases.deleteCase(id)
+    console.log(deletedCase)
     const updatedCases = casesForUser.filter((c) => c._id !== id)
     updateCases(updatedCases)
     navigate('/cases')

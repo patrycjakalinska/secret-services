@@ -41,8 +41,9 @@ const addNew = async (caseDetails) => {
 const deleteCase = async (caseId) => {
   try {
     const token = getToken()
+    console.log(caseId)
 
-    const res = await axios.delete(`baseUrl/${caseId}`, {
+    const res = await axios.delete(`${baseUrl}/${caseId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     return res.data
