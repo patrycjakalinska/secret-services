@@ -1,12 +1,10 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom'
 
-const ProtectedRoute = ({ element, isLoggedIn, redirectTo }) => {
-  return isLoggedIn ? (
-    <Navigate to={redirectTo} replace />
-  ) : (
-    element
-  );
-};
+const ProtectedRoute = ({ user }) => {
+  if (Object.keys(user).length === 0) {
+    return <Navigate to="/" replace />
+  }
+  return <Outlet />
+}
 
-export default ProtectedRoute;
+export default ProtectedRoute

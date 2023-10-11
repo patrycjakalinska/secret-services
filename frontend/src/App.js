@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom'
 import FullpageWrapper from './components/FullpageWrapper'
 import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
@@ -8,6 +13,7 @@ import Cases from './components/Cases'
 import Case from './components/Case'
 import CaseForm from './components/CaseForm'
 import Account from './components/Account'
+import ProtectedRoute from './components/ProtectedRoute'
 import cases from './services/cases'
 import users from '../src/services/users'
 
@@ -16,6 +22,7 @@ function App() {
   const [user, setUser] = useState({})
   const [casesForUser, setCasesForUser] = useState([])
   const [error, setError] = useState('')
+
 
   const fullpageApiRef = useRef(null)
 
@@ -26,7 +33,8 @@ function App() {
     } else {
       setToken(false)
       setCasesForUser([])
-      setUser({})
+      //setUser({})
+
     }
   }, [])
 
@@ -57,34 +65,57 @@ function App() {
     }
   }, [token])
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('user-token')
+    setUser({})
+    setToken(false)
+    setCasesForUser([])
+  }
+
   return (
     <Router>
       <div
         style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '120%' }}
       >
-        <Navbar fullpageApi={fullpageApiRef} user={user} setUser={setUser} />
+        <Navbar fullpageApi={fullpageApiRef} user={user} handleLogout={handleLogout} />
         <Routes>
           <Route
             path="/"
             element={<FullpageWrapper fullpageApi={fullpageApiRef} />}
           />
-          <Route path="/login" element={<LoginForm setIsLogged={setToken} />} />
           <Route
-            path="/register"
-            element={<RegisterForm setIsLogged={setToken} />}
-          />
-          <Route path="/cases" element={<Cases cases={casesForUser} />} />
-          <Route
-            path="/cases/:id"
+            path="/login"
             element={
-              <Case casesForUser={casesForUser} updateCases={setCasesForUser} />
+              token ? <Navigate to="/" /> : <LoginForm setIsLogged={setToken} />
             }
           />
           <Route
-            path="/newcase"
-            element={<CaseForm updateCases={setCasesForUser} />}
+            path="/register"
+            element={
+              token ? (
+                <Navigate to="/" />
+              ) : (
+                <RegisterForm setIsLogged={setToken} />
+              )
+            }
           />
-          <Route path="/account" element={<Account user={user} />} />
+          <Route element={<ProtectedRoute user={user} />}>
+            <Route path="/cases" element={<Cases cases={casesForUser} />} />
+            <Route
+              path="/cases/:id"
+              element={
+                <Case
+                  casesForUser={casesForUser}
+                  updateCases={setCasesForUser}
+                />
+              }
+            />
+            <Route
+              path="/newcase"
+              element={<CaseForm updateCases={setCasesForUser} />}
+            />
+            <Route path="/account" element={<Account user={user} />} />
+          </Route>
         </Routes>
       </div>
     </Router>
