@@ -54,7 +54,7 @@ const Case = ({ casesForUser, updateCases }) => {
           marginBottom: '1rem',
         }}
       >
-        <Typography variant="h3" sx={{ fontFamily: 'Playfair Display' }}>
+        <Typography sx={{fontSize:{xs:'36px', md:'50px'}, fontFamily: 'Playfair Display' }}>
           {currentCase.name}
         </Typography>
         <Button
