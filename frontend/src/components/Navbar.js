@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -18,12 +17,16 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import '../styles/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
-const Navbar = ({ user, fullpageApi, setUser }) => {
+const Navbar = ({ user, fullpageApi, handleLogout }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
-
   const navigate = useNavigate()
+
+  const handleLogoutClick = () => {
+    handleLogout()
+    navigate('/')
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -40,12 +43,6 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
     setIsUserMenuOpen(!isUserMenuOpen)
-  }
-
-  const handleLogout = () => {
-    window.localStorage.removeItem('user-token')
-    setUser({})
-    navigate('/')
   }
 
   const handleMoveToSection = (section) => {
@@ -304,10 +301,7 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem
-                  key="account"
-                  onClick={handleCloseUserMenu}
-                >
+                <MenuItem key="account" onClick={handleCloseUserMenu}>
                   <Link
                     to="/account"
                     style={{ textDecoration: 'none', color: '#313131' }}
@@ -315,10 +309,7 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                     <Typography textAlign="center">Account</Typography>
                   </Link>
                 </MenuItem>
-                <MenuItem
-                  key="cases"
-                  onClick={handleCloseUserMenu}
-                >
+                <MenuItem key="cases" onClick={handleCloseUserMenu}>
                   <Link
                     to="/cases"
                     style={{ textDecoration: 'none', color: '#313131' }}
@@ -340,7 +331,7 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                   </Link>
                 </MenuItem>
                 <MenuItem key="logout" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={handleLogout}>
+                  <Typography textAlign="center" onClick={handleLogoutClick}>
                     Logout
                   </Typography>
                 </MenuItem>

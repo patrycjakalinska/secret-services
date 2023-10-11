@@ -23,6 +23,7 @@ function App() {
   const [casesForUser, setCasesForUser] = useState([])
   const [error, setError] = useState('')
 
+
   const fullpageApiRef = useRef(null)
 
   useEffect(() => {
@@ -32,7 +33,8 @@ function App() {
     } else {
       setToken(false)
       setCasesForUser([])
-      setUser({})
+      //setUser({})
+
     }
   }, [])
 
@@ -63,12 +65,19 @@ function App() {
     }
   }, [token])
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('user-token')
+    setUser({})
+    setToken(false)
+    setCasesForUser([])
+  }
+
   return (
     <Router>
       <div
         style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '120%' }}
       >
-        <Navbar fullpageApi={fullpageApiRef} user={user} setUser={setUser} />
+        <Navbar fullpageApi={fullpageApiRef} user={user} handleLogout={handleLogout} />
         <Routes>
           <Route
             path="/"
