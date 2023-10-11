@@ -13,12 +13,15 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
 import '../styles/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
 const Navbar = ({ user, fullpageApi, setUser }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
   const navigate = useNavigate()
 
@@ -27,6 +30,7 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
   }
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
+    setIsUserMenuOpen(!isUserMenuOpen)
   }
 
   const handleCloseNavMenu = () => {
@@ -35,6 +39,7 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+    setIsUserMenuOpen(!isUserMenuOpen)
   }
 
   const handleLogout = () => {
@@ -219,7 +224,14 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
           </Box>
 
           {Object.keys(user).length !== 0 ? (
-            <Box sx={{ flexGrow: 0, paddingRight: '.5em' }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+                padding: '.5em',
+                backgroundColor: isUserMenuOpen ? '#FEFDFD' : 'none',
+                borderRadius: '16px',
+              }}
+            >
               <Tooltip title="Open settings">
                 <Box
                   onClick={handleOpenUserMenu}
@@ -230,18 +242,50 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                       alt="Remy Sharp"
                       src="/static/images/avatar/2.jpg"
                     />
+                    <Box
+                      sx={{
+                        display: { xs: 'none', md: 'flex' },
+                        flexDirection: 'column',
+                        alignItems: 'start',
+                        paddingX: '1em',
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: 'Inter',
+                          fontWeight: '500',
+                          fontSize: '16px',
+                          color: '#313131',
+                        }}
+                      >
+                        {user.name}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Inter',
+                          fontSize: '12px',
+                          color: 'rgba(49, 49, 49, 0.50);',
+                        }}
+                      >
+                        {user.mail}
+                      </Typography>
+                    </Box>
+                    {isUserMenuOpen ? (
+                      <KeyboardDoubleArrowDownIcon
+                        sx={{
+                          display: { xs: 'none', md: 'flex' },
+                          color: 'rgba(49, 49, 49, 0.50);',
+                        }}
+                      />
+                    ) : (
+                      <KeyboardDoubleArrowRightIcon
+                        sx={{
+                          display: { xs: 'none', md: 'flex' },
+                          color: 'rgba(49, 49, 49, 0.50);',
+                        }}
+                      />
+                    )}
                   </IconButton>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      paddingX: '1em',
-                    }}
-                  >
-                    <Typography sx={{ fontSize: '0.875rem', color: '#313131' }}>
-                      {user.name} {user.surname}
-                    </Typography>
-                  </Box>
                 </Box>
               </Tooltip>
               <Menu
@@ -260,13 +304,25 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem key="account" onClick={handleCloseUserMenu}>
-                  <Link to="/account">
+                <MenuItem
+                  key="account"
+                  onClick={handleCloseUserMenu}
+                >
+                  <Link
+                    to="/account"
+                    style={{ textDecoration: 'none', color: '#313131' }}
+                  >
                     <Typography textAlign="center">Account</Typography>
                   </Link>
                 </MenuItem>
-                <MenuItem key="cases" onClick={handleCloseUserMenu}>
-                  <Link to="/cases">
+                <MenuItem
+                  key="cases"
+                  onClick={handleCloseUserMenu}
+                >
+                  <Link
+                    to="/cases"
+                    style={{ textDecoration: 'none', color: '#313131' }}
+                  >
                     <Typography
                       textAlign="center"
                       sx={{ textDecoration: 'none', textTransform: 'none' }}
@@ -276,7 +332,10 @@ const Navbar = ({ user, fullpageApi, setUser }) => {
                   </Link>
                 </MenuItem>
                 <MenuItem key="bookmarks" onClick={handleCloseUserMenu}>
-                  <Link to={'/bookmarks'}>
+                  <Link
+                    to={'/bookmarks'}
+                    style={{ textDecoration: 'none', color: '#313131' }}
+                  >
                     <Typography textAlign="center">Bookmarks</Typography>
                   </Link>
                 </MenuItem>

@@ -15,6 +15,7 @@ function App() {
   const [token, setToken] = useState(false)
   const [user, setUser] = useState({})
   const [casesForUser, setCasesForUser] = useState([])
+  const [error, setError] = useState('')
 
   const fullpageApiRef = useRef(null)
 
@@ -56,7 +57,6 @@ function App() {
     }
   }, [token])
 
-
   return (
     <Router>
       <div
@@ -74,8 +74,16 @@ function App() {
             element={<RegisterForm setIsLogged={setToken} />}
           />
           <Route path="/cases" element={<Cases cases={casesForUser} />} />
-          <Route path="/cases/:id" element={<Case cases={casesForUser} />} />
-          <Route path="/newcase" element={<CaseForm updateCases={setCasesForUser}/>} />
+          <Route
+            path="/cases/:id"
+            element={
+              <Case casesForUser={casesForUser} updateCases={setCasesForUser} />
+            }
+          />
+          <Route
+            path="/newcase"
+            element={<CaseForm updateCases={setCasesForUser} />}
+          />
           <Route path="/account" element={<Account user={user} />} />
         </Routes>
       </div>

@@ -39,7 +39,7 @@ const FullpageWrapper = ({ fullpageApi }) => {
         afterLoad={afterLoad}
         render={({ state, fullpageApi }) => {
           return (
-            <div id="fullpage-wrapper">
+            <div id="fullpage-wrapper" className='Fullpage__Scroll'>
               <div className="section section1">
                 <LogoSection />
               </div>
