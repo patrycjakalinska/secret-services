@@ -1,8 +1,8 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: '#F1F0F0';
-	  overflow: hidden;
-    margin:0
+    margin:0;
+    overflow:'visible'
 }
 
 .Navbar__Items {
@@ -10,6 +10,10 @@ body {
     justify-content: 'space-between';
     flex: 1;
     display: inherit;
+}
+
+.Fullpage__Scroll {
+	  overflow: hidden;
 }
 
 

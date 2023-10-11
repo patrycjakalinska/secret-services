@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const ImageSchema = new mongoose.Schema({
   url: String,
   filename: String,
-});
+})
 
-ImageSchema.virtual("thumbnail").get(function () {
-  return this.url.replace("/upload", "/upload/w_200");
-});
+ImageSchema.virtual('thumbnail').get(function () {
+  return this.url.replace('/upload', '/upload/w_200')
+})
 
 const caseSchema = new mongoose.Schema({
   name: {
@@ -21,8 +21,10 @@ const caseSchema = new mongoose.Schema({
     minLength: 3,
     required: true,
   },
-  photos: [ImageSchema],
+  //photos: [ImageSchema],
+  photos: String,
   description: String,
-});
+  userId: String,
+})
 
-module.exports = mongoose.model("Case", caseSchema);
+module.exports = mongoose.model('Case', caseSchema)

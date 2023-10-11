@@ -8,6 +8,7 @@ loginRouter.post('/', async (req, res) => {
 
   try {
     const user = await User.findOne({ mail })
+    console.log(user)
 
     if (!user) {
       return res.status(401).json({ message: 'Wrong credentials' })

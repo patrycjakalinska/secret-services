@@ -1,32 +1,71 @@
-const express = require("express");
-const casesRouter = express.Router();
-const Case = require("../models/case");
-const User = require("../models/user");
-const verifyToken = require("../utils/auth");
+const express = require('express')
+const casesRouter = express.Router()
+const Case = require('../models/case')
+const User = require('../models/user')
+const verifyToken = require('../utils/auth')
 
-casesRouter.get("/", async (req, res) => {
-  const casesForUser = await Case.find({});
-  res.status(200).json({ casesForUser });
-});
+casesRouter.get('/', verifyToken, async (req, res) => {
+  const casesForUser = await Case.find({ userId: req.user.userId })
+  res.status(200).json(casesForUser)
+})
 
-casesRouter.post("/", verifyToken, async (req, res) => {
-  const cas = new Case(req.body);
-  const user = await User.findById(req.user.userId);
+casesRouter.post('/', verifyToken, async (req, res) => {
+  console.log(req.body)
+  const newCase = new Case({
+    name: req.body.name,
+    location: req.body.location,
+    interest: req.body.interest,
+    photos: req.body.photos,
+    description: req.body.description,
+    userId: req.user.userId,
+  })
   //cas.photos = req.files.map((f) => ({ url: f.path, filename: f.filename }));
-  user.cases.push(cas);
-  await user.save();
-  const savedCaseForUser = await cas.save();
-  return res.status(200).json({ savedCaseForUser });
-});
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.userId,
+    { $push: { cases: newCase } },
+    { new: true }
+  )
+  await updatedUser.save()
+  const savedCaseForUser = await newCase.save()
+  return res.status(200).json(savedCaseForUser)
+})
 
-casesRouter.get("/:id", verifyToken, async (req, res) => {
-  const caseForUser = await Case.findById(req.params.id);
-  const user = await User.findById(req.user.userId);
-  if (user.cases.includes(caseForUser._id)) {
-    res.status(200).json({ caseForUser });
-  } else {
-    res.status(401).json({ message: "Access denied" });
+casesRouter.delete('/:id', verifyToken, async (req, res) => {
+  try {
+    const caseId = req.params.id
+
+    const user = await User.findById(req.user.userId)
+    console.log(user)
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' })
+    } else if (!user.cases.includes(caseId)) {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
+    user.cases.pull(caseId)
+    await user.save()
+
+    const removedCase = await Case.findByIdAndRemove(caseId)
+    console.log(removedCase)
+
+    if (!removedCase) {
+      return res.json(404).json({ error: 'Case not found.' })
+    }
+
+    return res.status(200).json({ message: 'Case removed successfully.' })
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error.' })
   }
-});
+})
 
-module.exports = casesRouter;
+casesRouter.get('/:id', verifyToken, async (req, res) => {
+  const caseForUser = await Case.findById(req.params.id)
+  const user = await User.findById(req.user.userId)
+  if (user.cases.includes(caseForUser._id)) {
+    res.status(200).json({ caseForUser })
+  } else {
+    res.status(401).json({ message: 'Access denied.' })
+  }
+})
+
+module.exports = casesRouter

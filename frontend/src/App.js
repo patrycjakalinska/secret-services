@@ -4,11 +4,18 @@ import FullpageWrapper from './components/FullpageWrapper'
 import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm.js'
+import Cases from './components/Cases'
+import Case from './components/Case'
+import CaseForm from './components/CaseForm'
+import Account from './components/Account'
+import cases from './services/cases'
 import users from '../src/services/users'
 
 function App() {
   const [token, setToken] = useState(false)
   const [user, setUser] = useState({})
+  const [casesForUser, setCasesForUser] = useState([])
+  const [error, setError] = useState('')
 
   const fullpageApiRef = useRef(null)
 
@@ -18,6 +25,8 @@ function App() {
       setToken(true)
     } else {
       setToken(false)
+      setCasesForUser([])
+      setUser({})
     }
   }, [])
 
@@ -34,17 +43,26 @@ function App() {
     }
   }, [token, user])
 
+  useEffect(() => {
+    const fetchCases = async () => {
+      try {
+        const fetchedCases = await cases.getAll()
+        setCasesForUser(fetchedCases)
+      } catch (err) {
+        console.log('Error fetching cases.')
+      }
+    }
+    if (token) {
+      fetchCases()
+    }
+  }, [token])
+
   return (
     <Router>
       <div
-        style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '140%' }}
+        style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '120%' }}
       >
-        <Navbar
-          isLogged={token}
-          fullpageApi={fullpageApiRef}
-          user = {user}
-          setIsLogged={setToken}
-        />
+        <Navbar fullpageApi={fullpageApiRef} user={user} setUser={setUser} />
         <Routes>
           <Route
             path="/"
@@ -55,6 +73,18 @@ function App() {
             path="/register"
             element={<RegisterForm setIsLogged={setToken} />}
           />
+          <Route path="/cases" element={<Cases cases={casesForUser} />} />
+          <Route
+            path="/cases/:id"
+            element={
+              <Case casesForUser={casesForUser} updateCases={setCasesForUser} />
+            }
+          />
+          <Route
+            path="/newcase"
+            element={<CaseForm updateCases={setCasesForUser} />}
+          />
+          <Route path="/account" element={<Account user={user} />} />
         </Routes>
       </div>
     </Router>
