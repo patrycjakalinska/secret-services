@@ -8,7 +8,6 @@ import {
 } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import '../styles/styles.css'
 import signLogo from '../img/sign.png'
 import users from '../services/users'
 
@@ -24,6 +23,7 @@ const RegisterForm = ({ setIsLogged }) => {
     event.preventDefault()
     try {
       const user = await users.register({ name, surname, mail, password })
+      console.log(user)
       window.localStorage.setItem('user-token', user.token)
 
       setIsLogged(true)

@@ -8,7 +8,6 @@ loginRouter.post('/', async (req, res) => {
 
   try {
     const user = await User.findOne({ mail })
-    console.log(user)
 
     if (!user) {
       return res.status(401).json({ message: 'Wrong credentials' })
@@ -22,7 +21,7 @@ loginRouter.post('/', async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, mail: user.mail },
       process.env.SECRET,
-      { expiresIn: 365 * 24 * 60 * 60 }
+      { expiresIn: '1d' }
     )
 
     res.status(200).json({

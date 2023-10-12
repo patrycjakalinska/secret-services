@@ -14,15 +14,14 @@ import Case from './components/Case'
 import CaseForm from './components/CaseForm'
 import Account from './components/Account'
 import ProtectedRoute from './components/ProtectedRoute'
-import cases from './services/cases'
 import users from '../src/services/users'
+import PersonDetailsForm from './components/PersonDetailsForm'
 
 function App() {
   const [token, setToken] = useState(false)
   const [user, setUser] = useState({})
   const [casesForUser, setCasesForUser] = useState([])
   const [error, setError] = useState('')
-
 
   const fullpageApiRef = useRef(null)
 
@@ -34,7 +33,6 @@ function App() {
       setToken(false)
       setCasesForUser([])
       //setUser({})
-
     }
   }, [])
 
@@ -43,27 +41,21 @@ function App() {
       users
         .getUserInfo()
         .then((data) => {
-          setUser(data)
+          setUser({
+            name: data.name,
+            surname: data.surname,
+            mail: data.mail,
+            userType: data.userType,
+            bookmarks: data.bookmarks,
+            id: data.id,
+          })
+          setCasesForUser(data.cases)
         })
         .catch((err) => {
           console.log(err)
         })
     }
   }, [token, user])
-
-  useEffect(() => {
-    const fetchCases = async () => {
-      try {
-        const fetchedCases = await cases.getAll()
-        setCasesForUser(fetchedCases)
-      } catch (err) {
-        console.log('Error fetching cases.')
-      }
-    }
-    if (token) {
-      fetchCases()
-    }
-  }, [token])
 
   const handleLogout = () => {
     window.localStorage.removeItem('user-token')
@@ -77,7 +69,11 @@ function App() {
       <div
         style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '120%' }}
       >
-        <Navbar fullpageApi={fullpageApiRef} user={user} handleLogout={handleLogout} />
+        <Navbar
+          fullpageApi={fullpageApiRef}
+          user={user}
+          handleLogout={handleLogout}
+        />
         <Routes>
           <Route
             path="/"
@@ -114,7 +110,24 @@ function App() {
               path="/newcase"
               element={<CaseForm updateCases={setCasesForUser} />}
             />
-            <Route path="/account" element={<Account user={user} />} />
+            <Route
+              path="/user/:id"
+              element={
+                <Account user={user} updateUser={setUser} formType="main" />
+              }
+            />
+            <Route
+              path="/user/:id/info"
+              element={
+                <Account user={user} updateUser={setUser} formType="profile" />
+              }
+            />
+            <Route
+              path="/user/:id/payments"
+              element={
+                <Account user={user} updateUser={setUser} formType="payments" />
+              }
+            />
           </Route>
         </Routes>
       </div>

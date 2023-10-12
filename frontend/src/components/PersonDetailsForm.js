@@ -5,12 +5,18 @@ import {
   Typography,
   Button,
   Grid,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Select,
 } from '@mui/material'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import cases from '../services/cases'
+import users from '../services/users'
+
+const genders = ['woman', 'man', 'other']
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -24,40 +30,45 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 })
 
-const CaseForm = ({ updateCases }) => {
-  const [name, setName] = useState('')
-  const [interest, setInterest] = useState('')
-  const [location, setLocation] = useState('')
-  // TODO:
-  // * change image string to image IMAGE
-  // * change location to location needed to MapBox
-  const [image, setImage] = useState('')
-  const [description, setDescription] = useState('')
+const PersonDetailsForm = ({ user, updateUser, show }) => {
+  const [name, setName] = useState(user.name)
+  const [surname, setSurname] = useState(user.surname)
+  const [mail, setMail] = useState(user.mail)
+  const [profilePic, setProfilePic] = useState(user.profilePictureURL)
+  const [number, setNumber] = useState(user.number)
+  const [gender, setGender] = useState(user.gender)
 
-  const navigate = useNavigate()
+  if (!show) {
+    return null
+  }
 
-  const addNewCase = async (event) => {
+  const handleGenderChange = (newGender) => {
+    if (genders.includes(newGender)) {
+      setGender(newGender)
+    } else {
+      console.log('Something went wrong')
+    }
+  }
+
+  const updateCurrentUser = async (event) => {
     event.preventDefault()
     try {
-      const newCase = await cases.addNew({
+      const updatedUser = await user.updateUser({
         name,
-        interest,
-        location,
-        image,
-        description,
+        surname,
+        mail,
+        profilePic,
+        number,
+        gender,
       })
 
-      setName('')
-      setInterest('')
-      setLocation('')
-      setImage('')
-      setLocation('')
-      setDescription('')
+      setName(user.name)
+      setSurname(user.surname)
+      setMail(user.mail)
+      setNumber(user.number)
+      setGender(user.gender)
 
-
-      updateCases((prevCase) => [...prevCase, newCase])
-
-      navigate(`/cases/${newCase._id}`)
+      updateUser(updatedUser)
     } catch (err) {
       console.log('Something went wrong.')
     }
@@ -66,30 +77,20 @@ const CaseForm = ({ updateCases }) => {
   return (
     <Container
       maxWidth="xl"
-      id="home"
       sx={{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
       }}
     >
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
           backgroundColor: '#FEFDFD',
-          width: '80%',
-          height: 'auto',
-          borderRadius: '25px',
         }}
       >
         <Box
           sx={{
-            paddingY: '3em',
-            paddingX: { lg: '5em', md: '3.5em', sm: '3em', xs: '2em' },
             width: '100%',
           }}
         >
@@ -104,14 +105,14 @@ const CaseForm = ({ updateCases }) => {
                 textAlign: 'center',
               }}
             >
-              Create new case
+              Update your <strong>profile info</strong>
             </Typography>
-            <form onSubmit={addNewCase}>
+            <form onSubmit={updateCurrentUser}>
               <Grid container spacing={4} sx={{ marginTop: '2em' }}>
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setName(target.value)}
-                    label="Case name"
+                    label="Name"
                     fullWidth
                     autoFocus
                     sx={{
@@ -121,8 +122,8 @@ const CaseForm = ({ updateCases }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    onChange={({ target }) => setInterest(target.value)}
-                    label="Person|Company of interest"
+                    onChange={({ target }) => setSurname(target.value)}
+                    label="Surname"
                     fullWidth
                     sx={{
                       marginBottom: '.5em',
@@ -131,11 +132,41 @@ const CaseForm = ({ updateCases }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    onChange={({ target }) => setLocation(target.value)}
-                    label="Location"
+                    onChange={({ target }) => setMail(target.value)}
+                    label="E-mail address"
                     fullWidth
                     sx={{
                       marginBottom: { xs: '0', md: '.5em' },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Gender
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={gender}
+                      label="Gender"
+                      onChange={handleGenderChange}
+                    >
+                      {genders.map((g) => (
+                        <MenuItem value={g}>{g}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    onChange={({ target }) => setNumber(target.value)}
+                    label="Phone number"
+                    fullWidth
+                    multiline
+                    rows={3}
+                    sx={{
+                      marginBottom: '.5em',
                     }}
                   />
                 </Grid>
@@ -159,18 +190,6 @@ const CaseForm = ({ updateCases }) => {
                     Attach image
                     <VisuallyHiddenInput type="file" />
                   </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    onChange={({ target }) => setDescription(target.value)}
-                    label="Description"
-                    fullWidth
-                    multiline
-                    rows={3}
-                    sx={{
-                      marginBottom: '.5em',
-                    }}
-                  />
                 </Grid>
                 <Grid
                   item
@@ -207,4 +226,4 @@ const CaseForm = ({ updateCases }) => {
   )
 }
 
-export default CaseForm
+export default PersonDetailsForm

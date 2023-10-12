@@ -27,5 +27,23 @@ const getUserInfo = async () => {
   }
 }
 
+const uploadProfilePic = async (image) => {
+  try {
+    const res = await axios.post(`${baseUrl}/upload`, image)
+    return res
+  } catch (err) {
+    console.log('Error uploading picture: ', err)
+  }
+}
+
+const updateUser = async (details) => {
+  try {
+    const res = await axios.put(baseUrl, details)
+    return res
+  } catch (err) {
+    console.log('Error updating user info: ', err)
+  }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { register, getUserInfo }
+export default { register, getUserInfo, uploadProfilePic, updateUser }

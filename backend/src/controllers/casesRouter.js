@@ -4,13 +4,12 @@ const Case = require('../models/case')
 const User = require('../models/user')
 const verifyToken = require('../utils/auth')
 
-casesRouter.get('/', verifyToken, async (req, res) => {
-  const casesForUser = await Case.find({ userId: req.user.userId })
+casesRouter.get('/', async (req, res) => {
+  const casesForUser = await Case.find({})
   res.status(200).json(casesForUser)
 })
 
 casesRouter.post('/', verifyToken, async (req, res) => {
-  console.log(req.body)
   const newCase = new Case({
     name: req.body.name,
     location: req.body.location,
@@ -25,6 +24,13 @@ casesRouter.post('/', verifyToken, async (req, res) => {
     { $push: { cases: newCase } },
     { new: true }
   )
+
+  const updateAdmins = await User.find({ userType: 'admin' })
+  updateAdmins.forEach(async admin => {
+    admin.cases.push(newCase)
+    await admin.save()
+  })
+
   await updatedUser.save()
   const savedCaseForUser = await newCase.save()
   return res.status(200).json(savedCaseForUser)
@@ -35,7 +41,6 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
     const caseId = req.params.id
 
     const user = await User.findById(req.user.userId)
-    console.log(user)
 
     if (!user) {
       return res.status(404).json({ error: 'User not found.' })
@@ -46,7 +51,6 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
     await user.save()
 
     const removedCase = await Case.findByIdAndRemove(caseId)
-    console.log(removedCase)
 
     if (!removedCase) {
       return res.json(404).json({ error: 'Case not found.' })

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
   mail: {
@@ -13,24 +13,39 @@ const userSchema = new mongoose.Schema({
   cases: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Case",
+      ref: 'Case',
     },
   ],
   bookmarks: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Blog",
+      ref: 'Blog',
     },
   ],
-});
-
-userSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
-    delete returnedObject.passwordHash;
+  userType: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
   },
-});
+  profilePictureURL: String,
+  number: {
+    type: String,
+    default: '',
+  },
+  gender: {
+    type: String,
+    enum: ['woman', 'man', 'other'],
+    default: 'other',
+  },
+})
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+    delete returnedObject.passwordHash
+  },
+})
+
+module.exports = mongoose.model('User', userSchema)

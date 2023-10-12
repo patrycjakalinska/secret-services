@@ -4,6 +4,7 @@ import AboutSection from './sections/AboutSection'
 import WelcomeSection from './sections/WelcomeSection'
 import LogoSection from './sections/LogoSection'
 import ServicesSection from './sections/ServicesSection'
+import '../misc/styles.css'
 
 const FullpageWrapper = ({ fullpageApi }) => {
   const onLeave = (origin, destination, direction) => {
@@ -12,7 +13,6 @@ const FullpageWrapper = ({ fullpageApi }) => {
   const afterLoad = (origin, destination, direction) => {
     console.log('After load: ' + destination.index)
   }
-
 
   return (
     <div>
@@ -39,7 +39,7 @@ const FullpageWrapper = ({ fullpageApi }) => {
         afterLoad={afterLoad}
         render={({ state, fullpageApi }) => {
           return (
-            <div id="fullpage-wrapper" className='Fullpage__Scroll'>
+            <div id="fullpage-wrapper" className="Fullpage__Scroll">
               <div className="section section1">
                 <LogoSection />
               </div>

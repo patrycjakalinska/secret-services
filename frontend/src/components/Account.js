@@ -5,8 +5,12 @@ import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined'
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined'
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import { useState } from 'react'
+import { styled } from '@mui/material/styles'
+import cases from '../services/cases'
+import PersonDetailsForm from './PersonDetailsForm'
 
-const Account = ({ user }) => {
+const Account = ({ user, setUser, formType }) => {
   const navigate = useNavigate()
 
   if (Object.keys(user).length === 0) {
@@ -16,7 +20,6 @@ const Account = ({ user }) => {
   return (
     <Container
       maxWidth="xl"
-      id="home"
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -66,7 +69,15 @@ const Account = ({ user }) => {
               sx={{ marginRight: '1rem', height: '4rem', width: '4rem' }}
             />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Grid item xs={12} sx={{display:'flex', flexDirection:'column', justifyContent:'center'} }>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}
+              >
                 <Typography
                   variant="h7"
                   sx={{ fontFamily: 'Inter', fontWeight: '500' }}
@@ -74,7 +85,15 @@ const Account = ({ user }) => {
                   {user.name} {user.surname}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sx={{display:'flex', flexDirection:'column', justifyContent:'flex-start'} }>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                }}
+              >
                 <Typography
                   variant="h7"
                   sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
@@ -216,7 +235,13 @@ const Account = ({ user }) => {
           sx={{
             flex: 2,
           }}
-        ></Box>
+        >
+          <PersonDetailsForm
+            user={user}
+            updateUser={setUser}
+            show={formType === 'profile'}
+          />
+        </Box>
         {/* </Box> */}
       </Box>
     </Container>

@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
-import '../styles/styles.css'
+import '../misc/styles.css'
 
 const pages = ['Services', 'Blog', 'About']
 const Navbar = ({ user, fullpageApi, handleLogout }) => {
@@ -52,6 +52,7 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
       console.log('AAAAAAAAAAAAAAAA' + section)
     }
   }
+  console.log(user)
 
   return (
     <AppBar
@@ -303,7 +304,7 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
               >
                 <MenuItem key="account" onClick={handleCloseUserMenu}>
                   <Link
-                    to="/account"
+                    to={`/user/${user.id}`}
                     style={{ textDecoration: 'none', color: '#313131' }}
                   >
                     <Typography textAlign="center">Account</Typography>
