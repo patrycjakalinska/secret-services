@@ -27,8 +27,6 @@ const getAll = async () => {
 const addNew = async (caseDetails) => {
   try {
     const token = getToken()
-
-    console.log(caseDetails)
     const res = await axios.post(baseUrl, caseDetails, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -41,7 +39,6 @@ const addNew = async (caseDetails) => {
 const deleteCase = async (caseId) => {
   try {
     const token = getToken()
-    console.log(caseId)
 
     const res = await axios.delete(`${baseUrl}/${caseId}`, {
       headers: { Authorization: `Bearer ${token}` },

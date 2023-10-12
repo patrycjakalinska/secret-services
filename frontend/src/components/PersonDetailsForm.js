@@ -10,11 +10,11 @@ import {
   InputLabel,
   Select,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import PortraitIcon from '@mui/icons-material/Portrait'
 import users from '../services/users'
+import { useNavigate } from 'react-router-dom'
 
 const genders = ['woman', 'man', 'other']
 
@@ -30,13 +30,16 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 })
 
-const PersonDetailsForm = ({ user, updateUser, show }) => {
+const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
   const [name, setName] = useState(user.name)
   const [surname, setSurname] = useState(user.surname)
   const [mail, setMail] = useState(user.mail)
-  const [profilePic, setProfilePic] = useState(user.profilePictureURL)
   const [number, setNumber] = useState(user.number)
   const [gender, setGender] = useState(user.gender)
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [fileName, setFileName] = useState('')
+
+  const navigate = useNavigate()
 
   if (!show) {
     return null
@@ -53,23 +56,39 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
   const updateCurrentUser = async (event) => {
     event.preventDefault()
     try {
-      const updatedUser = await user.updateUser({
+      const updatedUserData = {
         name,
         surname,
         mail,
-        profilePic,
         number,
         gender,
-      })
+      }
+
+      const userResponse = await users.updateUser(updatedUserData)
+      const updatedUser = userResponse.data
+
+      if (selectedFile) {
+        const formData = new FormData()
+        formData.append('image', selectedFile)
+        const res = await users.uploadProfilePic(formData)
+        if (res.data) {
+          updatedUser.profilePictureURL = res.data
+        } else {
+          console.log('Error uploading pic to Cloudinary.')
+        }
+      }
+      updateUserInfo(updatedUser)
 
       setName(user.name)
       setSurname(user.surname)
       setMail(user.mail)
       setNumber(user.number)
       setGender(user.gender)
-
-      updateUser(updatedUser)
+      setFileName('')
+      setSelectedFile(null)
+      navigate(`/user/${user.id}`)
     } catch (err) {
+      console.log(err)
       console.log('Something went wrong.')
     }
   }
@@ -113,6 +132,7 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
                   <TextField
                     onChange={({ target }) => setName(target.value)}
                     label="Name"
+                    defaultValue={user.name}
                     fullWidth
                     autoFocus
                     sx={{
@@ -124,6 +144,7 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
                   <TextField
                     onChange={({ target }) => setSurname(target.value)}
                     label="Surname"
+                    defaultValue={user.surname}
                     fullWidth
                     sx={{
                       marginBottom: '.5em',
@@ -134,13 +155,14 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
                   <TextField
                     onChange={({ target }) => setMail(target.value)}
                     label="E-mail address"
+                    defaultValue={user.mail}
                     fullWidth
                     sx={{
                       marginBottom: { xs: '0', md: '.5em' },
                     }}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
                       Gender
@@ -149,24 +171,26 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={gender}
+                      defaultValue={user.gender}
                       label="Gender"
                       onChange={handleGenderChange}
                     >
                       {genders.map((g) => (
-                        <MenuItem value={g}>{g}</MenuItem>
+                        <MenuItem key={g} value={g}>
+                          {g}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setNumber(target.value)}
                     label="Phone number"
+                    defaultValue={user.number}
                     fullWidth
-                    multiline
-                    rows={3}
                     sx={{
-                      marginBottom: '.5em',
+                      marginBottom: { xs: '0', md: '.5em' },
                     }}
                   />
                 </Grid>
@@ -185,10 +209,17 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
                       height: { xs: '120%', md: '80%' },
                       '&:hover': { backgroundColor: '#3C404A' },
                     }}
-                    startIcon={<CloudUploadIcon />}
+                    startIcon={<PortraitIcon />}
                   >
-                    Attach image
-                    <VisuallyHiddenInput type="file" />
+                    {fileName || 'Select profile picture'}
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={(e) => {
+                        console.log(e.target.files)
+                        setSelectedFile(e.target.files[0])
+                        setFileName(e.target.files[0].name)
+                      }}
+                    />
                   </Button>
                 </Grid>
                 <Grid
@@ -214,7 +245,7 @@ const PersonDetailsForm = ({ user, updateUser, show }) => {
                       '&:hover': { backgroundColor: '#3C404A' },
                     }}
                   >
-                    Send
+                    Update
                   </Button>
                 </Grid>
               </Grid>

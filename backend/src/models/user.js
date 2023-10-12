@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  profilePictureURL: String,
+  profilePictureURL: {
+    type: String,
+    default: 'https://www.svgrepo.com/download/141685/detective.svg',
+  },
   number: {
     type: String,
     default: '',

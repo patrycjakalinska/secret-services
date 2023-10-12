@@ -68,9 +68,23 @@ usersRouter.put('/', verifyToken, async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'User not found.' })
     }
-    user.set(req.body)
-    const updatedUser = await user.save()
-    res.status(200).json(updatedUser)
+    if (req.body.name) {
+      user.name = req.body.name
+    }
+    if (req.body.surname) {
+      user.surname = req.body.surname
+    }
+    if (req.body.mail) {
+      user.mail = req.body.mail
+    }
+    if (req.body.number) {
+      user.number = req.body.number
+    }
+    if (req.body.gender) {
+      user.gender = req.body.gender
+    }
+    const savedUser = await user.save()
+    res.status(200).json(savedUser)
   } catch (err) {
     res.status(400).json({ messgae: 'Something went wrong.' })
   }
@@ -81,16 +95,18 @@ usersRouter.post(
   verifyToken,
   cloudinaryConfig.upload.single('image'),
   async (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No imgae file provided.' })
-    }
-
     try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No imgae file provided.' })
+      }
       const uploadRes = await cloudinaryConfig.handleUpload(req.file.buffer)
-      const user = await User.findOne({ mail: req.user.mail })
-      user.profilePictureURL = uploadRes.secure_url
-      const savedUser = await user.save()
-      return savedUser.profilePictureURL
+      if (uploadRes) {
+        const user = await User.findOne({ mail: req.user.mail })
+        user.profilePictureURL = uploadRes.secure_url
+        const savedUser = await user.save()
+        console.log(savedUser)
+        return res.json(savedUser)
+      }
     } catch (err) {
       res.status(500).json({ error: 'Error uploading image to Cloudinary.' })
     }

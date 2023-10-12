@@ -47,8 +47,13 @@ function App() {
             mail: data.mail,
             userType: data.userType,
             bookmarks: data.bookmarks,
+            cases: data.cases,
+            number: data.number,
+            gender: data.gender,
+            profilePictureURL: data.profilePictureURL,
             id: data.id,
           })
+          console.log(data)
           setCasesForUser(data.cases)
         })
         .catch((err) => {
@@ -113,13 +118,14 @@ function App() {
             <Route
               path="/user/:id"
               element={
-                <Account user={user} updateUser={setUser} formType="main" />
+                <Account user={user} updateUserInfo={setUser} formType="main" />
               }
             />
+
             <Route
               path="/user/:id/info"
               element={
-                <Account user={user} updateUser={setUser} formType="profile" />
+                <Account user={user} updateUserInfo={setUser} formType="profile" />
               }
             />
             <Route

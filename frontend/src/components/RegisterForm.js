@@ -23,7 +23,6 @@ const RegisterForm = ({ setIsLogged }) => {
     event.preventDefault()
     try {
       const user = await users.register({ name, surname, mail, password })
-      console.log(user)
       window.localStorage.setItem('user-token', user.token)
 
       setIsLogged(true)

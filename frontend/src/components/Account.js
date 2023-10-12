@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles'
 import cases from '../services/cases'
 import PersonDetailsForm from './PersonDetailsForm'
 
-const Account = ({ user, setUser, formType }) => {
+const Account = ({ user, updateUserInfo, formType = 'main' }) => {
   const navigate = useNavigate()
 
   if (Object.keys(user).length === 0) {
@@ -65,7 +65,7 @@ const Account = ({ user, setUser, formType }) => {
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <Avatar
               alt="Remy Sharp"
-              src="/static/images/avatar/2.jpg"
+              src={`${user.profilePictureURL}`}
               sx={{ marginRight: '1rem', height: '4rem', width: '4rem' }}
             />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -80,7 +80,11 @@ const Account = ({ user, setUser, formType }) => {
               >
                 <Typography
                   variant="h7"
-                  sx={{ fontFamily: 'Inter', fontWeight: '500' }}
+                  sx={{
+                    fontFamily: 'Inter',
+                    fontWeight: '500',
+                    fontSize: '18px',
+                  }}
                 >
                   {user.name} {user.surname}
                 </Typography>
@@ -103,37 +107,53 @@ const Account = ({ user, setUser, formType }) => {
               </Grid>
             </Box>
           </Box>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: 'flex', flexDirection: 'row', marginY: '.5em' }}
-          >
-            <Box sx={{ marginRight: '1rem' }}>
-              <PersonOutlineOutlinedIcon />
-            </Box>
-            <Box>
-              <Typography
+          <Grid item xs={12} sx={{}}>
+            <Link
+              to={`/user/${user.id}/info`}
+              style={{
+                textDecoration: 'none',
+                color: '#313131',
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+            >
+              <Box
                 sx={{
-                  fontFamily: 'Inter',
-                  fontWeight: '500',
-                  fontSize: '12px',
+                  marginRight: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                 }}
               >
-                Edit profile
-              </Typography>
-              <Typography
-                sx={{ fontSize: '12px', color: 'rgba(49, 49, 49, 0.50)' }}
-              >
-                Change name, number, address
-              </Typography>
-            </Box>
+                <PersonOutlineOutlinedIcon fontSize="medium" />
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    fontFamily: 'Inter',
+                    fontWeight: '500',
+                    fontSize: '16px',
+                  }}
+                >
+                  Edit profile
+                </Typography>
+                <Typography
+                  sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
+                >
+                  Change name, number, address
+                </Typography>
+              </Box>
+            </Link>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: 'flex', flexDirection: 'row', marginY: '.5em' }}
-          >
-            <Box sx={{ marginRight: '1rem' }}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box
+              sx={{
+                marginRight: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <PaymentsOutlinedIcon />
             </Box>
             <Box>
@@ -141,24 +161,27 @@ const Account = ({ user, setUser, formType }) => {
                 sx={{
                   fontFamily: 'Inter',
                   fontWeight: '500',
-                  fontSize: '12px',
+                  fontSize: '16px',
                 }}
               >
                 Payments
               </Typography>
               <Typography
-                sx={{ fontSize: '10px', color: 'rgba(49, 49, 49, 0.50)' }}
+                sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
               >
                 Change billing information
               </Typography>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: 'flex', flexDirection: 'row', marginY: '.5em' }}
-          >
-            <Box sx={{ marginRight: '1rem' }}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box
+              sx={{
+                marginRight: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <TextsmsOutlinedIcon />
             </Box>
             <Box>
@@ -166,25 +189,28 @@ const Account = ({ user, setUser, formType }) => {
                 sx={{
                   fontFamily: 'Inter',
                   fontWeight: '500',
-                  fontSize: '12px',
+                  fontSize: '16px',
                 }}
               >
                 Chats
               </Typography>
 
               <Typography
-                sx={{ fontSize: '10px', color: 'rgba(49, 49, 49, 0.50)' }}
+                sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
               >
                 View and delete chat messages
               </Typography>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: 'flex', flexDirection: 'row', marginY: '.5em' }}
-          >
-            <Box sx={{ marginRight: '1rem' }}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box
+              sx={{
+                marginRight: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <BusinessCenterOutlinedIcon />
             </Box>
             <Box>
@@ -192,13 +218,13 @@ const Account = ({ user, setUser, formType }) => {
                 sx={{
                   fontFamily: 'Inter',
                   fontWeight: '500',
-                  fontSize: '12px',
+                  fontSize: '16px',
                 }}
               >
                 My cases
               </Typography>
               <Typography
-                sx={{ fontSize: '10px', color: 'rgba(49, 49, 49, 0.50)' }}
+                sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
               >
                 Modify and disable cases
               </Typography>
@@ -215,7 +241,14 @@ const Account = ({ user, setUser, formType }) => {
               paddingTop: '1em',
             }}
           >
-            <Box sx={{ marginRight: '1rem' }}>
+            <Box
+              sx={{
+                marginRight: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <LogoutOutlinedIcon />
             </Box>
             <Box>
@@ -223,7 +256,7 @@ const Account = ({ user, setUser, formType }) => {
                 sx={{
                   fontFamily: 'Inter',
                   fontWeight: '500',
-                  fontSize: '12px',
+                  fontSize: '16px',
                 }}
               >
                 Logout
@@ -236,9 +269,12 @@ const Account = ({ user, setUser, formType }) => {
             flex: 2,
           }}
         >
+          <Box>
+
+          </Box>
           <PersonDetailsForm
             user={user}
-            updateUser={setUser}
+            updateUserInfo={updateUserInfo}
             show={formType === 'profile'}
           />
         </Box>

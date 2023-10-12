@@ -52,7 +52,6 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
       console.log('AAAAAAAAAAAAAAAA' + section)
     }
   }
-  console.log(user)
 
   return (
     <AppBar
@@ -238,7 +237,7 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                   <IconButton sx={{ p: 0 }}>
                     <Avatar
                       alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      src={`${user.profilePictureURL}`}
                     />
                     <Box
                       sx={{

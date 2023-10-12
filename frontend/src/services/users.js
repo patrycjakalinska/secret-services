@@ -1,6 +1,10 @@
 import axios from 'axios'
 const baseUrl = '/api/users'
 
+const getToken = () => {
+  return window.localStorage.getItem('user-token')
+}
+
 const register = async (credentials) => {
   try {
     const res = await axios.post(baseUrl, credentials)
@@ -29,8 +33,11 @@ const getUserInfo = async () => {
 
 const uploadProfilePic = async (image) => {
   try {
-    const res = await axios.post(`${baseUrl}/upload`, image)
-    return res
+    const token = getToken()
+    const res = await axios.post(`${baseUrl}/upload`, image, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
   } catch (err) {
     console.log('Error uploading picture: ', err)
   }
@@ -38,7 +45,10 @@ const uploadProfilePic = async (image) => {
 
 const updateUser = async (details) => {
   try {
-    const res = await axios.put(baseUrl, details)
+    const token = getToken()
+    const res = await axios.put(baseUrl, details, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     return res
   } catch (err) {
     console.log('Error updating user info: ', err)
