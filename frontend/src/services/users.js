@@ -16,8 +16,7 @@ const register = async (credentials) => {
 
 const getUserInfo = async () => {
   try {
-    const token = window.localStorage.getItem('user-token')
-
+    const token = getToken()
     if (!token) {
       return {}
     }
@@ -28,18 +27,6 @@ const getUserInfo = async () => {
   } catch (err) {
     console.log('Error fetching user info: ', err)
     throw err
-  }
-}
-
-const uploadProfilePic = async (image) => {
-  try {
-    const token = getToken()
-    const res = await axios.post(`${baseUrl}/upload`, image, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    return res.data
-  } catch (err) {
-    console.log('Error uploading picture: ', err)
   }
 }
 
@@ -56,4 +43,4 @@ const updateUser = async (details) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { register, getUserInfo, uploadProfilePic, updateUser }
+export default { register, getUserInfo, updateUser }

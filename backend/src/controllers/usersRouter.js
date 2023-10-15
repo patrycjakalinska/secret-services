@@ -5,8 +5,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const verifyToken = require('../utils/auth')
 const config = require('../utils/config')
-const cloudinaryConfig = require('../utils/cloudinary')
-const cloudinary = require('cloudinary').v2
 
 usersRouter.get('/', verifyToken, async (req, res) => {
   try {
@@ -89,28 +87,5 @@ usersRouter.put('/', verifyToken, async (req, res) => {
     res.status(400).json({ messgae: 'Something went wrong.' })
   }
 })
-
-usersRouter.post(
-  '/upload',
-  verifyToken,
-  cloudinaryConfig.upload.single('image'),
-  async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: 'No imgae file provided.' })
-      }
-      const uploadRes = await cloudinaryConfig.handleUpload(req.file.buffer)
-      if (uploadRes) {
-        const user = await User.findOne({ mail: req.user.mail })
-        user.profilePictureURL = uploadRes.secure_url
-        const savedUser = await user.save()
-        console.log(savedUser)
-        return res.json(savedUser)
-      }
-    } catch (err) {
-      res.status(500).json({ error: 'Error uploading image to Cloudinary.' })
-    }
-  }
-)
 
 module.exports = usersRouter

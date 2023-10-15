@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import PortraitIcon from '@mui/icons-material/Portrait'
 import users from '../services/users'
+import uploads from '../services/upload'
 import { useNavigate } from 'react-router-dom'
 
 const genders = ['woman', 'man', 'other']
@@ -36,8 +37,8 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
   const [mail, setMail] = useState(user.mail)
   const [number, setNumber] = useState(user.number)
   const [gender, setGender] = useState(user.gender)
-  const [selectedFile, setSelectedFile] = useState(null)
   const [fileName, setFileName] = useState('')
+  const [selectedFile, setSelectedFile] = useState('')
 
   const navigate = useNavigate()
 
@@ -53,6 +54,11 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
     }
   }
 
+  const handleImageChange = (e) => {
+    setSelectedFile(e.target.files[0])
+    setFileName(e.target.files[0].name)
+  }
+
   const updateCurrentUser = async (event) => {
     event.preventDefault()
     try {
@@ -65,14 +71,16 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
       }
 
       const userResponse = await users.updateUser(updatedUserData)
+      // TODO:
+      // * fix later
       const updatedUser = userResponse.data
 
       if (selectedFile) {
-        const formData = new FormData()
-        formData.append('image', selectedFile)
-        const res = await users.uploadProfilePic(formData)
-        if (res.data) {
-          updatedUser.profilePictureURL = res.data
+        const data = new FormData()
+        data.append('file', selectedFile)
+        const res = await uploads.uploadProfilePic(data)
+        if (res) {
+          updatedUser.profilePictureURL = res.profilePictureURL
         } else {
           console.log('Error uploading pic to Cloudinary.')
         }
@@ -85,7 +93,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
       setNumber(user.number)
       setGender(user.gender)
       setFileName('')
-      setSelectedFile(null)
+      setSelectedFile('')
       navigate(`/user/${user.id}`)
     } catch (err) {
       console.log(err)
@@ -126,7 +134,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
             >
               Update your <strong>profile info</strong>
             </Typography>
-            <form onSubmit={updateCurrentUser}>
+            <form onSubmit={updateCurrentUser} encType="multipart/form-data">
               <Grid container spacing={4} sx={{ marginTop: '2em' }}>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -214,11 +222,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                     {fileName || 'Select profile picture'}
                     <VisuallyHiddenInput
                       type="file"
-                      onChange={(e) => {
-                        console.log(e.target.files)
-                        setSelectedFile(e.target.files[0])
-                        setFileName(e.target.files[0].name)
-                      }}
+                      onChange={handleImageChange}
                     />
                   </Button>
                 </Grid>

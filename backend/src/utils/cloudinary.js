@@ -1,10 +1,6 @@
 const cloudinary = require('cloudinary').v2
-const streamifier = require('streamifier')
-const Multer = require('multer')
+const multer = require('multer')
 const config = require('./config')
-const fs = require('fs')
-const util = require('util')
-const writeFile = util.promisify(fs.writeFile)
 
 cloudinary.config({
   cloud_name: config.CLOUD_NAME,
@@ -14,25 +10,19 @@ cloudinary.config({
 
 const handleUpload = async (file) => {
   try {
-    const filename = `temp-${Date.now()}`
-
-    await writeFile(filename, file)
-
-    const res = await cloudinary.uploader.upload(filename, {
-      resource_type: 'auto',
-    })
+    const res = await cloudinary.uploader.upload(
+      `data:image/jpeg;base64,${file}`
+    )
     return res
   } catch (err) {
     console.log(err)
   }
 }
 
-const storage = new Multer.memoryStorage()
-const upload = Multer({ storage })
+const storage = multer.memoryStorage()
+const upload = multer({ storage })
 
 module.exports = {
   upload,
-  cloudinary,
-  storage,
   handleUpload,
 }
