@@ -27,9 +27,16 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  profilePictureURL: {
-    type: String,
-    default: 'https://www.svgrepo.com/download/141685/detective.svg',
+  profilePicture: {
+    url: {
+      type: String,
+
+      default: 'https://www.svgrepo.com/download/141685/detective.svg',
+    },
+    publicId: {
+      type: String,
+      default: 'placeholder',
+    },
   },
   number: {
     type: String,
@@ -37,8 +44,8 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['woman', 'man', 'other'],
-    default: 'other',
+    enum: ['Woman', 'Man', 'Other'],
+    default: 'Other',
   },
 })
 

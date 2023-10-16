@@ -11,13 +11,14 @@ import {
   Select,
 } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import PortraitIcon from '@mui/icons-material/Portrait'
-import users from '../services/users'
-import uploads from '../services/upload'
-import { useNavigate } from 'react-router-dom'
+import Backdrop from '../utils/Backdrop'
+import users from '../../services/users'
+import uploads from '../../services/upload'
 
-const genders = ['woman', 'man', 'other']
+const genders = ['Woman', 'Man', 'Other']
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -39,6 +40,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
   const [gender, setGender] = useState(user.gender)
   const [fileName, setFileName] = useState('')
   const [selectedFile, setSelectedFile] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
@@ -61,6 +63,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
 
   const updateCurrentUser = async (event) => {
     event.preventDefault()
+    setLoading(true)
     try {
       const updatedUserData = {
         name,
@@ -71,21 +74,23 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
       }
 
       const userResponse = await users.updateUser(updatedUserData)
-      // TODO:
-      // * fix later
       const updatedUser = userResponse.data
 
       if (selectedFile) {
         const data = new FormData()
         data.append('file', selectedFile)
         const res = await uploads.uploadProfilePic(data)
+        console.log(res)
         if (res) {
-          updatedUser.profilePictureURL = res.profilePictureURL
+          updatedUser.profilePicture.url = res.profilePicture.url
+          updatedUser.profilePicture.profileId = res.profilePicture.profileId
+          console.log(updatedUser)
         } else {
           console.log('Error uploading pic to Cloudinary.')
         }
       }
       updateUserInfo(updatedUser)
+      setLoading(false)
 
       setName(user.name)
       setSurname(user.surname)
@@ -94,7 +99,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
       setGender(user.gender)
       setFileName('')
       setSelectedFile('')
-      navigate(`/user/${user.id}`)
+      //navigate(`/user/${user.id}`)
     } catch (err) {
       console.log(err)
       console.log('Something went wrong.')
@@ -111,6 +116,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
         alignItems: 'center',
       }}
     >
+      <Backdrop loading={loading} />
       <Box
         sx={{
           backgroundColor: '#FEFDFD',
@@ -125,11 +131,11 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
             <Typography
               variant="h3"
               sx={{
-                fontFamily: 'Playfair Display',
-                fontWeight: '900',
-                fontSize: { lg: '40px', md: '40px', sm: '35px', xs: '30px' },
+                fontFamily: 'Inter',
+                fontWeight: '300',
+                fontSize: { lg: '26px', md: '24px', sm: '22px', xs: '20px' },
                 color: '#313131',
-                textAlign: 'center',
+                textAlign: 'left',
               }}
             >
               Update your <strong>profile info</strong>
@@ -181,7 +187,9 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                       value={gender}
                       defaultValue={user.gender}
                       label="Gender"
-                      onChange={handleGenderChange}
+                      onChange={({ target }) =>
+                        handleGenderChange(target.value)
+                      }
                     >
                       {genders.map((g) => (
                         <MenuItem key={g} value={g}>
