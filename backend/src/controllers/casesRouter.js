@@ -43,6 +43,24 @@ casesRouter.post('/', verifyToken, async (req, res) => {
   return res.status(200).json(savedCaseForUser)
 })
 
+casesRouter.put('/:id/addPhotos', verifyToken, async (req, res) => {
+  try {
+    console.log(req)
+    console.log(req.body)
+    console.log(req.params)
+    const caseId = req.params.id
+    const currentCase = await Case.findById(caseId)
+    console.log(currentCase)
+    for (let photo of req.body) {
+      currentCase.photos.push({ url: photo.url, publicId: photo.publicId })
+    }
+    const savedCase = await currentCase.save()
+    res.status(200).json(savedCase)
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error.' })
+  }
+})
+
 casesRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const caseId = req.params.id

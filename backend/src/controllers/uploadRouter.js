@@ -65,6 +65,7 @@ uploadRouter.post(
           })
         }
       } catch (err) {
+        console.log('AAA')
         console.log(err)
       }
     }

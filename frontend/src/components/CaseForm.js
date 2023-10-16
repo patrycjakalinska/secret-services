@@ -8,23 +8,12 @@ import {
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { styled } from '@mui/material/styles'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import Backdrop from './utils/Backdrop'
 import cases from '../services/cases'
 import uploads from '../services/upload'
+import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-})
 
 const CaseForm = ({ updateCases }) => {
   const [name, setName] = useState('')

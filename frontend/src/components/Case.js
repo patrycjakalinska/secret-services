@@ -4,12 +4,16 @@ import { Box, Button, Typography, Container } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import cases from '../services/cases'
 import ImageSlider from './ImageSlider'
+import ImageUploadModal from './ImageUploadModal'
+import { useState } from 'react'
 
 const Case = ({ casesForUser, updateCases }) => {
+  const [modalOpen, setModalOpen] = useState(false)
   const id = useParams().id
+  const [currentCase, setCurrentCase] = useState(
+    casesForUser.find((c) => c._id === id)
+  )
   const navigate = useNavigate()
-
-  const currentCase = casesForUser.find((c) => c._id === id)
 
   const handleDelete = async () => {
     const deletedCase = await cases.deleteCase(id)
@@ -26,6 +30,12 @@ const Case = ({ casesForUser, updateCases }) => {
 
   return (
     <Container maxWidth="lg" sx={{ height: '100vh', overflow: 'visible' }}>
+      <ImageUploadModal
+        caseToUpdate={currentCase}
+        open={modalOpen}
+        setOpen={setModalOpen}
+        updateCaseInfo={setCurrentCase}
+      />
       <Link to={'/cases'} style={{ textDecoration: 'none', color: '#313131' }}>
         <Box
           sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
@@ -102,6 +112,42 @@ const Case = ({ casesForUser, updateCases }) => {
           }}
         >
           <ImageSlider imageUrls={currentCase.photos.map((p) => p.url)} />
+          {currentCase.photos.length > 0 ? (
+            <Button
+              component="label"
+              variant="contained"
+              disableElevation
+              sx={{
+                textTransform: 'none',
+                borderRadius: '8px',
+                fontWeight: '700',
+                backgroundColor: '#EC6D62',
+                fontSize: '12',
+                width: '100%',
+                '&:hover': { backgroundColor: '#3C404A' },
+              }}
+            >
+              {' '}
+              View all{' '}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              disableElevation
+              onClick={() => setModalOpen(true)}
+              sx={{
+                textTransform: 'none',
+                borderRadius: '8px',
+                fontWeight: '700',
+                backgroundColor: '#EC6D62',
+                fontSize: '12',
+                width: '100%',
+                '&:hover': { backgroundColor: '#3C404A' },
+              }}
+            >
+              Add photos
+            </Button>
+          )}
         </Box>
         <Box sx={{ width: '100%', height: '100$', flex: { xs: '1', lg: '2' } }}>
           <Typography variant="body2">{currentCase.description}</Typography>
