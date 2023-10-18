@@ -4,6 +4,7 @@ const User = require('../models/user')
 const Case = require('../models/case')
 const cloudinaryConfig = require('../utils/cloudinary')
 const verifyToken = require('../utils/auth')
+const { classifyImage } = require('../utils/classification')
 
 uploadRouter.post(
   '/profilePic',
@@ -29,6 +30,9 @@ uploadRouter.post(
         )
         user.profilePicture.url = imageDetails.secure_url
         user.profilePicture.publicId = imageDetails.public_id
+
+        classifyImage(user.profilePictureURL)
+
         const savedUser = await user.save()
         return res.json(savedUser)
       }
