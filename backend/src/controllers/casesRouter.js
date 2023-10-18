@@ -3,6 +3,7 @@ const casesRouter = express.Router()
 const Case = require('../models/case')
 const User = require('../models/user')
 const verifyToken = require('../utils/auth')
+const cloudinaryConfig = require('../utils/cloudinary')
 
 casesRouter.get('/', async (req, res) => {
   const casesForUser = await Case.find({})
@@ -14,11 +15,17 @@ casesRouter.post('/', verifyToken, async (req, res) => {
     name: req.body.name,
     location: req.body.location,
     interest: req.body.interest,
-    photos: req.body.photos,
+    photos: [],
     description: req.body.description,
     userId: req.user.userId,
   })
-  //cas.photos = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+
+  for (const photo of req.body.photos) {
+    newCase.photos.push({
+      url: photo.url,
+      publicId: photo.publicId,
+    })
+  }
   const updatedUser = await User.findByIdAndUpdate(
     req.user.userId,
     { $push: { cases: newCase } },
@@ -26,7 +33,7 @@ casesRouter.post('/', verifyToken, async (req, res) => {
   )
 
   const updateAdmins = await User.find({ userType: 'admin' })
-  updateAdmins.forEach(async admin => {
+  updateAdmins.forEach(async (admin) => {
     admin.cases.push(newCase)
     await admin.save()
   })
@@ -34,6 +41,20 @@ casesRouter.post('/', verifyToken, async (req, res) => {
   await updatedUser.save()
   const savedCaseForUser = await newCase.save()
   return res.status(200).json(savedCaseForUser)
+})
+
+casesRouter.put('/:id/addPhotos', verifyToken, async (req, res) => {
+  try {
+    const caseId = req.params.id
+    const currentCase = await Case.findById(caseId)
+    for (let photo of req.body) {
+      currentCase.photos.push({ url: photo.url, publicId: photo.publicId })
+    }
+    const savedCase = await currentCase.save()
+    res.status(200).json(savedCase)
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error.' })
+  }
 })
 
 casesRouter.delete('/:id', verifyToken, async (req, res) => {
@@ -50,11 +71,20 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
     user.cases.pull(caseId)
     await user.save()
 
-    const removedCase = await Case.findByIdAndRemove(caseId)
+    const currentCase = await Case.findById(caseId)
 
-    if (!removedCase) {
+    if (!currentCase) {
       return res.json(404).json({ error: 'Case not found.' })
     }
+
+    for (let photo of currentCase.photos) {
+      let removedCloud = await cloudinaryConfig.handleDeleteCase(
+        photo.publicId,
+        currentCase.name
+      )
+    }
+
+    await Case.deleteOne({ _id: caseId })
 
     return res.status(200).json({ message: 'Case removed successfully.' })
   } catch (err) {
