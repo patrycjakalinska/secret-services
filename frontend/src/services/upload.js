@@ -29,5 +29,19 @@ const uploadCasePhotos = async (images) => {
   }
 }
 
+const deletePhoto = async (id, caseId) => {
+  try {
+    const token = window.localStorage.getItem('user-token')
+
+    const res = await axios.delete(`${baseUrl}/${caseId}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    return res.data
+  } catch (err) {
+    console.log('Error removing photo: ', err)
+  }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { uploadProfilePic, uploadCasePhotos }
+export default { uploadProfilePic, uploadCasePhotos, deletePhoto }

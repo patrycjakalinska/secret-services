@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 import Backdrop from './utils/Backdrop'
+import MuiBackdrop from '@mui/material/Backdrop'
 import uploads from '../services/upload'
 import cases from '../services/cases'
-import { useNavigate } from 'react-router-dom'
 
 const style = {
   position: 'absolute',
@@ -25,6 +25,8 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
   const [fileName, setFileName] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState('')
+
+  const handleClose = () => setOpen(false)
 
   const handleSelectImages = (e) => {
     const files = e.target.files
@@ -61,7 +63,6 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
       console.log('Something went wrong.')
     }
   }
-  console.log(open)
 
   return (
     <div>
@@ -70,6 +71,14 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
         open={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        onClose={handleClose}
+        slots={{ backdrop: MuiBackdrop }}
+        closeAfterTransition
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
       >
         <form onSubmit={handleUploadImages}>
           <Box sx={style}>

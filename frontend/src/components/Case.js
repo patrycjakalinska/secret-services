@@ -8,7 +8,7 @@ import ImageUploadModal from './ImageUploadModal'
 import { useState } from 'react'
 
 const Case = ({ casesForUser, updateCases }) => {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [uploadModalOpen, setUploadModalOpen] = useState(false)
   const id = useParams().id
   const [currentCase, setCurrentCase] = useState(
     casesForUser.find((c) => c._id === id)
@@ -28,12 +28,13 @@ const Case = ({ casesForUser, updateCases }) => {
     return <div>Loading...</div>
   }
 
+  console.log(currentCase.photos)
   return (
     <Container maxWidth="lg" sx={{ height: '100vh', overflow: 'visible' }}>
       <ImageUploadModal
         caseToUpdate={currentCase}
-        open={modalOpen}
-        setOpen={setModalOpen}
+        open={uploadModalOpen}
+        setOpen={setUploadModalOpen}
         updateCaseInfo={setCurrentCase}
       />
       <Link to={'/cases'} style={{ textDecoration: 'none', color: '#313131' }}>
@@ -111,43 +112,27 @@ const Case = ({ casesForUser, updateCases }) => {
             marginRight: '2rem',
           }}
         >
-          <ImageSlider imageUrls={currentCase.photos.map((p) => p.url)} />
-          {currentCase.photos.length > 0 ? (
-            <Button
-              component="label"
-              variant="contained"
-              disableElevation
-              sx={{
-                textTransform: 'none',
-                borderRadius: '8px',
-                fontWeight: '700',
-                backgroundColor: '#EC6D62',
-                fontSize: '12',
-                width: '100%',
-                '&:hover': { backgroundColor: '#3C404A' },
-              }}
-            >
-              {' '}
-              View all{' '}
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              disableElevation
-              onClick={() => setModalOpen(true)}
-              sx={{
-                textTransform: 'none',
-                borderRadius: '8px',
-                fontWeight: '700',
-                backgroundColor: '#EC6D62',
-                fontSize: '12',
-                width: '100%',
-                '&:hover': { backgroundColor: '#3C404A' },
-              }}
-            >
-              Add photos
-            </Button>
-          )}
+          <ImageSlider
+            images={currentCase.photos}
+            setCurrentCase={setCurrentCase}
+            caseId={currentCase._id}
+          />
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={() => setUploadModalOpen(true)}
+            sx={{
+              textTransform: 'none',
+              borderRadius: '8px',
+              fontWeight: '700',
+              backgroundColor: '#EC6D62',
+              fontSize: '12',
+              width: '100%',
+              '&:hover': { backgroundColor: '#3C404A' },
+            }}
+          >
+            Add photos
+          </Button>
         </Box>
         <Box sx={{ width: '100%', height: '100$', flex: { xs: '1', lg: '2' } }}>
           <Typography variant="body2">{currentCase.description}</Typography>

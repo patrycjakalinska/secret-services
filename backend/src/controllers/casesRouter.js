@@ -45,12 +45,8 @@ casesRouter.post('/', verifyToken, async (req, res) => {
 
 casesRouter.put('/:id/addPhotos', verifyToken, async (req, res) => {
   try {
-    console.log(req)
-    console.log(req.body)
-    console.log(req.params)
     const caseId = req.params.id
     const currentCase = await Case.findById(caseId)
-    console.log(currentCase)
     for (let photo of req.body) {
       currentCase.photos.push({ url: photo.url, publicId: photo.publicId })
     }

@@ -39,8 +39,6 @@ const addNew = async (caseDetails) => {
 const addPhotos = async (photos, caseId) => {
   try {
     const token = getToken()
-    console.log('Photos: ', photos)
-    console.log(caseId)
     const res = await axios.put(`${baseUrl}/${caseId}/addPhotos`, photos, {
       headers: { Authorization: `Bearer ${token}` },
     })

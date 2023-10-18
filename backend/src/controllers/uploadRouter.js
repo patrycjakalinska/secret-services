@@ -65,12 +65,39 @@ uploadRouter.post(
           })
         }
       } catch (err) {
-        console.log('AAA')
         console.log(err)
       }
     }
     return res.json(photoDetails)
   }
 )
+
+uploadRouter.delete('/:caseId/:id', async (req, res) => {
+  const { caseId, id } = req.params
+  //
+  try {
+    const currentCase = await Case.findById(caseId)
+    if (!currentCase) {
+      return res.status(404).json({ error: 'Case not found' })
+    }
+
+    const photoToDelete = currentCase.photos.find(
+      (p) => p._id.toString() === id
+    )
+    const deleteRes = await cloudinaryConfig.handleDeleteOnePhoto(
+      photoToDelete.publicId
+    )
+
+    const updatedPhotos = currentCase.photos.filter(
+      (p) => p._id.toString() !== id
+    )
+    currentCase.photos = updatedPhotos
+
+    await currentCase.save()
+    res.status(200).json(currentCase)
+  } catch (err) {
+    return res.status(500).json({ error: 'Internal server error' })
+  }
+})
 
 module.exports = uploadRouter

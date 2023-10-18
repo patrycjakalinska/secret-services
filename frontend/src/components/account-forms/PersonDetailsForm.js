@@ -80,11 +80,9 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
         const data = new FormData()
         data.append('file', selectedFile)
         const res = await uploads.uploadProfilePic(data)
-        console.log(res)
         if (res) {
           updatedUser.profilePicture.url = res.profilePicture.url
           updatedUser.profilePicture.profileId = res.profilePicture.profileId
-          console.log(updatedUser)
         } else {
           console.log('Error uploading pic to Cloudinary.')
         }
