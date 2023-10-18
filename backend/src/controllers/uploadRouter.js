@@ -30,7 +30,9 @@ uploadRouter.post(
         )
         user.profilePicture.url = imageDetails.secure_url
         user.profilePicture.publicId = imageDetails.public_id
+
         classifyImage(user.profilePictureURL)
+
         const savedUser = await user.save()
         return res.json(savedUser)
       }

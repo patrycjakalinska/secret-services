@@ -6,58 +6,64 @@ import {
   Button,
   Grid,
 } from '@mui/material'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { styled } from '@mui/material/styles'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import Backdrop from './utils/Backdrop'
 import cases from '../services/cases'
+import uploads from '../services/upload'
+import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-})
 
 const CaseForm = ({ updateCases }) => {
   const [name, setName] = useState('')
   const [interest, setInterest] = useState('')
   const [location, setLocation] = useState('')
   // TODO:
-  // * change image string to image IMAGE
   // * change location to location needed to MapBox
-  const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
+  const [fileName, setFileName] = useState('')
+  const [selectedFiles, setSelectedFiles] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
+
+  const handleSelectImages = (e) => {
+    const files = e.target.files
+    setSelectedFiles(files)
+    setFileName('Selected ' + e.target.files.length + ' photos')
+  }
 
   const addNewCase = async (event) => {
     event.preventDefault()
     try {
-      const newCase = await cases.addNew({
-        name,
-        interest,
-        location,
-        image,
-        description,
-      })
+      if (selectedFiles) {
+        setLoading(true)
+        const data = new FormData()
+        data.append('caseName', name)
+        for (let i = 0; i < selectedFiles.length; i++) {
+          data.append('files', selectedFiles[i])
+        }
+        const photosDetails = await uploads.uploadCasePhotos(data)
+        const newCase = await cases.addNew({
+          name,
+          interest,
+          location,
+          description,
+          photos: photosDetails,
+        })
+        setLoading(false)
 
-      setName('')
-      setInterest('')
-      setLocation('')
-      setImage('')
-      setLocation('')
-      setDescription('')
+        updateCases((prevCase) => [...prevCase, newCase])
+        setName('')
+        setInterest('')
+        setLocation('')
+        setDescription('')
+        setFileName('')
+        setSelectedFiles('')
 
-
-      updateCases((prevCase) => [...prevCase, newCase])
-
-      navigate(`/cases/${newCase._id}`)
+        navigate(`/cases/${newCase._id}`)
+      }
     } catch (err) {
       console.log('Something went wrong.')
     }
@@ -75,6 +81,7 @@ const CaseForm = ({ updateCases }) => {
         height: '100vh',
       }}
     >
+      <Backdrop loading={loading} />
       <Box
         sx={{
           display: 'flex',
@@ -156,8 +163,12 @@ const CaseForm = ({ updateCases }) => {
                     }}
                     startIcon={<CloudUploadIcon />}
                   >
-                    Attach image
-                    <VisuallyHiddenInput type="file" />
+                    {fileName || 'Attach images'}
+                    <VisuallyHiddenInput
+                      type="file"
+                      multiple
+                      onChange={handleSelectImages}
+                    />
                   </Button>
                 </Grid>
                 <Grid item xs={12}>

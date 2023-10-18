@@ -237,7 +237,7 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                   <IconButton sx={{ p: 0 }}>
                     <Avatar
                       alt="Remy Sharp"
-                      src={`${user.profilePictureURL}`}
+                      src={`${user.profilePicture.url}`}
                     />
                     <Box
                       sx={{

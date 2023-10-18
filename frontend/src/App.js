@@ -13,9 +13,9 @@ import Cases from './components/Cases'
 import Case from './components/Case'
 import CaseForm from './components/CaseForm'
 import Account from './components/Account'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from './components/utils/ProtectedRoute'
 import users from '../src/services/users'
-import PersonDetailsForm from './components/PersonDetailsForm'
+import PersonDetailsForm from './components/account-forms/PersonDetailsForm'
 
 function App() {
   const [token, setToken] = useState(false)
@@ -50,10 +50,12 @@ function App() {
             cases: data.cases,
             number: data.number,
             gender: data.gender,
-            profilePictureURL: data.profilePictureURL,
+            profilePicture: {
+              url: data.profilePicture.url,
+              profileId: data.profilePicture.profileId,
+            },
             id: data.id,
           })
-          console.log(data)
           setCasesForUser(data.cases)
         })
         .catch((err) => {
@@ -125,7 +127,11 @@ function App() {
             <Route
               path="/user/:id/info"
               element={
-                <Account user={user} updateUserInfo={setUser} formType="profile" />
+                <Account
+                  user={user}
+                  updateUserInfo={setUser}
+                  formType="profile"
+                />
               }
             />
             <Route

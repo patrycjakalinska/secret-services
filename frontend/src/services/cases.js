@@ -36,6 +36,18 @@ const addNew = async (caseDetails) => {
   }
 }
 
+const addPhotos = async (photos, caseId) => {
+  try {
+    const token = getToken()
+    const res = await axios.put(`${baseUrl}/${caseId}/addPhotos`, photos, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const deleteCase = async (caseId) => {
   try {
     const token = getToken()
@@ -49,4 +61,4 @@ const deleteCase = async (caseId) => {
   }
 }
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, addNew, deleteCase }
+export default { getAll, addNew, deleteCase, addPhotos }

@@ -21,8 +21,14 @@ const caseSchema = new mongoose.Schema({
     minLength: 3,
     required: true,
   },
-  //photos: [ImageSchema],
-  photos: String,
+  photos: [
+    {
+      url: {
+        type: String,
+      },
+      publicId: { type: String },
+    },
+  ],
   description: String,
   userId: String,
 })

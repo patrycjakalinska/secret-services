@@ -8,7 +8,8 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import cases from '../services/cases'
-import PersonDetailsForm from './PersonDetailsForm'
+import PersonDetailsForm from './account-forms/PersonDetailsForm'
+import PaymentsDetailsForm from './account-forms/PaymentsDetailsForm'
 
 const Account = ({ user, updateUserInfo, formType = 'main' }) => {
   const navigate = useNavigate()
@@ -65,7 +66,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <Avatar
               alt="Remy Sharp"
-              src={`${user.profilePictureURL}`}
+              src={`${user.profilePicture.url}`}
               sx={{ marginRight: '1rem', height: '4rem', width: '4rem' }}
             />
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -146,32 +147,42 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
             </Link>
           </Grid>
           <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Box
-              sx={{
-                marginRight: '1rem',
+            <Link
+              to={`/user/${user.id}/payments`}
+              style={{
+                textDecoration: 'none',
+                color: '#313131',
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
+                flexDirection: 'row',
               }}
             >
-              <PaymentsOutlinedIcon />
-            </Box>
-            <Box>
-              <Typography
+              <Box
                 sx={{
-                  fontFamily: 'Inter',
-                  fontWeight: '500',
-                  fontSize: '16px',
+                  marginRight: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                 }}
               >
-                Payments
-              </Typography>
-              <Typography
-                sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
-              >
-                Change billing information
-              </Typography>
-            </Box>
+                <PaymentsOutlinedIcon />
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    fontFamily: 'Inter',
+                    fontWeight: '500',
+                    fontSize: '16px',
+                  }}
+                >
+                  Payments
+                </Typography>
+                <Typography
+                  sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
+                >
+                  Change billing information
+                </Typography>
+              </Box>
+            </Link>
           </Grid>
           <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box
@@ -269,13 +280,16 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
             flex: 2,
           }}
         >
-          <Box>
-
-          </Box>
+          <Box></Box>
           <PersonDetailsForm
             user={user}
             updateUserInfo={updateUserInfo}
             show={formType === 'profile'}
+          />
+          <PaymentsDetailsForm
+            user={user}
+            updateUserInfo={updateUserInfo}
+            show={formType === 'payment'}
           />
         </Box>
         {/* </Box> */}
