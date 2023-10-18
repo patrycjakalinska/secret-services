@@ -39,7 +39,6 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
     try {
       if (selectedFiles) {
         setLoading(true)
-        console.log(caseToUpdate)
         setOpen(false)
         const data = new FormData()
         data.append('caseName', caseToUpdate.name)

@@ -43,6 +43,9 @@ const ImageSlider = ({ images, setCurrentCase, caseId }) => {
                 style={{ maxHeight: '100%', height: 'auto' }}
               />
             </Zoom>
+            {image.tags.map((t) => (
+              <span>{t}</span>
+            ))}
             <Box
               sx={{
                 position: 'absolute',

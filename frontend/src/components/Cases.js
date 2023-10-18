@@ -15,7 +15,6 @@ import example from '../img/example.jpg'
 import { useNavigate } from 'react-router-dom'
 
 const Cases = ({ cases }) => {
-  const navigate = useNavigate()
 
   return (
     <div
@@ -101,7 +100,7 @@ const Cases = ({ cases }) => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={example}
+                      image={c.photos[0].url || example}
                       alt="green iguana"
                     />
                     <CardContent

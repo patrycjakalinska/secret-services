@@ -27,6 +27,12 @@ const caseSchema = new mongoose.Schema({
         type: String,
       },
       publicId: { type: String },
+      tags: [
+        {
+          type: String,
+          default: [],
+        },
+      ],
     },
   ],
   description: String,
