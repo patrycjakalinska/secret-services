@@ -53,6 +53,7 @@ function App() {
             profilePicture: {
               url: data.profilePicture.url,
               profileId: data.profilePicture.profileId,
+              tags: data.tags,
             },
             id: data.id,
           })

@@ -48,7 +48,11 @@ casesRouter.put('/:id/addPhotos', verifyToken, async (req, res) => {
     const caseId = req.params.id
     const currentCase = await Case.findById(caseId)
     for (let photo of req.body) {
-      currentCase.photos.push({ url: photo.url, publicId: photo.publicId })
+      currentCase.photos.push({
+        url: photo.url,
+        publicId: photo.publicId,
+        tags: photo.tags,
+      })
     }
     const savedCase = await currentCase.save()
     res.status(200).json(savedCase)

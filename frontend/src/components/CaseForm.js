@@ -45,6 +45,7 @@ const CaseForm = ({ updateCases }) => {
           data.append('files', selectedFiles[i])
         }
         const photosDetails = await uploads.uploadCasePhotos(data)
+        console.log(photosDetails)
         const newCase = await cases.addNew({
           name,
           interest,

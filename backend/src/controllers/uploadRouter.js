@@ -22,6 +22,7 @@ uploadRouter.post(
         encoded,
         `profilePicture/${req.user.mail}`
       )
+      console.log(imageDetails)
 
       if (imageDetails) {
         const user = await User.findOne({ mail: req.user.mail })
@@ -30,8 +31,6 @@ uploadRouter.post(
         )
         user.profilePicture.url = imageDetails.secure_url
         user.profilePicture.publicId = imageDetails.public_id
-
-        classifyImage(user.profilePictureURL)
 
         const savedUser = await user.save()
         return res.json(savedUser)
@@ -57,6 +56,8 @@ uploadRouter.post(
 
     for (const file of files) {
       try {
+        let imageData = Buffer.from(file.buffer)
+        let classification = await classifyImage(imageData)
         let encoded = file.buffer.toString('base64')
         let imageDetails = await cloudinaryConfig.handleUpload(
           encoded,
@@ -66,6 +67,7 @@ uploadRouter.post(
           photoDetails.push({
             url: imageDetails.secure_url,
             publicId: imageDetails.public_id,
+            tags: [...classification],
           })
         }
       } catch (err) {
