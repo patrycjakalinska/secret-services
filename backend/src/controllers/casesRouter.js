@@ -4,88 +4,158 @@ const Case = require('../models/case')
 const User = require('../models/user')
 const verifyToken = require('../utils/auth')
 const cloudinaryConfig = require('../utils/cloudinary')
+const Evidence = require('../models/evidence')
+const { classifyImage } = require('../utils/classification')
 
-casesRouter.get('/', async (req, res) => {
-  const casesForUser = await Case.find({})
-  res.status(200).json(casesForUser)
-})
+casesRouter.post(
+  '/',
+  cloudinaryConfig.upload.array('files'),
+  verifyToken,
+  async (req, res) => {
+    const { files } = req
+    const session = await Case.startSession()
 
-casesRouter.post('/', verifyToken, async (req, res) => {
-  const newCase = new Case({
-    name: req.body.name,
-    location: req.body.location,
-    interest: req.body.interest,
-    photos: [],
-    description: req.body.description,
-    userId: req.user.userId,
-  })
+    try {
+      session.startTransaction()
 
-  for (const photo of req.body.photos) {
-    newCase.photos.push({
-      url: photo.url,
-      publicId: photo.publicId,
-    })
-  }
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.userId,
-    { $push: { cases: newCase } },
-    { new: true }
-  )
-
-  const updateAdmins = await User.find({ userType: 'admin' })
-  updateAdmins.forEach(async (admin) => {
-    admin.cases.push(newCase)
-    await admin.save()
-  })
-
-  await updatedUser.save()
-  const savedCaseForUser = await newCase.save()
-  return res.status(200).json(savedCaseForUser)
-})
-
-casesRouter.put('/:id/addPhotos', verifyToken, async (req, res) => {
-  try {
-    const caseId = req.params.id
-    const currentCase = await Case.findById(caseId)
-    for (let photo of req.body) {
-      currentCase.photos.push({
-        url: photo.url,
-        publicId: photo.publicId,
-        tags: photo.tags,
+      const newCase = new Case({
+        name: req.body.name,
+        location: req.body.location,
+        interest: req.body.interest,
+        photos: [],
+        description: req.body.description,
+        user: req.user.userId,
       })
+
+      if (files) {
+        const uploadPromises = files.map(async (file) => {
+          try {
+            const classification = await classifyImage(file.buffer)
+            let encoded = file.buffer.toString('base64')
+            let imageDetails = await cloudinaryConfig.handleUpload(
+              encoded,
+              `cases/${newCase.name}`
+            )
+
+            if (imageDetails && imageDetails.secure_url) {
+              newCase.photos.push({
+                url: imageDetails.secure_url,
+                publicId: imageDetails.public_id,
+                tags: classification,
+              })
+            }
+          } catch (err) {
+            session.endSession()
+            throw new Error('Error while uploading files: ' + err)
+          }
+        })
+
+        await Promise.all(uploadPromises)
+      }
+      console.log(newCase)
+
+      const savedCase = await newCase.save({ session })
+      const adminUsers = await User.find({ userType: 'admin' }).session(session)
+
+      const updatePromises = adminUsers.map(async (admin) => {
+        admin.cases.push(savedCase)
+        return admin.save({ session })
+      })
+
+      await Promise.all(updatePromises)
+
+      await session.commitTransaction()
+
+      session.endSession()
+
+      return res.status(200).json(savedCase)
+    } catch (err) {
+      session.endSession()
+      return res.status(500).json({ error: 'Internal server error.' })
     }
+  }
+)
+
+casesRouter.put(
+  '/:id/photos',
+  cloudinaryConfig.upload.array('files'),
+  verifyToken,
+  async (req, res) => {
+    const { id } = req.params
+    const { files } = req
+
+    const currentCase = await Case.findById(id)
+
+    if (!files) {
+      return res.status(400).json({ error: 'No image files provided.' })
+    }
+
+    const uploadPromises = files.map(async (file) => {
+      try {
+        const classification = await classifyImage(file.buffer)
+        let encoded = file.buffer.toString('base64')
+        let imageDetails = await cloudinaryConfig.handleUpload(
+          encoded,
+          `cases/${currentCase.name}`
+        )
+        if (imageDetails && imageDetails.secure_url) {
+          currentCase.photos.push({
+            url: imageDetails.secure_url,
+            publicId: imageDetails.public_id,
+            tags: classification,
+          })
+        }
+      } catch (err) {
+        throw new Error('Error while uploading files: ' + err)
+      }
+    })
+    await Promise.all(uploadPromises)
+
     const savedCase = await currentCase.save()
-    res.status(200).json(savedCase)
+    return res.status(200).json(savedCase)
+  }
+)
+
+casesRouter.get('/:id', verifyToken, async (req, res) => {
+  try {
+    const caseForUser = await Case.findById(req.params.id)
+    if (!caseForUser) {
+      return res.status(404).json({ message: 'Case not found.' })
+    }
+    const user = await User.findById(req.user.userId)
+    if (user.cases.includes(caseForUser._id)) {
+      res.status(200).json({ caseForUser })
+    } else {
+      res.status(401).json({ message: 'Access denied.' })
+    }
   } catch (err) {
-    res.status(500).json({ error: 'Internal server error.' })
+    return res.status(500).json({ message: 'Internal server error.' })
   }
 })
 
 casesRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const caseId = req.params.id
-
     const user = await User.findById(req.user.userId)
+    const currentCase = await Case.findById(caseId)
 
     if (!user) {
       return res.status(404).json({ error: 'User not found.' })
-    } else if (!user.cases.includes(caseId)) {
-      return res.status(401).json({ message: 'Unauthorized' })
     }
-    user.cases.pull(caseId)
-    await user.save()
-
-    const currentCase = await Case.findById(caseId)
 
     if (!currentCase) {
       return res.json(404).json({ error: 'Case not found.' })
     }
 
+    if (!user.cases.includes(caseId)) {
+      return res.status(403).json({ message: 'Unauthorized' })
+    }
+
+    user.cases.pull(caseId)
+    await user.save()
+
     for (let photo of currentCase.photos) {
-      let removedCloud = await cloudinaryConfig.handleDeleteCase(
-        photo.publicId,
-        currentCase.name
-      )
+      await cloudinaryConfig.handleDeleteCase(photo.publicId, currentCase.name)
     }
 
     await Case.deleteOne({ _id: caseId })
@@ -96,14 +166,127 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
   }
 })
 
-casesRouter.get('/:id', verifyToken, async (req, res) => {
-  const caseForUser = await Case.findById(req.params.id)
-  const user = await User.findById(req.user.userId)
-  if (user.cases.includes(caseForUser._id)) {
-    res.status(200).json({ caseForUser })
-  } else {
-    res.status(401).json({ message: 'Access denied.' })
+casesRouter.delete('/:id/:photoId', async (req, res) => {
+  const { id, photoId } = req.params
+
+  try {
+    const currentCase = await Case.findById(id)
+
+    if (!currentCase) {
+      return res.status(404).json({ error: 'Case not found' })
+    }
+
+    const photoToDelete = currentCase.photos.id(photoId)
+
+    if (!photoToDelete) {
+      return res.status(404).json({ error: 'Photo not found' })
+    }
+
+    await cloudinaryConfig.handleDeleteOnePhoto(photoToDelete.publicId)
+    const filtered = currentCase.photos.filter(
+      (p) => p._id.toString() !== photoId
+    )
+    currentCase.photos = filtered
+
+    await currentCase.save()
+
+    res.status(200).json(currentCase)
+  } catch (err) {
+    return res.status(500).json({ error: 'Internal server error' })
   }
 })
+
+casesRouter.get('/:id/evidence', verifyToken, async (req, res) => {
+  const caseId = req.params.id
+
+  try {
+    const currentCase = await Case.findById(caseId)
+    const user = await User.findById(req.user.userId)
+
+    if (!currentCase) {
+      return res.status(404).json({ message: 'Case not found' })
+    }
+    if (!user.cases.includes(currentCase._id)) {
+      res.status(401).json({ message: 'Access denied.' })
+    }
+
+    const { evidence } = currentCase
+
+    res.status(200).json({ evidence })
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' })
+  }
+})
+
+casesRouter.post(
+  '/:id/evidence',
+  verifyToken,
+  cloudinaryConfig.upload.array('files'),
+  async (req, res) => {
+    const { id } = req.params
+    const { files } = req
+
+    if (req.user.userType !== 'admin') {
+      return res.status(403).json({ error: 'Unauthorized.' })
+    }
+
+    const session = await Case.startSession()
+
+    try {
+      session.startTransaction()
+
+      const currentCase = await Case.findById(id).session(session)
+
+      if (!currentCase) {
+        return res.status(404).json({ error: 'Case not found.' })
+      }
+
+      const newEvidence = new Evidence({
+        title: req.body.title,
+        location: req.body.location,
+        photos: [],
+      })
+
+      if (files) {
+        const uploadPromises = files.map(async (file) => {
+          try {
+            const classification = await classifyImage(file.buffer)
+            let encoded = file.buffer.toString('base64')
+            let imageDetails = await cloudinaryConfig.handleUpload(
+              encoded,
+              `cases/${currentCase.name}/evidence`
+            )
+
+            if (imageDetails && imageDetails.secure_url) {
+              newEvidence.photos.push({
+                url: imageDetails.secure_url,
+                publicId: imageDetails.public_id,
+                tags: classification,
+              })
+            }
+          } catch (err) {
+            session.endSession()
+            throw new Error('Error while uploading files: ' + err)
+          }
+        })
+
+        await Promise.all(uploadPromises)
+      }
+
+      currentCase.evidence = [...currentCase.evidence, newEvidence]
+      await currentCase.save({ session })
+
+      const savedEvidence = await newEvidence.save({ session })
+
+      await session.commitTransaction()
+      session.endSession()
+
+      return res.status(200).json(savedEvidence)
+    } catch (error) {
+      session.endSession()
+      return res.status(500).json({ error: 'Internal server error.' })
+    }
+  }
+)
 
 module.exports = casesRouter

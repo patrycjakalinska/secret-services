@@ -6,18 +6,17 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Zoom from 'react-medium-image-zoom'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import uploads from '../services/upload'
+import cases from '../services/cases'
 
 import 'react-medium-image-zoom/dist/styles.css'
 import Backdrop from './utils/Backdrop'
-import { borderRadius } from '@mui/system'
 
 const ImageSlider = ({ images, setCurrentCase, caseId }) => {
   const [loading, setLoading] = useState(false)
 
   const handleDelete = async (id, caseId) => {
     setLoading(true)
-    const updatedCase = await uploads.deletePhoto(id, caseId)
+    const updatedCase = await cases.deletePhoto(caseId, id)
     setCurrentCase(updatedCase)
     setLoading(false)
   }
@@ -25,7 +24,7 @@ const ImageSlider = ({ images, setCurrentCase, caseId }) => {
   return (
     <div>
       <Backdrop loading={loading} />
-      <Carousel showArrows={true} infiniteLoop={true} showThumbs={false}>
+      <Carousel showArrows={true} infiniteLoop={true} showThumbs={false}style={{marginBottom:'1rem'}}>
         {images.map((image, index) => (
           <Box
             key={index}

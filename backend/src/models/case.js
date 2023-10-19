@@ -1,14 +1,5 @@
 const mongoose = require('mongoose')
 
-const ImageSchema = new mongoose.Schema({
-  url: String,
-  filename: String,
-})
-
-ImageSchema.virtual('thumbnail').get(function () {
-  return this.url.replace('/upload', '/upload/w_200')
-})
-
 const caseSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -36,7 +27,16 @@ const caseSchema = new mongoose.Schema({
     },
   ],
   description: String,
-  userId: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  evidence: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Evidence',
+    },
+  ],
 })
 
 module.exports = mongoose.model('Case', caseSchema)

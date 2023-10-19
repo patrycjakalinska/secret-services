@@ -12,10 +12,10 @@ import RegisterForm from './components/RegisterForm.js'
 import Cases from './components/Cases'
 import Case from './components/Case'
 import CaseForm from './components/CaseForm'
+import AllEvidence from './components/AllEvidence'
 import Account from './components/Account'
 import ProtectedRoute from './components/utils/ProtectedRoute'
 import users from '../src/services/users'
-import PersonDetailsForm from './components/account-forms/PersonDetailsForm'
 
 function App() {
   const [token, setToken] = useState(false)
@@ -41,7 +41,6 @@ function App() {
       users
         .getUserInfo()
         .then((data) => {
-          console.log(data)
           setUser({
             name: data.name,
             surname: data.surname,
@@ -105,15 +104,23 @@ function App() {
             }
           />
           <Route element={<ProtectedRoute user={user} />}>
-            <Route path="/cases" element={<Cases cases={casesForUser} />} />
+            <Route
+              path="/cases"
+              element={<Cases cases={casesForUser} user={user} />}
+            />
             <Route
               path="/cases/:id"
               element={
                 <Case
                   casesForUser={casesForUser}
                   updateCases={setCasesForUser}
+                  user={user}
                 />
               }
+            />
+            <Route
+              path="/cases/:id/evidence"
+              element={<AllEvidence cases={casesForUser} user={user} />}
             />
             <Route
               path="/newcase"

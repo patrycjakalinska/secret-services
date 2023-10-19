@@ -30,7 +30,6 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
 
   const handleSelectImages = (e) => {
     const files = e.target.files
-    console.log(files)
     setSelectedFiles(files)
     setFileName('Selected ' + e.target.files.length + ' photos')
   }
@@ -45,11 +44,8 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
         for (let i = 0; i < selectedFiles.length; i++) {
           data.append('files', selectedFiles[i])
         }
-        const photosDetails = await uploads.uploadCasePhotos(data)
-        const updatedCase = await cases.addPhotos(
-          photosDetails,
-          caseToUpdate._id
-        )
+        data.append('caseId', caseToUpdate._id)
+        const updatedCase = await cases.addPhotos(data)
         updateCaseInfo(updatedCase)
 
         setLoading(false)
