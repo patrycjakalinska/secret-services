@@ -41,6 +41,7 @@ function App() {
       users
         .getUserInfo()
         .then((data) => {
+          console.log(data)
           setUser({
             name: data.name,
             surname: data.surname,

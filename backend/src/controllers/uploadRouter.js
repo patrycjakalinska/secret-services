@@ -5,6 +5,7 @@ const Case = require('../models/case')
 const cloudinaryConfig = require('../utils/cloudinary')
 const verifyToken = require('../utils/auth')
 const { classifyImage } = require('../utils/classification')
+const { Worker, isMainThread } = require('worker_threads')
 
 uploadRouter.post(
   '/profilePic',
@@ -22,7 +23,6 @@ uploadRouter.post(
         encoded,
         `profilePicture/${req.user.mail}`
       )
-      console.log(imageDetails)
 
       if (imageDetails) {
         const user = await User.findOne({ mail: req.user.mail })
@@ -56,8 +56,8 @@ uploadRouter.post(
 
     for (const file of files) {
       try {
-        let imageData = Buffer.from(file.buffer)
-        let classification = await classifyImage(imageData)
+        const classification = await classifyImage(file.buffer)
+        console.log(classification)
         let encoded = file.buffer.toString('base64')
         let imageDetails = await cloudinaryConfig.handleUpload(
           encoded,
@@ -67,7 +67,7 @@ uploadRouter.post(
           photoDetails.push({
             url: imageDetails.secure_url,
             publicId: imageDetails.public_id,
-            tags: [...classification],
+            tags: classification,
           })
         }
       } catch (err) {

@@ -24,9 +24,6 @@ const Case = ({ casesForUser, updateCases }) => {
 
   // TODO:
   // * better loading screen
-  if (!currentCase) {
-    return <div>Loading...</div>
-  }
 
   console.log(currentCase.photos)
   return (

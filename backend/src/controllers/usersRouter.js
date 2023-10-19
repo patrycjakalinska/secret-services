@@ -1,6 +1,7 @@
 const express = require('express')
 const usersRouter = express.Router()
 const User = require('../models/user')
+const Case = require('../models/case')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const verifyToken = require('../utils/auth')
@@ -8,7 +9,14 @@ const config = require('../utils/config')
 
 usersRouter.get('/', verifyToken, async (req, res) => {
   try {
-    const user = await User.findOne({ mail: req.user.mail }).populate('cases')
+    const user = await User.findOne({ mail: req.user.mail })
+    console.log(user)
+    if (user.userType === 'admin') {
+      const allCases = await Case.find({})
+      user.cases = allCases
+    } else {
+      await user.populate('cases')
+    }
     res.json(user)
   } catch (err) {
     console.log(err)
