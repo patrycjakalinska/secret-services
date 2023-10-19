@@ -13,6 +13,9 @@
 
 # misc
 .env
+/utils/googleAPIKey.json
+./utils/googleAPIKey.json
+googleAPIKey.json
 .DS_Store
 .env.local
 .env.development.local

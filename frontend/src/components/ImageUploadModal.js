@@ -50,8 +50,6 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
           photosDetails,
           caseToUpdate._id
         )
-        console.log(updatedCase)
-
         updateCaseInfo(updatedCase)
 
         setLoading(false)

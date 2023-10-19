@@ -12,7 +12,12 @@ const handleUpload = async (file, folder) => {
   try {
     const res = await cloudinary.uploader.upload(
       `data:image/jpeg;base64,${file}`,
-      { folder: `detectiveApp/${folder}` }
+      {
+        folder: `detectiveApp/${folder}`,
+        quality: 'auto:low',
+        format: 'webp',
+        fetch_format: 'auto',
+      }
     )
     return res
   } catch (err) {
