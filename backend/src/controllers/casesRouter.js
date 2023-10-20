@@ -5,12 +5,8 @@ const User = require('../models/user')
 const verifyToken = require('../utils/auth')
 const cloudinaryConfig = require('../utils/cloudinary')
 const Evidence = require('../models/evidence')
-const ObjectId = require('mongodb').ObjectId
 const { classifyImage } = require('../utils/classification')
 
-//TODO:
-// * fix population of evidence
-// * only data in evidence is photos
 casesRouter.get('/', verifyToken, async (req, res) => {
   try {
     if (req.user.userType === 'admin') {
@@ -18,7 +14,9 @@ casesRouter.get('/', verifyToken, async (req, res) => {
       return res.status(200).json(allCases)
     }
 
-    const casesForUser = await Case.find({ user: req.user.userId }).populate('evidence')
+    const casesForUser = await Case.find({ user: req.user.userId }).populate(
+      'evidence'
+    )
 
     res.status(200).json(casesForUser)
   } catch (error) {
@@ -244,14 +242,12 @@ casesRouter.post(
     const { id } = req.params
     const { files } = req
 
-    // if (req.user.userType !== 'admin') {
-    //   return res.status(403).json({ error: 'Unauthorized.' })
-    // }
+    if (req.user.userType !== 'admin') {
+      return res.status(403).json({ error: 'Unauthorized.' })
+    }
 
     const session = await Case.startSession()
 
-    //TODO:
-    // * fix
     try {
       session.startTransaction()
 
@@ -296,7 +292,6 @@ casesRouter.post(
         await Promise.all(uploadPromises)
       }
 
-      console.log(newEvidence)
       currentCase.evidence = [...currentCase.evidence, newEvidence]
       const savedCase = await currentCase.save({ session })
 

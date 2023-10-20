@@ -105,7 +105,7 @@ function App() {
               )
             }
           />
-          <Route element={<ProtectedRoute user={user} />}>
+          <Route element={<ProtectedRoute isUser={token} />}>
             <Route
               path="/cases"
               element={<Cases cases={casesForUser} user={user} />}

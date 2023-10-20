@@ -17,6 +17,18 @@ const getAll = async () => {
   }
 }
 
+const getCaseById = async (id) => {
+  try {
+    const token = getToken()
+    const res = await axios.get(`$[baseUrl}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const addNew = async (data) => {
   try {
     const token = getToken()
@@ -82,7 +94,7 @@ const getEvidenceForCase = async (caseId) => {
 
     return res.data
   } catch (err) {
-    console.log('Error removing photo: ', err)
+    console.log('Error fetching evidence: ', err)
   }
 }
 
@@ -101,6 +113,7 @@ const addEvidence = async (data, id) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAll,
+  getCaseById,
   addNew,
   deleteCase,
   addPhotos,
