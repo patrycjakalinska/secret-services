@@ -5,7 +5,26 @@ const User = require('../models/user')
 const verifyToken = require('../utils/auth')
 const cloudinaryConfig = require('../utils/cloudinary')
 const Evidence = require('../models/evidence')
+const ObjectId = require('mongodb').ObjectId
 const { classifyImage } = require('../utils/classification')
+
+//TODO:
+// * fix population of evidence
+// * only data in evidence is photos
+casesRouter.get('/', verifyToken, async (req, res) => {
+  try {
+    if (req.user.userType === 'admin') {
+      const allCases = await Case.find({}).populate('evidence')
+      return res.status(200).json(allCases)
+    }
+
+    const casesForUser = await Case.find({ user: req.user.userId }).populate('evidence')
+
+    res.status(200).json(casesForUser)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error.' })
+  }
+})
 
 casesRouter.post(
   '/',
@@ -137,7 +156,7 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const caseId = req.params.id
     const user = await User.findById(req.user.userId)
-    const currentCase = await Case.findById(caseId)
+    const currentCase = await Case.findById(caseId).populate('evidence')
 
     if (!user) {
       return res.status(404).json({ error: 'User not found.' })
@@ -200,7 +219,7 @@ casesRouter.get('/:id/evidence', verifyToken, async (req, res) => {
   const caseId = req.params.id
 
   try {
-    const currentCase = await Case.findById(caseId)
+    const currentCase = await Case.findById(caseId).populate('evidence')
     const user = await User.findById(req.user.userId)
 
     if (!currentCase) {
@@ -212,7 +231,7 @@ casesRouter.get('/:id/evidence', verifyToken, async (req, res) => {
 
     const { evidence } = currentCase
 
-    res.status(200).json({ evidence })
+    res.status(200).json(evidence)
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' })
   }
@@ -220,18 +239,19 @@ casesRouter.get('/:id/evidence', verifyToken, async (req, res) => {
 
 casesRouter.post(
   '/:id/evidence',
-  verifyToken,
   cloudinaryConfig.upload.array('files'),
   async (req, res) => {
     const { id } = req.params
     const { files } = req
 
-    if (req.user.userType !== 'admin') {
-      return res.status(403).json({ error: 'Unauthorized.' })
-    }
+    // if (req.user.userType !== 'admin') {
+    //   return res.status(403).json({ error: 'Unauthorized.' })
+    // }
 
     const session = await Case.startSession()
 
+    //TODO:
+    // * fix
     try {
       session.startTransaction()
 
@@ -244,9 +264,12 @@ casesRouter.post(
       const newEvidence = new Evidence({
         title: req.body.title,
         location: req.body.location,
+        description: req.body.description,
+        case: currentCase,
         photos: [],
       })
 
+      console.log(newEvidence)
       if (files) {
         const uploadPromises = files.map(async (file) => {
           try {
@@ -273,15 +296,16 @@ casesRouter.post(
         await Promise.all(uploadPromises)
       }
 
+      console.log(newEvidence)
       currentCase.evidence = [...currentCase.evidence, newEvidence]
-      await currentCase.save({ session })
+      const savedCase = await currentCase.save({ session })
 
-      const savedEvidence = await newEvidence.save({ session })
+      await newEvidence.save({ session })
 
       await session.commitTransaction()
       session.endSession()
 
-      return res.status(200).json(savedEvidence)
+      return res.status(200).json(savedCase)
     } catch (error) {
       session.endSession()
       return res.status(500).json({ error: 'Internal server error.' })

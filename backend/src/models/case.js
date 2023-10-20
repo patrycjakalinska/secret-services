@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Photo = require('./photo')
 
 const caseSchema = new mongoose.Schema({
   name: {
@@ -12,20 +13,7 @@ const caseSchema = new mongoose.Schema({
     minLength: 3,
     required: true,
   },
-  photos: [
-    {
-      url: {
-        type: String,
-      },
-      publicId: { type: String },
-      tags: [
-        {
-          type: String,
-          default: [],
-        },
-      ],
-    },
-  ],
+  photos: [Photo.schema],
   description: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,

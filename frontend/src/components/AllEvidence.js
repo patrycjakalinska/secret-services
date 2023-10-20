@@ -14,11 +14,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Link } from 'react-router-dom'
 import example from '../img/example.jpg'
 
-const AllEvidence = ({ cases }) => {
+const AllEvidence = ({ casesForUser }) => {
   const id = useParams().id
   const [currentCase, setCurrentCase] = useState(
-    cases.find((c) => c._id === id)
+    casesForUser.find((c) => c._id === id)
   )
+
   return (
     <div
       style={{
@@ -36,7 +37,7 @@ const AllEvidence = ({ cases }) => {
         }}
       >
         <Link
-          to={'/cases'}
+          to={`/cases/${id}`}
           style={{ textDecoration: 'none', color: '#313131' }}
         >
           <Box

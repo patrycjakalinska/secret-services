@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Box, TextField, Typography, Button, Grid, Modal } from '@mui/material'
 import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 import Backdrop from './utils/Backdrop'
 import MuiBackdrop from '@mui/material/Backdrop'
 import CloseIcon from '@mui/icons-material/Close'
+import cases from '../services/cases'
 
 const style = {
   position: 'absolute',
@@ -17,13 +19,15 @@ const style = {
   p: 4,
 }
 
-const UpdateModal = ({ open, setOpen }) => {
+const UpdateModal = ({ open, setOpen, updateCaseInfo }) => {
   const [title, setTitle] = useState('')
   const [location, setLocation] = useState('')
   const [description, setDescription] = useState('')
   const [fileName, setFileName] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState('')
+
+  const id = useParams().id
 
   const handleClose = () => setOpen(false)
 
@@ -32,29 +36,33 @@ const UpdateModal = ({ open, setOpen }) => {
     setSelectedFiles(files)
     setFileName('Selected ' + e.target.files.length + ' photos')
   }
-  const handleUploadImages = async (event) => {
-    console.log('rere')
-    // event.preventDefault()
-    // try {
-    //   if (selectedFiles) {
-    //     setLoading(true)
-    //     setOpen(false)
-    //     const data = new FormData()
-    //     data.append('caseName', caseToUpdate.name)
-    //     for (let i = 0; i < selectedFiles.length; i++) {
-    //       data.append('files', selectedFiles[i])
-    //     }
-    //     data.append('caseId', caseToUpdate._id)
-    //     const updatedCase = await cases.addPhotos(data)
-    //     updateCaseInfo(updatedCase)
+  const handleAddEvidence = async (event) => {
+    event.preventDefault()
+    try {
+      setLoading(true)
+      setOpen(false)
+      const data = new FormData()
+      if (selectedFiles) {
+        for (let i = 0; i < selectedFiles.length; i++) {
+          data.append('files', selectedFiles[i])
+        }
+      }
+      data.append('title', title)
+      data.append('location', location)
+      data.append('description', description)
+      const updatedCase = await cases.addEvidence(data, id)
+      console.log(updatedCase)
+      updateCaseInfo(updatedCase)
 
-    //     setLoading(false)
-    //     setFileName('')
-    //     setSelectedFiles('')
-    //   }
-    // } catch (err) {
-    //   console.log('Something went wrong.')
-    // }
+      setLoading(false)
+      setTitle('')
+      setLocation('')
+      setDescription('')
+      setFileName('')
+      setSelectedFiles('')
+    } catch (err) {
+      console.log('Something went wrong.')
+    }
   }
 
   return (
@@ -73,7 +81,7 @@ const UpdateModal = ({ open, setOpen }) => {
           },
         }}
       >
-        <form onSubmit={handleUploadImages}>
+        <form onSubmit={handleAddEvidence}>
           <Box sx={style}>
             <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
               <Button

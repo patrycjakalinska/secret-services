@@ -280,7 +280,6 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
             flex: 2,
           }}
         >
-          <Box></Box>
           <PersonDetailsForm
             user={user}
             updateUserInfo={updateUserInfo}

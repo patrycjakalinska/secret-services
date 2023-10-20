@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema({
   },
 })
 
+userSchema.pre('find', function (next) {
+  this.populate('cases evidence')
+  next()
+})
+
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()

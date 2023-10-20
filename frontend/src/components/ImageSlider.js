@@ -24,7 +24,7 @@ const ImageSlider = ({ images, setCurrentCase, caseId }) => {
   return (
     <div>
       <Backdrop loading={loading} />
-      <Carousel showArrows={true} infiniteLoop={true} showThumbs={false}style={{marginBottom:'1rem'}}>
+      <Carousel showArrows={true} infiniteLoop={true} showThumbs={false}>
         {images.map((image, index) => (
           <Box
             key={index}

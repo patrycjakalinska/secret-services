@@ -6,7 +6,6 @@ import Modal from '@mui/material/Modal'
 import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 import Backdrop from './utils/Backdrop'
 import MuiBackdrop from '@mui/material/Backdrop'
-import uploads from '../services/upload'
 import cases from '../services/cases'
 
 const style = {
@@ -36,10 +35,10 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
   const handleUploadImages = async (event) => {
     event.preventDefault()
     try {
-      if (selectedFiles) {
-        setLoading(true)
-        setOpen(false)
+      setLoading(true)
+      setOpen(false)
         const data = new FormData()
+      if (selectedFiles) {
         data.append('caseName', caseToUpdate.name)
         for (let i = 0; i < selectedFiles.length; i++) {
           data.append('files', selectedFiles[i])

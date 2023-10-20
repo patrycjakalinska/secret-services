@@ -8,7 +8,7 @@ import ImageUploadModal from './ImageUploadModal'
 import UpdateModal from './UpdateModal'
 import { useState } from 'react'
 
-const Case = ({ casesForUser, updateCases }) => {
+const Case = ({ casesForUser, updateCases, user }) => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false)
   const [updateModalOpen, setUpdateModalOpen] = useState(false)
   const id = useParams().id
@@ -32,7 +32,11 @@ const Case = ({ casesForUser, updateCases }) => {
         setOpen={setUploadModalOpen}
         updateCaseInfo={setCurrentCase}
       />
-      <UpdateModal open={updateModalOpen} setOpen={setUpdateModalOpen} />
+      <UpdateModal
+        open={updateModalOpen}
+        setOpen={setUpdateModalOpen}
+        updateCaseInfo={setCurrentCase}
+      />
       <Link to={'/cases'} style={{ textDecoration: 'none', color: '#313131' }}>
         <Box
           sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
@@ -95,24 +99,26 @@ const Case = ({ casesForUser, updateCases }) => {
           >
             Delete
           </Button>
-          <Button
-            onClick={() => setUpdateModalOpen(true)}
-            size="small"
-            sx={{
-              backgroundColor: '#3C404A',
-              borderRadius: '8px',
-              color: '#FEFEFE',
-              paddingX: '2rem',
-              paddingY: '.5rem',
-              height: '100%',
-              fontFamily: 'Inter',
-              fontWeight: '700',
-              textTransform: 'none',
-              '&:hover': { backgroundColor: '#EC6D62' },
-            }}
-          >
-            Add update
-          </Button>
+          {user.userType === 'admin' && (
+            <Button
+              onClick={() => setUpdateModalOpen(true)}
+              size="small"
+              sx={{
+                backgroundColor: '#3C404A',
+                borderRadius: '8px',
+                color: '#FEFEFE',
+                paddingX: '2rem',
+                paddingY: '.5rem',
+                height: '100%',
+                fontFamily: 'Inter',
+                fontWeight: '700',
+                textTransform: 'none',
+                '&:hover': { backgroundColor: '#EC6D62' },
+              }}
+            >
+              Add update
+            </Button>
+          )}
         </Box>
       </Box>
       <Box

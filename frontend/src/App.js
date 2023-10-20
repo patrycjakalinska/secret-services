@@ -16,6 +16,7 @@ import AllEvidence from './components/AllEvidence'
 import Account from './components/Account'
 import ProtectedRoute from './components/utils/ProtectedRoute'
 import users from '../src/services/users'
+import cases from './services/cases'
 
 function App() {
   const [token, setToken] = useState(false)
@@ -47,7 +48,6 @@ function App() {
             mail: data.mail,
             userType: data.userType,
             bookmarks: data.bookmarks,
-            cases: data.cases,
             number: data.number,
             gender: data.gender,
             profilePicture: {
@@ -57,11 +57,13 @@ function App() {
             },
             id: data.id,
           })
-          setCasesForUser(data.cases)
         })
         .catch((err) => {
           console.log(err)
         })
+      cases.getAll().then((data) => {
+        setCasesForUser(data)
+      })
     }
   }, [token, user])
 
@@ -120,7 +122,7 @@ function App() {
             />
             <Route
               path="/cases/:id/evidence"
-              element={<AllEvidence cases={casesForUser} user={user} />}
+              element={<AllEvidence casesForUser={casesForUser} />}
             />
             <Route
               path="/newcase"

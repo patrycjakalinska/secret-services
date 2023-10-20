@@ -5,10 +5,35 @@ const getToken = () => {
   return window.localStorage.getItem('user-token')
 }
 
+const getAll = async () => {
+  try {
+    const token = getToken()
+    const res = await axios.get(baseUrl, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const addNew = async (data) => {
   try {
     const token = getToken()
     const res = await axios.post(baseUrl, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const deleteCase = async (caseId) => {
+  try {
+    const token = getToken()
+
+    const res = await axios.delete(`${baseUrl}/${caseId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     return res.data
@@ -47,17 +72,39 @@ const deletePhoto = async (caseId, photoId) => {
   }
 }
 
-const deleteCase = async (caseId) => {
+const getEvidenceForCase = async (caseId) => {
+  try {
+    const token = window.localStorage.getItem('user-token')
+
+    const res = await axios.get(`${baseUrl}/${caseId}/evidence`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    return res.data
+  } catch (err) {
+    console.log('Error removing photo: ', err)
+  }
+}
+
+const addEvidence = async (data, id) => {
   try {
     const token = getToken()
-
-    const res = await axios.delete(`${baseUrl}/${caseId}`, {
+    const res = await axios.post(`${baseUrl}/${id}/evidence`, data, {
       headers: { Authorization: `Bearer ${token}` },
     })
     return res.data
   } catch (err) {
-    console.log(err)
+    console.log('Error adding evidence: ', err)
   }
 }
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { addNew, deleteCase, addPhotos, deletePhoto }
+export default {
+  getAll,
+  addNew,
+  deleteCase,
+  addPhotos,
+  deletePhoto,
+  getEvidenceForCase,
+  addEvidence,
+}

@@ -12,11 +12,8 @@ usersRouter.get('/', verifyToken, async (req, res) => {
   // check if admin has all cases
   try {
     const user = await User.findOne({ mail: req.user.mail })
-    if (user.userType === 'admin') {
-      const allCases = await Case.find({})
-      user.cases = allCases
-    } else {
-      await user.populate('cases')
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' })
     }
     res.json(user)
   } catch (err) {
