@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Typography, Button, Grid, Modal } from '@mui/material'
 import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 import Backdrop from './utils/Backdrop'
@@ -28,6 +28,7 @@ const UpdateModal = ({ open, setOpen, updateCaseInfo }) => {
   const [selectedFiles, setSelectedFiles] = useState('')
 
   const id = useParams().id
+  const navigate = useNavigate()
 
   const handleClose = () => setOpen(false)
 
@@ -60,6 +61,7 @@ const UpdateModal = ({ open, setOpen, updateCaseInfo }) => {
       setDescription('')
       setFileName('')
       setSelectedFiles('')
+      navigate(`/cases/${id}/evidence/`)
     } catch (err) {
       console.log('Something went wrong.')
     }

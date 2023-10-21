@@ -32,7 +32,7 @@ const AllEvidence = ({ casesForUser }) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           marginY: '1rem',
         }}
       >
@@ -41,10 +41,14 @@ const AllEvidence = ({ casesForUser }) => {
           style={{ textDecoration: 'none', color: '#313131' }}
         >
           <Box
-            sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
           >
             <ArrowBackIcon />
-            <Typography variant="h6">ALL</Typography>
+            <Typography variant="h6">Back to case</Typography>
           </Box>
         </Link>
       </Container>

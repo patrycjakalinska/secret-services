@@ -28,9 +28,7 @@ const handleUpload = async (file, folder) => {
 const handleDeleteCase = async (file, folderName) => {
   try {
     const res = await cloudinary.uploader.destroy(file)
-    const folder = await cloudinary.api.delete_folder(
-      `detectiveApp/cases/${folderName}`
-    )
+    await cloudinary.api.delete_folder(`detectiveApp/cases/${folderName}`)
     return res
   } catch (err) {
     console.log(err)

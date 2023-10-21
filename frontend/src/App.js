@@ -13,6 +13,7 @@ import Cases from './components/Cases'
 import Case from './components/Case'
 import CaseForm from './components/CaseForm'
 import AllEvidence from './components/AllEvidence'
+import Evidence from './components/Evidence'
 import Account from './components/Account'
 import ProtectedRoute from './components/utils/ProtectedRoute'
 import users from '../src/services/users'
@@ -123,6 +124,16 @@ function App() {
             <Route
               path="/cases/:id/evidence"
               element={<AllEvidence casesForUser={casesForUser} />}
+            />
+            <Route
+              path="/cases/:id/evidence/:evidenceId"
+              element={
+                <Evidence
+                  casesForUser={casesForUser}
+                  user={user}
+                  updateCases={setCasesForUser}
+                />
+              }
             />
             <Route
               path="/newcase"

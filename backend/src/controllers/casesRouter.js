@@ -154,7 +154,7 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const caseId = req.params.id
     const user = await User.findById(req.user.userId)
-    const currentCase = await Case.findById(caseId).populate('evidence')
+    const currentCase = await Case.findById(caseId)
 
     if (!user) {
       return res.status(404).json({ error: 'User not found.' })
@@ -238,6 +238,7 @@ casesRouter.get('/:id/evidence', verifyToken, async (req, res) => {
 casesRouter.post(
   '/:id/evidence',
   cloudinaryConfig.upload.array('files'),
+  verifyToken,
   async (req, res) => {
     const { id } = req.params
     const { files } = req
@@ -265,7 +266,6 @@ casesRouter.post(
         photos: [],
       })
 
-      console.log(newEvidence)
       if (files) {
         const uploadPromises = files.map(async (file) => {
           try {
@@ -292,18 +292,53 @@ casesRouter.post(
         await Promise.all(uploadPromises)
       }
 
-      currentCase.evidence = [...currentCase.evidence, newEvidence]
-      const savedCase = await currentCase.save({ session })
+      const savedEvidence = await newEvidence.save({ session })
 
-      await newEvidence.save({ session })
+      currentCase.evidence = [...currentCase.evidence, savedEvidence]
+      const savedCase = await currentCase.save({ session })
+      const populatedCase = await savedCase.populate('evidence')
 
       await session.commitTransaction()
       session.endSession()
 
-      return res.status(200).json(savedCase)
+      return res.status(200).json(populatedCase)
     } catch (error) {
       session.endSession()
       return res.status(500).json({ error: 'Internal server error.' })
+    }
+  }
+)
+
+casesRouter.delete(
+  '/:id/evidence/:evidenceId',
+  verifyToken,
+  async (req, res) => {
+    try {
+      const { id, evidenceId } = req.params
+
+      const currentCase = await Case.findById(id)
+      const currentEvidence = await Evidence.findById(evidenceId)
+
+      if (!currentEvidence) {
+        return res.status(404).json({ error: 'Evidence not found.' })
+      }
+
+      if (!currentCase) {
+        return res.json(404).json({ error: 'Case not found.' })
+      }
+
+      currentCase.evidence.pull(evidenceId)
+      await currentCase.save()
+
+      for (let photo of currentEvidence.photos) {
+        await cloudinaryConfig.handleDeleteOnePhoto(photo.publicId)
+      }
+
+      await Evidence.deleteOne({ _id: evidenceId })
+
+      return res.status(200).json({ message: 'Case removed successfully.' })
+    } catch (err) {
+      res.status(500).json({ error: 'Internal server error.' })
     }
   }
 )

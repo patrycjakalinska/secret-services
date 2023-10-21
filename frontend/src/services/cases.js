@@ -101,12 +101,27 @@ const getEvidenceForCase = async (caseId) => {
 const addEvidence = async (data, id) => {
   try {
     const token = getToken()
+
     const res = await axios.post(`${baseUrl}/${id}/evidence`, data, {
       headers: { Authorization: `Bearer ${token}` },
     })
     return res.data
   } catch (err) {
     console.log('Error adding evidence: ', err)
+  }
+}
+
+const deleteEvidence = async (id, evidenceId) => {
+  try {
+    const token = getToken()
+    console.log(id)
+
+    const res = await axios.delete(`${baseUrl}/${id}/evidence/${evidenceId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log('Error deleting evidence: ', err)
   }
 }
 
@@ -120,4 +135,5 @@ export default {
   deletePhoto,
   getEvidenceForCase,
   addEvidence,
+  deleteEvidence,
 }

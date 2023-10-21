@@ -11,7 +11,6 @@ import { useState } from 'react'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import Backdrop from './utils/Backdrop'
 import cases from '../services/cases'
-import uploads from '../services/upload'
 import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
 
 const CaseForm = ({ updateCases }) => {
