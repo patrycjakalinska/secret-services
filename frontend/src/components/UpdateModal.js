@@ -19,7 +19,7 @@ const style = {
   p: 4,
 }
 
-const UpdateModal = ({ open, setOpen, updateCaseInfo }) => {
+const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
   const [title, setTitle] = useState('')
   const [location, setLocation] = useState('')
   const [description, setDescription] = useState('')
@@ -52,8 +52,12 @@ const UpdateModal = ({ open, setOpen, updateCaseInfo }) => {
       data.append('location', location)
       data.append('description', description)
       const updatedCase = await cases.addEvidence(data, id)
-      console.log(updatedCase)
-      updateCaseInfo(updatedCase)
+
+      const updatedCases = casesForUser.map((c) =>
+        c._id === id ? updatedCase : c
+      )
+
+      updateCases(updatedCases)
 
       setLoading(false)
       setTitle('')
@@ -61,7 +65,7 @@ const UpdateModal = ({ open, setOpen, updateCaseInfo }) => {
       setDescription('')
       setFileName('')
       setSelectedFiles('')
-      navigate(`/cases/${id}/evidence/`)
+      navigate(`/cases/${id}`)
     } catch (err) {
       console.log('Something went wrong.')
     }

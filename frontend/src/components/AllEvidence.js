@@ -6,16 +6,20 @@ import {
   CardMedia,
   Grid,
   CardActionArea,
+  Button,
   Box,
   Container,
   Typography,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import AllPhotosModal from './AllPhotosModal'
 import { Link } from 'react-router-dom'
 import example from '../img/example.jpg'
 
 const AllEvidence = ({ casesForUser }) => {
   const id = useParams().id
+  const [openAllPhotos, setOpenAllPhotos] = useState(false)
   const [currentCase, setCurrentCase] = useState(
     casesForUser.find((c) => c._id === id)
   )
@@ -30,12 +34,17 @@ const AllEvidence = ({ casesForUser }) => {
         maxWidth="lg"
         sx={{
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           alignItems: 'flex-start',
           marginY: '1rem',
         }}
       >
+        <AllPhotosModal
+          evidence={currentCase.evidence}
+          open={openAllPhotos}
+          setOpen={setOpenAllPhotos}
+        />
         <Link
           to={`/cases/${id}`}
           style={{ textDecoration: 'none', color: '#313131' }}
@@ -51,6 +60,26 @@ const AllEvidence = ({ casesForUser }) => {
             <Typography variant="h6">Back to case</Typography>
           </Box>
         </Link>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            disableElevation
+            onClick={() => setOpenAllPhotos(true)}
+            sx={{
+              backgroundColor: 'none',
+              textTransform: 'none',
+              color: '#313131',
+            }}
+          >
+            <Typography variant="h6">All photos</Typography>
+            <ArrowForwardIcon />
+          </Button>
+        </Box>
       </Container>
       <Container
         maxWidth="lg"
@@ -109,8 +138,8 @@ const AllEvidence = ({ casesForUser }) => {
                         variant="h5"
                         component="div"
                         sx={{
-                          fontFamily: 'Raleway',
-                          fontWeight: '500',
+                          fontFamily: 'Inter',
+                          fontWeight: '400',
                         }}
                       >
                         {e.title}

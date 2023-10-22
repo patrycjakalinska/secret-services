@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Box, Button, Typography, Container } from '@mui/material'
+import { Box, Button, Paper, Typography, Container } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import cases from '../services/cases'
 import ImageSlider from './ImageSlider'
@@ -43,7 +43,6 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
           sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
         >
           <ArrowBackIcon color="#313131" />
-          <Typography variant="h6">ALL EVIDENCE</Typography>
         </Box>
       </Link>
       <Box
@@ -68,7 +67,9 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
             sx={{
               fontSize: { xs: '36px', md: '50px' },
               marginLeft: '1rem',
-              fontFamily: 'Inter',
+              fontFamily: 'Playfair Display',
+              fontWeight: '400',
+              fontStyle: 'italic',
             }}
           >
             {evidence.title}
@@ -86,7 +87,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
               onClick={handleDelete}
               size="small"
               sx={{
-                backgroundColor: '#3C404A',
+                backgroundColor: '#EC6D62',
                 borderRadius: '8px',
                 color: '#FEFEFE',
                 paddingX: '2rem',
@@ -96,7 +97,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
                 fontFamily: 'Inter',
                 fontWeight: '700',
                 textTransform: 'none',
-                '&:hover': { backgroundColor: '#EC6D62' },
+                '&:hover': { backgroundColor: '#3C404A' },
               }}
             >
               Delete
@@ -125,8 +126,48 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
           marginTop: '2rem',
         }}
       >
-        <Box sx={{ width: '100%', height: '100$', flex: { xs: '1', lg: '2' } }}>
-          <Typography variant="body2">{currentCase.description}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            width: '100%',
+            height: '100$',
+            flex: { xs: '1', lg: '2' },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              margin: '2rem',
+              padding: '3rem',
+              height: '90%',
+              borderRadius: '40px 0  40px 0 ',
+              backgroundColor: '#313131',
+              color: '#F1F0F0',
+            }}
+          >
+            <Paper
+              elevation={6}
+              sx={{
+                borderRadius: '34px 0 34px 0',
+                backgroundColor: '#F1F0F0',
+                height: '100%',
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  padding: '2rem',
+                  fontFamily: 'Raleway',
+                  fontSize: '18px',
+                }}
+              >
+                {evidence.description}
+              </Typography>
+            </Paper>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -136,9 +177,9 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
           }}
         >
           <ImageSlider
-            images={currentCase.photos}
-            setCurrentCase={setCurrentCase}
+            images={evidence.photos}
             caseId={currentCase._id}
+            isEvidence={true}
           />
         </Box>
       </Box>

@@ -154,6 +154,7 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const caseId = req.params.id
     const user = await User.findById(req.user.userId)
+    const currentCaseEvidence = await Evidence.find({ case: caseId })
     const currentCase = await Case.findById(caseId)
 
     if (!user) {
@@ -171,8 +172,21 @@ casesRouter.delete('/:id', verifyToken, async (req, res) => {
     user.cases.pull(caseId)
     await user.save()
 
+    const evidences = currentCase.evidence
+    for (let evidence of evidences) {
+      for (let photo of evidence.photos) {
+        await cloudinaryConfig.handleDeleteOnePhoto(photo.publicId)
+      }
+    }
+
     for (let photo of currentCase.photos) {
       await cloudinaryConfig.handleDeleteCase(photo.publicId, currentCase.name)
+    }
+
+    if (currentCaseEvidence.length > 0) {
+      await Evidence.deleteMany({
+        _id: { $in: currentCaseEvidence.map((e) => e._id) },
+      }) // Delete all documents in the array
     }
 
     await Case.deleteOne({ _id: caseId })
@@ -331,6 +345,7 @@ casesRouter.delete(
       await currentCase.save()
 
       for (let photo of currentEvidence.photos) {
+        console.log(photo.publicId)
         await cloudinaryConfig.handleDeleteOnePhoto(photo.publicId)
       }
 

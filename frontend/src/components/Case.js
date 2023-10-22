@@ -35,7 +35,8 @@ const Case = ({ casesForUser, updateCases, user }) => {
       <UpdateModal
         open={updateModalOpen}
         setOpen={setUpdateModalOpen}
-        updateCaseInfo={setCurrentCase}
+        casesForUser={casesForUser}
+        updateCases={updateCases}
       />
       <Link to={'/cases'} style={{ textDecoration: 'none', color: '#313131' }}>
         <Box
