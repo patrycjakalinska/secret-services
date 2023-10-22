@@ -74,33 +74,33 @@ const Case = ({ casesForUser, updateCases, user }) => {
         >
           {currentCase.name}
         </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row-reverse',
-            justifyContent: 'center',
-          }}
-        >
-          <Button
-            onClick={handleDelete}
-            size="small"
+        {user.userType === 'admin' && (
+          <Box
             sx={{
-              backgroundColor: '#3C404A',
-              borderRadius: '8px',
-              color: '#FEFEFE',
-              paddingX: '2rem',
-              paddingY: '.5rem',
-              marginX: '1rem',
-              height: '100%',
-              fontFamily: 'Inter',
-              fontWeight: '700',
-              textTransform: 'none',
-              '&:hover': { backgroundColor: '#EC6D62' },
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              justifyContent: 'center',
             }}
           >
-            Delete
-          </Button>
-          {user.userType === 'admin' && (
+            <Button
+              onClick={handleDelete}
+              size="small"
+              sx={{
+                backgroundColor: '#3C404A',
+                borderRadius: '8px',
+                color: '#FEFEFE',
+                paddingX: '2rem',
+                paddingY: '.5rem',
+                marginX: '1rem',
+                height: '100%',
+                fontFamily: 'Inter',
+                fontWeight: '700',
+                textTransform: 'none',
+                '&:hover': { backgroundColor: '#EC6D62' },
+              }}
+            >
+              Delete
+            </Button>
             <Button
               onClick={() => setUpdateModalOpen(true)}
               size="small"
@@ -119,8 +119,8 @@ const Case = ({ casesForUser, updateCases, user }) => {
             >
               Add update
             </Button>
-          )}
-        </Box>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{
@@ -192,7 +192,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
             Add photos
           </Button>
         </Box>
-        <Box sx={{ width: '100%', height: '100$', flex: { xs: '1', lg: '2' } }}>
+        <Box sx={{ width: '100%', height: '100$', flex: { xs: '2' } }}>
           <Typography variant="body2">{currentCase.description}</Typography>
         </Box>
       </Box>

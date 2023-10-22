@@ -123,6 +123,7 @@ const CaseForm = ({ updateCases }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setInterest(target.value)}
+                    inputProps={{ minLength: 3 }}
                     label="Person|Company of interest"
                     fullWidth
                     sx={{

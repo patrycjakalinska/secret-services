@@ -54,7 +54,7 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
       const updatedCase = await cases.addEvidence(data, id)
 
       const updatedCases = casesForUser.map((c) =>
-        c._id === id ? updatedCase : c
+        c._id === id ? updatedCase.case : c
       )
 
       updateCases(updatedCases)
@@ -65,7 +65,7 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
       setDescription('')
       setFileName('')
       setSelectedFiles('')
-      navigate(`/cases/${id}`)
+      navigate(`/cases/${id}/evidence/${updatedCase.evidenceId}`)
     } catch (err) {
       console.log('Something went wrong.')
     }

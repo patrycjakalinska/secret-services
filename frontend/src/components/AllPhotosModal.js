@@ -2,7 +2,15 @@ import { useState, useEffect } from 'react'
 import MuiBackdrop from '@mui/material/Backdrop'
 import Backdrop from './utils/Backdrop'
 import { useParams } from 'react-router-dom'
-import { TextField, Box, ImageListItem, ImageList, Modal } from '@mui/material'
+import {
+  Button,
+  TextField,
+  Box,
+  ImageListItem,
+  ImageList,
+  Modal,
+} from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 import Zoom from 'react-medium-image-zoom'
 
 const AllPhotosModal = ({ evidence, open, setOpen }) => {
@@ -28,7 +36,6 @@ const AllPhotosModal = ({ evidence, open, setOpen }) => {
   }
 
   const handleClose = () => setOpen(false)
-  console.log(filteredPhotos)
 
   const handleFilter = (filter) => {
     if (filter === 'all_photos') {
@@ -71,12 +78,25 @@ const AllPhotosModal = ({ evidence, open, setOpen }) => {
         }}
       >
         <Box sx={style}>
-          <TextField
-            id="standard-basic"
-            variant="standard"
-            label="Filter"
-            onChange={({ target }) => setFilter(target.value)}
-          />
+          <Box sx= {{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+            <TextField
+              id="standard-basic"
+              variant="standard"
+              label="Filter"
+              onChange={({ target }) => setFilter(target.value)}
+            />
+            <Button
+              onClick={() => setOpen(false)}
+              sx={{
+                padding: '0',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <CloseIcon fontSize="small" style={{ color: '#313131' }} />
+            </Button>
+          </Box>
           <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
             {filteredPhotos.map((item) => (
               <ImageListItem key={item.publicId}>

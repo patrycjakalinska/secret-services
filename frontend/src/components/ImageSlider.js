@@ -29,7 +29,12 @@ const ImageSlider = ({
   return (
     <div>
       <Backdrop loading={loading} />
-      <Carousel showArrows={true} infiniteLoop={true} showThumbs={false}>
+      <Carousel
+        showArrows={true}
+        infiniteLoop={true}
+        showThumbs={false}
+        sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
+      >
         {images.map((image, index) => (
           <Box
             key={index}
@@ -37,7 +42,7 @@ const ImageSlider = ({
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: '100%', // Set a fixed height for each slide
+              height: '100%',
               position: 'relative',
             }}
           >

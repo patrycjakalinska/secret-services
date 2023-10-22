@@ -141,10 +141,8 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
               display: 'flex',
               flexDirection: 'column',
               margin: '2rem',
-              padding: '3rem',
               height: '90%',
               borderRadius: '40px 0  40px 0 ',
-              backgroundColor: '#313131',
               color: '#F1F0F0',
             }}
           >

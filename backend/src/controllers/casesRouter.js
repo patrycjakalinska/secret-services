@@ -51,7 +51,7 @@ casesRouter.post(
             let encoded = file.buffer.toString('base64')
             let imageDetails = await cloudinaryConfig.handleUpload(
               encoded,
-              `cases/${newCase.name}`
+              `cases/${newCase.name.trim()}`
             )
 
             if (imageDetails && imageDetails.secure_url) {
@@ -69,17 +69,28 @@ casesRouter.post(
 
         await Promise.all(uploadPromises)
       }
-      console.log(newCase)
 
       const savedCase = await newCase.save({ session })
-      const adminUsers = await User.find({ userType: 'admin' }).session(session)
+      const adminUsers = await User.find({ userType: 'admin' })
+        .select('cases')
+        .session(session)
 
-      const updatePromises = adminUsers.map(async (admin) => {
-        admin.cases.push(savedCase)
-        return admin.save({ session })
-      })
+      if (adminUsers.length > 0) {
+        const updatePromises = adminUsers.map(async (admin) => {
+          admin.cases.push(savedCase)
+          return admin.save({ session })
+        })
 
-      await Promise.all(updatePromises)
+        try {
+          await Promise.all(updatePromises)
+        } catch (err) {
+          session.endSession()
+          console.error('Error updating admin users:', err)
+          return res.status(500).json({ error: 'Error updating admin users.' })
+        }
+      } else {
+        console.log('No admin users found')
+      }
 
       await session.commitTransaction()
 
@@ -87,6 +98,7 @@ casesRouter.post(
 
       return res.status(200).json(savedCase)
     } catch (err) {
+      console.log(err)
       session.endSession()
       return res.status(500).json({ error: 'Internal server error.' })
     }
@@ -113,7 +125,7 @@ casesRouter.put(
         let encoded = file.buffer.toString('base64')
         let imageDetails = await cloudinaryConfig.handleUpload(
           encoded,
-          `cases/${currentCase.name}`
+          `cases/${currentCase.name.trim()}`
         )
         if (imageDetails && imageDetails.secure_url) {
           currentCase.photos.push({
@@ -280,6 +292,7 @@ casesRouter.post(
         photos: [],
       })
 
+
       if (files) {
         const uploadPromises = files.map(async (file) => {
           try {
@@ -287,7 +300,7 @@ casesRouter.post(
             let encoded = file.buffer.toString('base64')
             let imageDetails = await cloudinaryConfig.handleUpload(
               encoded,
-              `cases/${currentCase.name}/evidence`
+              `cases/${currentCase.name.trim()}/evidence`
             )
 
             if (imageDetails && imageDetails.secure_url) {
@@ -315,7 +328,9 @@ casesRouter.post(
       await session.commitTransaction()
       session.endSession()
 
-      return res.status(200).json(populatedCase)
+      return res
+        .status(200)
+        .json({ case: populatedCase, evidenceId: savedEvidence._id })
     } catch (error) {
       session.endSession()
       return res.status(500).json({ error: 'Internal server error.' })
@@ -345,7 +360,6 @@ casesRouter.delete(
       await currentCase.save()
 
       for (let photo of currentEvidence.photos) {
-        console.log(photo.publicId)
         await cloudinaryConfig.handleDeleteOnePhoto(photo.publicId)
       }
 
