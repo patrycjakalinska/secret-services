@@ -1,3 +1,5 @@
+import { useParams } from 'react-router-dom'
+import { useState } from 'react'
 import {
   Card,
   CardContent,
@@ -5,13 +7,23 @@ import {
   Grid,
   CardActionArea,
   Button,
+  Box,
   Container,
   Typography,
 } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import AllPhotosModal from './AllPhotosModal'
 import { Link } from 'react-router-dom'
 import example from '../img/example.jpg'
 
-const Cases = ({ cases, user }) => {
+const AllEvidence = ({ casesForUser }) => {
+  const id = useParams().id
+  const [openAllPhotos, setOpenAllPhotos] = useState(false)
+  const [currentCase, setCurrentCase] = useState(
+    casesForUser.find((c) => c._id === id)
+  )
+
   return (
     <div
       style={{
@@ -22,40 +34,52 @@ const Cases = ({ cases, user }) => {
         maxWidth="lg"
         sx={{
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
           marginY: '1rem',
         }}
       >
-        {user.userType !== 'admin' && (
-          <Button
-            disableElevation
-            type="submit"
-            variant="contained"
+        <AllPhotosModal
+          evidence={currentCase.evidence}
+          open={openAllPhotos}
+          setOpen={setOpenAllPhotos}
+        />
+        <Link
+          to={`/cases/${id}`}
+          style={{ textDecoration: 'none', color: '#313131' }}
+        >
+          <Box
             sx={{
-              fontWeight: '700',
-              backgroundColor: '#EC6D62',
-              marginTop: '1em',
-              fontSize: '20px',
-              textTransform: 'none',
-              borderRadius: '18px',
-
-              '&:hover': { backgroundColor: '#3C404A' },
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
-            <Link
-              to="/newcase"
-              style={{
-                padding: '.5rem',
-                textDecoration: 'none',
-                color: '#F1F0F0',
-              }}
-            >
-              Create new case
-            </Link>
+            <ArrowBackIcon />
+            <Typography variant="h6">Back to case</Typography>
+          </Box>
+        </Link>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            disableElevation
+            onClick={() => setOpenAllPhotos(true)}
+            sx={{
+              backgroundColor: 'none',
+              textTransform: 'none',
+              color: '#313131',
+            }}
+          >
+            <Typography variant="h6">All photos</Typography>
+            <ArrowForwardIcon />
           </Button>
-        )}
+        </Box>
       </Container>
       <Container
         maxWidth="lg"
@@ -67,13 +91,13 @@ const Cases = ({ cases, user }) => {
         }}
       >
         <Grid container spacing={2}>
-          {cases.map((c) => (
+          {currentCase.evidence.map((e) => (
             <Grid
               item
               xs={12}
               sm={6}
               md={4}
-              key={c._id}
+              key={e._id}
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -91,14 +115,14 @@ const Cases = ({ cases, user }) => {
                 }}
               >
                 <Link
-                  to={`/cases/${c._id}`}
+                  to={`/cases/${id}/evidence/${e._id}`}
                   style={{ textDecoration: 'none', color: '#313131' }}
                 >
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       height="140"
-                      image={c.photos.length > 0 ? c.photos[0].url : example}
+                      image={e.photos.length > 0 ? e.photos[0].url : example}
                       alt="green iguana"
                     />
                     <CardContent
@@ -114,11 +138,11 @@ const Cases = ({ cases, user }) => {
                         variant="h5"
                         component="div"
                         sx={{
-                          fontFamily: 'Raleway',
-                          fontWeight: '500',
+                          fontFamily: 'Inter',
+                          fontWeight: '400',
                         }}
                       >
-                        {c.name}
+                        {e.title}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -132,7 +156,7 @@ const Cases = ({ cases, user }) => {
                           WebkitBoxOrient: 'vertical',
                         }}
                       >
-                        {c.description}
+                        {e.description}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -146,4 +170,4 @@ const Cases = ({ cases, user }) => {
   )
 }
 
-export default Cases
+export default AllEvidence

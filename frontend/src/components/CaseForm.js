@@ -11,9 +11,7 @@ import { useState } from 'react'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import Backdrop from './utils/Backdrop'
 import cases from '../services/cases'
-import uploads from '../services/upload'
 import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
-
 
 const CaseForm = ({ updateCases }) => {
   const [name, setName] = useState('')
@@ -40,19 +38,14 @@ const CaseForm = ({ updateCases }) => {
       if (selectedFiles) {
         setLoading(true)
         const data = new FormData()
-        data.append('caseName', name)
         for (let i = 0; i < selectedFiles.length; i++) {
           data.append('files', selectedFiles[i])
         }
-        const photosDetails = await uploads.uploadCasePhotos(data)
-        console.log(photosDetails)
-        const newCase = await cases.addNew({
-          name,
-          interest,
-          location,
-          description,
-          photos: photosDetails,
-        })
+        data.append('name', name)
+        data.append('interest', interest)
+        data.append('location', location)
+        data.append('description', description)
+        const newCase = await cases.addNew(data)
         setLoading(false)
 
         updateCases((prevCase) => [...prevCase, newCase])
@@ -130,6 +123,7 @@ const CaseForm = ({ updateCases }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setInterest(target.value)}
+                    inputProps={{ minLength: 3 }}
                     label="Person|Company of interest"
                     fullWidth
                     sx={{

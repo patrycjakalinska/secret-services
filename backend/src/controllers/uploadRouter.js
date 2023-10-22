@@ -26,7 +26,7 @@ uploadRouter.post(
 
       if (imageDetails) {
         const user = await User.findOne({ mail: req.user.mail })
-        const removedProfilePic = await cloudinaryConfig.handleDeleteOnePhoto(
+        await cloudinaryConfig.handleDeleteOnePhoto(
           user.profilePicture.publicId
         )
         user.profilePicture.url = imageDetails.secure_url
@@ -40,70 +40,5 @@ uploadRouter.post(
     }
   }
 )
-
-uploadRouter.post(
-  '/many',
-  cloudinaryConfig.upload.array('files'),
-  verifyToken,
-  async (req, res) => {
-    const { files } = req
-    if (!files) {
-      return res.status(400).json({ error: 'No image files provided.' })
-    }
-
-    const caseName = req.body.caseName
-    let photoDetails = []
-
-    for (const file of files) {
-      try {
-        const classification = await classifyImage(file.buffer)
-        console.log(classification)
-        let encoded = file.buffer.toString('base64')
-        let imageDetails = await cloudinaryConfig.handleUpload(
-          encoded,
-          `cases/${caseName}`
-        )
-        if (imageDetails && imageDetails.secure_url) {
-          photoDetails.push({
-            url: imageDetails.secure_url,
-            publicId: imageDetails.public_id,
-            tags: classification,
-          })
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    return res.json(photoDetails)
-  }
-)
-
-uploadRouter.delete('/:caseId/:id', async (req, res) => {
-  const { caseId, id } = req.params
-  //
-  try {
-    const currentCase = await Case.findById(caseId)
-    if (!currentCase) {
-      return res.status(404).json({ error: 'Case not found' })
-    }
-
-    const photoToDelete = currentCase.photos.find(
-      (p) => p._id.toString() === id
-    )
-    const deleteRes = await cloudinaryConfig.handleDeleteOnePhoto(
-      photoToDelete.publicId
-    )
-
-    const updatedPhotos = currentCase.photos.filter(
-      (p) => p._id.toString() !== id
-    )
-    currentCase.photos = updatedPhotos
-
-    await currentCase.save()
-    res.status(200).json(currentCase)
-  } catch (err) {
-    return res.status(500).json({ error: 'Internal server error' })
-  }
-})
 
 module.exports = uploadRouter

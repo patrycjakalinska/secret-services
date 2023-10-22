@@ -10,6 +10,7 @@ const blogsRouter = require('./controllers/blogsRouter')
 const casesRouter = require('./controllers/casesRouter')
 const uploadRouter = require('./controllers/uploadRouter')
 const bodyParser = require('body-parser')
+const evidenceRouter = require('./controllers/evidenceRouter')
 
 logger.info(`Connecting to ${config.MONGODB_URI}`)
 
@@ -32,5 +33,6 @@ app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/cases', casesRouter)
 app.use('/api/upload', uploadRouter)
+app.use('/api/evidence', evidenceRouter)
 
 module.exports = app
