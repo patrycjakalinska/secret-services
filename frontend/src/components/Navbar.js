@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
-import '../misc/styles.css'
+import '../styles.css'
 
 const pages = ['Services', 'Blog', 'About']
 const Navbar = ({ user, fullpageApi, handleLogout }) => {

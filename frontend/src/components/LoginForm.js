@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import signLogo from '../img/sign.png'
 import login from '../services/login'
-import AlertDialog from './utils/AlertDialog'
+import AlertDialog from './misc/AlertDialog'
 
 const LoginForm = ({ setIsLogged }) => {
   const [mail, setMail] = useState('')

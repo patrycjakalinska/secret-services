@@ -9,7 +9,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import cases from '../services/cases'
 
 import 'react-medium-image-zoom/dist/styles.css'
-import Backdrop from './utils/Backdrop'
+import Backdrop from './misc/Backdrop'
 
 const ImageSlider = ({
   images,

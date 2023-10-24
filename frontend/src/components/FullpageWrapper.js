@@ -4,7 +4,7 @@ import AboutSection from './sections/AboutSection'
 import WelcomeSection from './sections/WelcomeSection'
 import LogoSection from './sections/LogoSection'
 import ServicesSection from './sections/ServicesSection'
-import '../misc/styles.css'
+import '../styles.css'
 
 const FullpageWrapper = ({ fullpageApi }) => {
   const onLeave = (origin, destination, direction) => {

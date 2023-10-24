@@ -5,6 +5,7 @@ import {
   Routes,
   Navigate,
 } from 'react-router-dom'
+import { Box } from '@mui/material'
 import FullpageWrapper from './components/FullpageWrapper'
 import Navbar from './components/Navbar'
 import LoginForm from './components/LoginForm'
@@ -15,9 +16,12 @@ import CaseForm from './components/CaseForm'
 import AllEvidence from './components/AllEvidence'
 import Evidence from './components/Evidence'
 import Account from './components/Account'
-import ProtectedRoute from './components/utils/ProtectedRoute'
+import ProtectedRoute from './components/misc/ProtectedRoute'
 import users from '../src/services/users'
 import cases from './services/cases'
+import ChatBot from './components/ChatBot'
+
+import 'react-chatbot-kit/build/main.css'
 
 function App() {
   const [token, setToken] = useState(false)
@@ -78,13 +82,27 @@ function App() {
   return (
     <Router>
       <div
-        style={{ backgroundColor: '#F1F0F0', color: '#313131', height: '120%' }}
+        style={{
+          backgroundColor: '#F1F0F0',
+          color: '#313131',
+          height: '120%',
+        }}
       >
         <Navbar
           fullpageApi={fullpageApiRef}
           user={user}
           handleLogout={handleLogout}
         />
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999,
+          }}
+        >
+          <ChatBot user={user} />
+        </Box>
         <Routes>
           <Route
             path="/"

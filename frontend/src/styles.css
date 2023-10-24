@@ -5,6 +5,15 @@ body {
     overflow:'visible'
 }
 
+#chatbotContainer .react-chatbot-kit-chat-container {
+  width:350px;
+}
+
+#chatbotContainer .react-chatbot-kit-chat-bot-message {
+  width:80%
+
+}
+
 .Navbar__Items {
     display: 'flex';
     justify-content: 'space-between';
@@ -20,12 +29,6 @@ body {
 
 
 
-.Logo {
-	display: flex;
-	width: 100%;
-	align-items:center;
-  text-align: center;
-}
 
 .fp-watermark {
 	display: none;

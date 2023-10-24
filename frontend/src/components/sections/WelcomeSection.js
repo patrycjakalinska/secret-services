@@ -1,4 +1,4 @@
-import '../../misc/styles.css'
+import '../../styles.css'
 import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
