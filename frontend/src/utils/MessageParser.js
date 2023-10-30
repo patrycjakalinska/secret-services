@@ -18,11 +18,13 @@ const contactPrompts = [
   'reach out',
 ]
 
+const locationSynonyms = ['location', 'address', 'place', 'office']
+
 const MessageParser = ({ children, actions }) => {
   const parse = (message) => {
     const lowerCaseMessage = message.toLowerCase()
 
-    if (lowerCaseMessage.includes('hello')) {
+    if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
       actions.handleHello()
     } else if (
       workingHoursPrompts.some((prompt) => lowerCaseMessage.includes(prompt))
@@ -32,6 +34,19 @@ const MessageParser = ({ children, actions }) => {
       contactPrompts.some((prompt) => lowerCaseMessage.includes(prompt))
     ) {
       actions.handleContactInformation()
+    } else if (lowerCaseMessage.includes('faq')) {
+      actions.handleFAQ()
+    } else if (lowerCaseMessage.includes('services')) {
+      actions.handleServices()
+    } else if (
+      lowerCaseMessage.includes('price') ||
+      lowerCaseMessage.includes('cost')
+    ) {
+      actions.handlePrice()
+    } else if (
+      locationSynonyms.some((synonym) => lowerCaseMessage.includes(synonym))
+    ) {
+      actions.handleLocation()
     } else {
       actions.handleUnrecognizedMessage()
     }

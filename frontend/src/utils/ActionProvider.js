@@ -50,6 +50,42 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     }))
   }
 
+  //TODO: 
+  // create vidget for showing services:w
+
+  const handleServices = () => {
+    const botMessage = createChatBotMessage(
+      'We offer a range of services, including surveillance, background checks, and missing persons investigations.'
+    )
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }))
+  }
+
+  const handlePrice = () => {
+    const botMessage = createChatBotMessage(
+      'Our pricing varies depending on the specific service you require. Please visit our website or contact us for a customized quote.'
+    )
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }))
+  }
+
+  const handleLocation = () => {
+    const botMessage = createChatBotMessage(
+      'We work remote to bring you most private investigation. You cannot meet your detective.'
+    )
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }))
+  }
+
   return (
     <div>
       {React.Children.map(children, (child) => {
@@ -58,6 +94,9 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
             handleUnrecognizedMessage,
             handleHello,
             handleWorkingHours,
+            handleLocation,
+            handleServices,
+            handlePrice,
             handleContactInformation,
           },
         })
