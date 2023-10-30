@@ -4,9 +4,25 @@ import AboutSection from './sections/AboutSection'
 import WelcomeSection from './sections/WelcomeSection'
 import LogoSection from './sections/LogoSection'
 import ServicesSection from './sections/ServicesSection'
-import '../misc/styles.css'
+import services from '../services/service'
+import { useEffect, useState } from 'react'
+import '../styles.css'
 
 const FullpageWrapper = ({ fullpageApi }) => {
+  const [tiers, setTiers] = useState([])
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await services.getAll()
+        setTiers(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchServices()
+  }, [])
+
   const onLeave = (origin, destination, direction) => {
     console.log('Leaving section ' + origin.index)
   }
@@ -50,7 +66,7 @@ const FullpageWrapper = ({ fullpageApi }) => {
                 <AboutSection />
               </div>
               <div className="section section4">
-                <ServicesSection />
+                <ServicesSection tiers={tiers} />
               </div>
             </div>
           )

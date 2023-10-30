@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import MuiBackdrop from '@mui/material/Backdrop'
-import Backdrop from './utils/Backdrop'
+import Backdrop from './misc/Backdrop'
 import { useParams } from 'react-router-dom'
 import {
   Button,

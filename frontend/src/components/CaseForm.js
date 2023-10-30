@@ -9,9 +9,9 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import Backdrop from './utils/Backdrop'
+import Backdrop from './misc/Backdrop'
 import cases from '../services/cases'
-import VisuallyHiddenInput from './utils/VisuallyHiddenInput'
+import VisuallyHiddenInput from './misc/VisuallyHiddenInput'
 
 const CaseForm = ({ updateCases }) => {
   const [name, setName] = useState('')

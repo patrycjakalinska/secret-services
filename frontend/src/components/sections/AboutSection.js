@@ -3,7 +3,7 @@ import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import logo from '../../img/access.png'
-import '../../misc/styles.css'
+import '../../styles.css'
 
 
 const AboutSection = () => {

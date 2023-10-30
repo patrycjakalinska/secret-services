@@ -11,25 +11,8 @@ import {
   Select,
 } from '@mui/material'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
-import PortraitIcon from '@mui/icons-material/Portrait'
-import Backdrop from '../utils/Backdrop'
-import users from '../../services/users'
-
-const genders = ['Woman', 'Man', 'Other']
-
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-})
+import Backdrop from '../misc/Backdrop'
 
 //TODO:
 // * add this user info to backend but only send crucial info, and do route on specific

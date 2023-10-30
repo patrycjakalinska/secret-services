@@ -1,40 +1,12 @@
 import ReactFullpage from '@fullpage/react-fullpage'
+import { useEffect, useState } from 'react'
 import { Container } from '@mui/system'
 import Grid from '@mui/material/Grid'
 import CssBaseline from '@mui/material/CssBaseline'
 import React from 'react'
 import ServicePanel from '../ServicePanel'
 
-const tiers = [
-  {
-    title: 'Service',
-    price: '99$',
-    description:
-      'Consequat id porta nibh venenatis. Sed libero enim sed faucibus turpis. Porttitor leo a diam sollicitudin tempor id eu. Maecenas volutpat blandit aliquam etiam erat velit. Sed arcu non odio euismod lacinia at quis risus.',
-    color: '#3C404A',
-    buttonHover: '#EC6D62',
-    buttonText: '#FEFDFD',
-  },
-  {
-    title: 'Service',
-    price: '130$',
-    description:
-      'Gravida quis blandit turpis cursus. Vivamus arcu felis bibendum ut. Facilisis leo vel fringilla est ullamcorper eget nulla facilisi etiam. Diam maecenas ultricies mi eget',
-    color: '#3C404A',
-    buttonHover: '#EC6D62',
-    buttonText: '#FEFDFD',
-  },
-  {
-    title: 'Service',
-    price: '225$',
-    description:
-      'Consequat id porta nibh venenatis. Sed libero enim sed faucibus turpis. Porttitor leo a diam sollicitudin tempor id eu. Maecenas volutpat blandit aliquam etiam erat velit. Sed arcu non odio euismod lacinia at quis risus.',
-    color: '#EC6D62',
-    buttonHover: '#3C404A',
-    buttonText: '#FEFDFD',
-  },
-]
-const ServicesSection = () => {
+const ServicesSection = ({ tiers }) => {
   return (
     <div id="services">
       <Container
