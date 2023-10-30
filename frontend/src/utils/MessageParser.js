@@ -36,7 +36,10 @@ const MessageParser = ({ children, actions }) => {
       actions.handleContactInformation()
     } else if (lowerCaseMessage.includes('faq')) {
       actions.handleFAQ()
-    } else if (lowerCaseMessage.includes('services')) {
+    } else if (
+      lowerCaseMessage.includes('services') ||
+      lowerCaseMessage.includes('service')
+    ) {
       actions.handleServices()
     } else if (
       lowerCaseMessage.includes('price') ||
@@ -47,6 +50,16 @@ const MessageParser = ({ children, actions }) => {
       locationSynonyms.some((synonym) => lowerCaseMessage.includes(synonym))
     ) {
       actions.handleLocation()
+    } else if (lowerCaseMessage.includes('surveillance')) {
+      actions.handleSurveillanceServiceInfo()
+    } else if (lowerCaseMessage.includes('background check')) {
+      actions.handleCheckServiceInfo()
+    } else if (
+      lowerCaseMessage.includes('missing person') ||
+      lowerCaseMessage.includes('missing')
+
+    ) {
+      actions.handleMissingPersonServiceInfo()
     } else {
       actions.handleUnrecognizedMessage()
     }

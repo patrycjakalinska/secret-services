@@ -1,10 +1,17 @@
 import { createChatBotMessage } from 'react-chatbot-kit'
 import { Avatar } from '@mui/material'
 import AddCommentIcon from '@mui/icons-material/AddComment'
+import ServiceWidget from '../components/ServiceWidget'
 
 const config = (userUrl) => {
   return {
     initialMessages: [createChatBotMessage(`Hello, how can I help you?`)],
+    widgets: [
+      {
+        widgetName: 'services',
+        widgetFunc: () => <ServiceWidget />,
+      },
+    ],
     customStyles: {
       botMessageBox: {
         backgroundColor: '#EC6D62',

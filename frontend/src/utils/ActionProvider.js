@@ -50,13 +50,13 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     }))
   }
 
-  //TODO: 
+  //TODO:
   // create vidget for showing services:w
 
   const handleServices = () => {
-    const botMessage = createChatBotMessage(
-      'We offer a range of services, including surveillance, background checks, and missing persons investigations.'
-    )
+    const botMessage = createChatBotMessage('Here are our avaiable services:', {
+      widget: 'services',
+    })
 
     setState((prev) => ({
       ...prev,
@@ -67,6 +67,39 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const handlePrice = () => {
     const botMessage = createChatBotMessage(
       'Our pricing varies depending on the specific service you require. Please visit our website or contact us for a customized quote.'
+    )
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }))
+  }
+
+  const handleSurveillanceServiceInfo = () => {
+    const botMessage = createChatBotMessage(
+      "Our 'Surveillance' service provides discreet and professional monitoring, offering tailored solutions to meet your specific needs. Our expert team uses advanced technology to deliver comprehensive reports and crucial information, ensuring your peace of mind. Whether it's for business, personal, or legal purposes, trust us to secure your interests."
+    )
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }))
+  }
+
+  const handleCheckServiceInfo = () => {
+    const botMessage = createChatBotMessage(
+      "Our 'Background Check' service offers comprehensive investigations for individuals and entities, providing crucial information for informed decision-making in personal, professional, or partnership matters. Trust us to reveal the facts you need."
+    )
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }))
+  }
+
+  const handleMissingPersonServiceInfo = () => {
+    const botMessage = createChatBotMessage(
+      "Our 'Missing Person' service is dedicated to locating and reuniting individuals with their loved ones. With our experienced team and extensive resources, we are committed to resolving cases with care and professionalism, offering hope and closure to those searching for answers."
     )
 
     setState((prev) => ({
@@ -96,6 +129,9 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
             handleWorkingHours,
             handleLocation,
             handleServices,
+            handleSurveillanceServiceInfo,
+            handleCheckServiceInfo,
+            handleMissingPersonServiceInfo,
             handlePrice,
             handleContactInformation,
           },
