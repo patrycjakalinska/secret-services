@@ -87,8 +87,7 @@ const PaymentsDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setBankName(target.value)}
-                    label="Name"
-                    defaultValue={user.name}
+                    label="Bank name"
                     fullWidth
                     autoFocus
                     sx={{
@@ -99,8 +98,7 @@ const PaymentsDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setBankNumber(target.value)}
-                    label="Surname"
-                    defaultValue={user.surname}
+                    label="Bank number"
                     fullWidth
                     sx={{
                       marginBottom: '.5em',
@@ -110,8 +108,7 @@ const PaymentsDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setCardNumber(target.value)}
-                    label="E-mail address"
-                    defaultValue={user.mail}
+                    label="Card number"
                     fullWidth
                     sx={{
                       marginBottom: { xs: '0', md: '.5em' },
@@ -121,8 +118,7 @@ const PaymentsDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setCvc(target.value)}
-                    label="Phone number"
-                    defaultValue={user.number}
+                    label="CVC/CVV"
                     fullWidth
                     sx={{
                       marginBottom: { xs: '0', md: '.5em' },
