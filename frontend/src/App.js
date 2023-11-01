@@ -177,7 +177,7 @@ function App() {
             <Route
               path="/user/:id/payments"
               element={
-                <Account user={user} updateUser={setUser} formType="payments" />
+                <Account user={user} updateUser={setUser} formType="payment" />
               }
             />
           </Route>

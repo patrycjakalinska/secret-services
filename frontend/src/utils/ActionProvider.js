@@ -57,10 +57,14 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     const botMessage = createChatBotMessage('Here are our avaiable services:', {
       widget: 'services',
     })
+    const botMessage2 = createChatBotMessage(
+      'If you would like to know more about one of these, just type in service name.',
+      { delay: 1000 }
+    )
 
     setState((prev) => ({
       ...prev,
-      messages: [...prev.messages, botMessage],
+      messages: [...prev.messages, botMessage, botMessage2],
     }))
   }
 

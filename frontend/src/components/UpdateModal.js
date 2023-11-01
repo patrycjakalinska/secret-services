@@ -6,6 +6,7 @@ import Backdrop from './misc/Backdrop'
 import MuiBackdrop from '@mui/material/Backdrop'
 import CloseIcon from '@mui/icons-material/Close'
 import cases from '../services/cases'
+import LocationInput from './LocationInput'
 
 const style = {
   position: 'absolute',
@@ -19,13 +20,14 @@ const style = {
   p: 4,
 }
 
-const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
+const UpdateModal = ({ open, setOpen, updateCases, casesForUser, map }) => {
   const [title, setTitle] = useState('')
   const [location, setLocation] = useState('')
   const [description, setDescription] = useState('')
   const [fileName, setFileName] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState('')
+  const [geometry, setGeometry] = useState({})
 
   const id = useParams().id
   const navigate = useNavigate()
@@ -50,6 +52,8 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
       }
       data.append('title', title)
       data.append('location', location)
+      data.append('longitude', geometry.longitude)
+      data.append('latitude', geometry.latitude)
       data.append('description', description)
       const updatedCase = await cases.addEvidence(data, id)
 
@@ -128,13 +132,10 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  onChange={({ target }) => setLocation(target.value)}
-                  label="Location"
-                  fullWidth
-                  sx={{
-                    marginBottom: '.5em',
-                  }}
+                <LocationInput
+                  setLocation={setLocation}
+                  setGeometry={setGeometry}
+                  map={map}
                 />
               </Grid>
               <Grid item xs={12}>

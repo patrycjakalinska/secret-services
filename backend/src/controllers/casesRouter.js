@@ -96,7 +96,7 @@ casesRouter.post(
 
       session.endSession()
 
-      return res.status(200).json(savedCase)
+      return res.status(201).json(savedCase)
     } catch (err) {
       console.log(err)
       session.endSession()
@@ -284,14 +284,18 @@ casesRouter.post(
         return res.status(404).json({ error: 'Case not found.' })
       }
 
+
       const newEvidence = new Evidence({
         title: req.body.title,
         location: req.body.location,
+        geometry: {
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
+        },
         description: req.body.description,
         case: currentCase,
         photos: [],
       })
-
 
       if (files) {
         const uploadPromises = files.map(async (file) => {

@@ -1,9 +1,14 @@
 const mongoose = require('mongoose')
 const Photo = require('./photo')
 
+
 const evidenceSchema = new mongoose.Schema({
   title: String,
   location: String,
+  geometry: {
+    longitude: String,
+    latitude: String,
+  },
   description: String,
   photos: [Photo.schema],
   case: {
