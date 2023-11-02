@@ -284,7 +284,6 @@ casesRouter.post(
         return res.status(404).json({ error: 'Case not found.' })
       }
 
-
       const newEvidence = new Evidence({
         title: req.body.title,
         location: req.body.location,
@@ -292,6 +291,7 @@ casesRouter.post(
           longitude: req.body.longitude,
           latitude: req.body.latitude,
         },
+        date: Date.now(),
         description: req.body.description,
         case: currentCase,
         photos: [],

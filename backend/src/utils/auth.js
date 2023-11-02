@@ -9,7 +9,6 @@ const verifyToken = (req, res, next) => {
   if (!token) {
     return res.sendStatus(401).json({ error: 'Unathorized' })
   }
-  console.log(token)
 
   try {
     const decoded = jwt.verify(token, config.SECRET)
