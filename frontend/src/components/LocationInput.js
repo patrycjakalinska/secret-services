@@ -1,8 +1,9 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import PlacesAutocomplete from 'react-places-autocomplete'
+import { Box, Typography } from '@mui/material'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
 const LocationInput = ({ setLocation, setGeometry, map }) => {
   useEffect(() => {
@@ -26,7 +27,28 @@ const LocationInput = ({ setLocation, setGeometry, map }) => {
 
   const handleSelect = async (value) => {}
 
-  return <div id="geocoder"></div>
+  return (
+    <Box
+      id="geocoder"
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      }}
+    >
+      <Typography
+        sx={{
+          fontFamily: 'Raleway',
+          paddingLeft: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        Location:{' '}
+      </Typography>
+    </Box>
+  )
 }
 
 export default LocationInput

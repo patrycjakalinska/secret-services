@@ -7,6 +7,7 @@ import MuiBackdrop from '@mui/material/Backdrop'
 import CloseIcon from '@mui/icons-material/Close'
 import cases from '../services/cases'
 import LocationInput from './LocationInput'
+import '../styles.css'
 
 const style = {
   position: 'absolute',
@@ -20,7 +21,7 @@ const style = {
   p: 4,
 }
 
-const UpdateModal = ({ open, setOpen, updateCases, casesForUser, map }) => {
+const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
   const [title, setTitle] = useState('')
   const [location, setLocation] = useState('')
   const [description, setDescription] = useState('')
@@ -131,11 +132,10 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser, map }) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} fullWidth>
                 <LocationInput
                   setLocation={setLocation}
                   setGeometry={setGeometry}
-                  map={map}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -185,7 +185,7 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser, map }) => {
               <Button
                 variant="contained"
                 fullWidth
-                onClick={() => console.log('A')}
+                onClick={() => console.log('')}
                 type="submit"
                 disableElevation
                 sx={{

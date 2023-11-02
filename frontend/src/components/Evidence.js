@@ -34,7 +34,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: '100vh', overflow: 'visible' }}>
+    <Container maxWidth="lg" sx={{ height: '100vh'}}>
       <Link
         to={`/cases/${id}/evidence`}
         style={{ textDecoration: 'none', color: '#313131' }}

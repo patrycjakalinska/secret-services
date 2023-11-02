@@ -16,7 +16,6 @@ const Case = ({ casesForUser, updateCases, user }) => {
   const [currentCase, setCurrentCase] = useState(
     casesForUser.find((c) => c._id === id)
   )
-  const [map, setMap] = useState(null)
 
   const navigate = useNavigate()
 
@@ -28,7 +27,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: '100vh', overflow: 'visible' }}>
+    <Container maxWidth="lg" sx={{ height: '100%' }}>
       <ImageUploadModal
         caseToUpdate={currentCase}
         open={uploadModalOpen}
@@ -40,7 +39,6 @@ const Case = ({ casesForUser, updateCases, user }) => {
         setOpen={setUpdateModalOpen}
         casesForUser={casesForUser}
         updateCases={updateCases}
-        map={map}
       />
       <Link to={'/cases'} style={{ textDecoration: 'none', color: '#313131' }}>
         <Box
@@ -55,7 +53,9 @@ const Case = ({ casesForUser, updateCases, user }) => {
           <Typography variant="h6">ALL</Typography>
         </Box>
       </Link>
-      <MapComponent evidence={currentCase.evidence} setMap={setMap} />
+      <Box sx={{ width: '100%', height: '300px' }}>
+        <MapComponent evidence={currentCase.evidence} />
+      </Box>
       <Box
         sx={{
           display: 'flex',
