@@ -24,7 +24,8 @@ const config = (userUrl) => {
       botAvatar: () => (
         <Avatar src="https://res.cloudinary.com/ddw3shtfu/image/upload/v1698180852/detectiveApp/misc/gtcmtlk4qtn4ka9klfzz.jpg" />
       ),
-      userAvatar: () => <Avatar src={userUrl} />,
+      userAvatar: () =>
+        userUrl === '' ? <Avatar>G</Avatar> : <Avatar src={userUrl} />,
     },
   }
 }

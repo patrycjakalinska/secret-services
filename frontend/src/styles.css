@@ -1,8 +1,17 @@
+html{
+    background-color: '#F1F0F0';
+    height: 0px;
+
+}
+.fp-scroll-mac{
+  overflow: visible;
+}
+
 body {
+  overflow: visible;
     font-family: 'Inter', sans-serif;
     background-color: '#F1F0F0';
     margin:0;
-    overflow:'visible'
 }
 
 #chatbotContainer .react-chatbot-kit-chat-container {
@@ -13,21 +22,32 @@ body {
   width:80%
 
 }
+#marker {
+background-size: cover;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+cursor: pointer;
+}
+ 
+.mapboxgl-popup {
+max-width: 200px;
+}
 
+
+.mapboxgl-ctrl-geocoder {
+  width:100%
+}
+
+.mapboxgl-ctrl {
+  width:100%
+}
 .Navbar__Items {
     display: 'flex';
     justify-content: 'space-between';
     flex: 1;
     display: inherit;
 }
-
-.Fullpage__Scroll {
-	  overflow: hidden;
-}
-
-
-
-
 
 
 .fp-watermark {

@@ -38,7 +38,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
           paddingY: '3em',
           paddingX: '2em',
           width: '80%',
-          height: 'auto',
+          height: '50%',
           borderRadius: '25px',
         }}
       >
@@ -56,6 +56,9 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
           container
           spacing={2}
           sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignContent: 'space-between',
             flex: 1,
             paddingRight: '1rem',
             marginRight: '1em',
@@ -184,7 +187,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
               </Box>
             </Link>
           </Grid>
-          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
+          {/* <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box
               sx={{
                 marginRight: '1rem',
@@ -203,7 +206,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                   fontSize: '16px',
                 }}
               >
-                Chats
+                Chats 
               </Typography>
 
               <Typography
@@ -240,7 +243,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                 Modify and disable cases
               </Typography>
             </Box>
-          </Grid>
+          </Grid> */}
           <Grid
             item
             fullwidth

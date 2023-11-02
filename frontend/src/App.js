@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import { Box } from '@mui/material'
 import FullpageWrapper from './components/FullpageWrapper'
 import Navbar from './components/Navbar'
@@ -20,7 +15,6 @@ import ProtectedRoute from './components/misc/ProtectedRoute'
 import users from '../src/services/users'
 import cases from './services/cases'
 import ChatBot from './components/ChatBot'
-
 import 'react-chatbot-kit/build/main.css'
 
 function App() {
@@ -80,110 +74,107 @@ function App() {
   }
 
   return (
-    <Router>
-      <div
-        style={{
-          backgroundColor: '#F1F0F0',
-          color: '#313131',
-          height: '120%',
+    <div
+      style={{
+        backgroundColor: '#F1F0F0',
+        color: '#313131',
+        height: '120%',
+      }}
+    >
+      <Navbar
+        user={user}
+        handleLogout={handleLogout}
+      />
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 9999,
         }}
       >
-        <Navbar
-          fullpageApi={fullpageApiRef}
-          user={user}
-          handleLogout={handleLogout}
+        <ChatBot user={user} />
+      </Box>
+      <Routes>
+        <Route
+          path="/"
+          element={<FullpageWrapper  />}
         />
-        <Box
-          sx={{
-            position: 'fixed',
-            bottom: '20px',
-            right: '20px',
-            zIndex: 9999,
-          }}
-        >
-          <ChatBot user={user} />
-        </Box>
-        <Routes>
+        <Route
+          path="/login"
+          element={
+            token ? <Navigate to="/" /> : <LoginForm setIsLogged={setToken} />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            token ? (
+              <Navigate to="/" />
+            ) : (
+              <RegisterForm setIsLogged={setToken} />
+            )
+          }
+        />
+        <Route element={<ProtectedRoute isUser={token} />}>
           <Route
-            path="/"
-            element={<FullpageWrapper fullpageApi={fullpageApiRef} />}
+            path="/cases"
+            element={<Cases cases={casesForUser} user={user} />}
           />
           <Route
-            path="/login"
+            path="/cases/:id"
             element={
-              token ? <Navigate to="/" /> : <LoginForm setIsLogged={setToken} />
+              <Case
+                casesForUser={casesForUser}
+                updateCases={setCasesForUser}
+                user={user}
+              />
             }
           />
           <Route
-            path="/register"
+            path="/cases/:id/evidence"
+            element={<AllEvidence casesForUser={casesForUser} />}
+          />
+          <Route
+            path="/cases/:id/evidence/:evidenceId"
             element={
-              token ? (
-                <Navigate to="/" />
-              ) : (
-                <RegisterForm setIsLogged={setToken} />
-              )
+              <Evidence
+                casesForUser={casesForUser}
+                user={user}
+                updateCases={setCasesForUser}
+              />
             }
           />
-          <Route element={<ProtectedRoute isUser={token} />}>
-            <Route
-              path="/cases"
-              element={<Cases cases={casesForUser} user={user} />}
-            />
-            <Route
-              path="/cases/:id"
-              element={
-                <Case
-                  casesForUser={casesForUser}
-                  updateCases={setCasesForUser}
-                  user={user}
-                />
-              }
-            />
-            <Route
-              path="/cases/:id/evidence"
-              element={<AllEvidence casesForUser={casesForUser} />}
-            />
-            <Route
-              path="/cases/:id/evidence/:evidenceId"
-              element={
-                <Evidence
-                  casesForUser={casesForUser}
-                  user={user}
-                  updateCases={setCasesForUser}
-                />
-              }
-            />
-            <Route
-              path="/newcase"
-              element={<CaseForm updateCases={setCasesForUser} />}
-            />
-            <Route
-              path="/user/:id"
-              element={
-                <Account user={user} updateUserInfo={setUser} formType="main" />
-              }
-            />
+          <Route
+            path="/newcase"
+            element={<CaseForm updateCases={setCasesForUser} />}
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <Account user={user} updateUserInfo={setUser} formType="main" />
+            }
+          />
 
-            <Route
-              path="/user/:id/info"
-              element={
-                <Account
-                  user={user}
-                  updateUserInfo={setUser}
-                  formType="profile"
-                />
-              }
-            />
-            <Route
-              path="/user/:id/payments"
-              element={
-                <Account user={user} updateUser={setUser} formType="payments" />
-              }
-            />
-          </Route>
-        </Routes>
-      </div>
-    </Router>
+          <Route
+            path="/user/:id/info"
+            element={
+              <Account
+                user={user}
+                updateUserInfo={setUser}
+                formType="profile"
+              />
+            }
+          />
+          <Route
+            path="/user/:id/payments"
+            element={
+              <Account user={user} updateUser={setUser} formType="payment" />
+            }
+          />
+        </Route>
+      </Routes>
+    </div>
   )
 }
 

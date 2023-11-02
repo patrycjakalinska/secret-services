@@ -8,7 +8,7 @@ import services from '../services/service'
 import { useEffect, useState } from 'react'
 import '../styles.css'
 
-const FullpageWrapper = ({ fullpageApi }) => {
+const FullpageWrapper = () => {
   const [tiers, setTiers] = useState([])
 
   useEffect(() => {
@@ -23,36 +23,27 @@ const FullpageWrapper = ({ fullpageApi }) => {
     fetchServices()
   }, [])
 
-  const onLeave = (origin, destination, direction) => {
-    console.log('Leaving section ' + origin.index)
-  }
-  const afterLoad = (origin, destination, direction) => {
-    console.log('After load: ' + destination.index)
-  }
-
   return (
     <div>
       <ReactFullpage
         resetSliders={true}
         controlArrows={true}
         animateAnchor={true}
+        scrollBar={true}
         keyboardScrolling={true}
         menu={'#menu'} // menu for anchors
         loopHorizontal={true}
         licenseKey={'GPLv3'}
         activeClass={'active'} //adds an active class to the correct menu button
-        //anchors={['firstPage', 'homePage', 'aboutPage', 'servicesPage']}
+        anchors={[ 'home', 'blog', 'about', 'services']}
         lockAnchors={true} //anchor feature
         navigation={true} //enables cool dots
         arrowNavigation={true} //enables arrows for slides
         slidesNavigation={true}
         slidesNavPosition={'bottom'}
-        scrollingSpeed={1000} /* used this for something to work... */
+        scrollingSpeed={1000}
         autoScrolling={true}
-        ref={fullpageApi}
         loopBottom={true}
-        onLeave={onLeave}
-        afterLoad={afterLoad}
         render={({ state, fullpageApi }) => {
           return (
             <div id="fullpage-wrapper" className="Fullpage__Scroll">

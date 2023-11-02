@@ -14,7 +14,7 @@ const ChatBot = ({ user }) => {
     <Paper id="chatbotContainer" elevation={10}>
       {showBot ? (
         <Chatbot
-          config={config(user.profilePicture.url)}
+          config={Object.keys(user).length !== 0 ? config(user.profilePicture.url) : config('')}
           actionProvider={ActionProvider}
           messageParser={MessageParser}
           headerText={

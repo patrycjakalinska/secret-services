@@ -7,6 +7,7 @@ import ImageSlider from './ImageSlider'
 import ImageUploadModal from './ImageUploadModal'
 import UpdateModal from './UpdateModal'
 import { useState } from 'react'
+import MapComponent from './MapComponent'
 
 const Case = ({ casesForUser, updateCases, user }) => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false)
@@ -15,6 +16,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
   const [currentCase, setCurrentCase] = useState(
     casesForUser.find((c) => c._id === id)
   )
+
   const navigate = useNavigate()
 
   const handleDelete = async () => {
@@ -25,7 +27,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: '100vh', overflow: 'visible' }}>
+    <Container maxWidth="lg" sx={{ height: '100%' }}>
       <ImageUploadModal
         caseToUpdate={currentCase}
         open={uploadModalOpen}
@@ -40,22 +42,19 @@ const Case = ({ casesForUser, updateCases, user }) => {
       />
       <Link to={'/cases'} style={{ textDecoration: 'none', color: '#313131' }}>
         <Box
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}
         >
           <ArrowBackIcon />
           <Typography variant="h6">ALL</Typography>
         </Box>
       </Link>
-
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginBottom: '2rem',
-        }}
-      >
-        <Typography variant="h2">TU BEDZIE MAPA</Typography>
+      <Box sx={{ width: '100%', height: '300px' }}>
+        <MapComponent evidence={currentCase.evidence} />
       </Box>
       <Box
         sx={{
