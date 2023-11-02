@@ -29,6 +29,7 @@
     "react": "^18.2.0",
     "react-chatbot-kit": "^2.1.2",
     "react-dom": "^18.2.0",
+    "react-map-gl": "^7.1.6",
     "react-material-ui-carousel": "^3.4.2",
     "react-medium-image-zoom": "^4.4.3",
     "react-places-autocomplete": "^7.3.0",

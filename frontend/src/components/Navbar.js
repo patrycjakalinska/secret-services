@@ -16,7 +16,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
 import '../styles.css'
 
-const pages = ['Services', 'Blog', 'About']
+const pages = ['Blog', 'About', 'Services']
 const Navbar = ({ user, fullpageApi, handleLogout }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -45,17 +45,10 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
     setIsUserMenuOpen(!isUserMenuOpen)
   }
 
-  const handleMoveToSection = (section) => {
-    if (fullpageApi && fullpageApi.current) {
-      fullpageApi.current.moveTo(section)
-    } else {
-      console.log('AAAAAAAAAAAAAAAA' + section)
-    }
-  }
-
   return (
     <AppBar
       position="static"
+      className="menu"
       sx={{
         backgroundColor: '#F1F0F0',
         zIndex: 1000,
@@ -133,19 +126,11 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem
-                key="home"
-                onClick={() => handleMoveToSection('homePage')}
-              >
+              <MenuItem key="home">
                 <Typography textAlign="center">Home</Typography>
               </MenuItem>
               {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={() =>
-                    handleMoveToSection(page.toLowerCase() + 'Page')
-                  }
-                >
+                <MenuItem key={page}>
                   <Typography textAlign="center" color="#313131">
                     {page}
                   </Typography>
@@ -193,29 +178,36 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
           >
             <Button
               key="home"
-              onClick={() => handleMoveToSection('page1')}
+              data-menuanchor="home"
               sx={{
-                color: '#EC6D62',
                 my: 2,
                 display: 'block',
                 textTransform: 'none',
               }}
             >
-              {' '}
-              Home
+              <a
+                href="#home"
+                style={{ textDecoration: 'none', color: '#EC6D62' }}
+              >
+                Home
+              </a>
             </Button>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => handleMoveToSection(page.toLowerCase() + 'page')}
+                data-menuanchor={`${page.toLowerCase()}`}
                 sx={{
                   my: 2,
-                  color: '#313131',
                   display: 'block',
                   textTransform: 'none',
                 }}
               >
-                {page}
+                <a
+                  href={`#${page.toLowerCase()}`}
+                  style={{ textDecoration: 'none', color: '#313131' }}
+                >
+                  {page}
+                </a>
               </Button>
             ))}
           </Box>
