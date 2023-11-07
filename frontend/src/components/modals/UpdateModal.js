@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Typography, Button, Grid, Modal } from '@mui/material'
-import VisuallyHiddenInput from './misc/VisuallyHiddenInput'
-import Backdrop from './misc/Backdrop'
+import VisuallyHiddenInput from '../misc/VisuallyHiddenInput'
+import Backdrop from '../misc/Backdrop'
 import MuiBackdrop from '@mui/material/Backdrop'
 import CloseIcon from '@mui/icons-material/Close'
-import cases from '../services/cases'
-import LocationInput from './LocationInput'
-import '../styles.css'
+import cases from '../../services/cases'
+import LocationInput from '../LocationInput'
+import '../../styles.css'
 
 const style = {
   position: 'absolute',
@@ -81,8 +81,8 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
       <Backdrop loading={loading} />
       <Modal
         open={open}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
         onClose={handleClose}
         slots={{ backdrop: MuiBackdrop }}
         closeAfterTransition
@@ -104,19 +104,19 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
                   justifyContent: 'flex-end',
                 }}
               >
-                <CloseIcon fontSize="small" style={{ color: '#313131' }} />
+                <CloseIcon fontSize='small' style={{ color: '#313131' }} />
               </Button>
             </Box>
 
             <Typography
-              id="modal-modal-title"
-              variant="h5"
+              id='modal-modal-title'
+              variant='h5'
               sx={{
                 textAlign: 'center',
                 fontFamily: 'Raleway',
                 fontWeight: '500',
               }}
-              component="h2"
+              component='h2'
             >
               Add evidence | updates
             </Typography>
@@ -124,7 +124,7 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
               <Grid item xs={12}>
                 <TextField
                   onChange={({ target }) => setTitle(target.value)}
-                  label="Title"
+                  label='Title'
                   fullWidth
                   autoFocus
                   sx={{
@@ -140,8 +140,8 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
               </Grid>
               <Grid item xs={12}>
                 <Button
-                  component="label"
-                  variant="contained"
+                  component='label'
+                  variant='contained'
                   fullWidth
                   disableElevation
                   sx={{
@@ -156,7 +156,7 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
                 >
                   {fileName || 'Attach images'}
                   <VisuallyHiddenInput
-                    type="file"
+                    type='file'
                     multiple
                     onChange={handleSelectImages}
                   />
@@ -165,7 +165,7 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
               <Grid item xs={12}>
                 <TextField
                   onChange={({ target }) => setDescription(target.value)}
-                  label="Description"
+                  label='Description'
                   fullWidth
                   multiline
                   rows={3}
@@ -183,10 +183,10 @@ const UpdateModal = ({ open, setOpen, updateCases, casesForUser }) => {
               }}
             >
               <Button
-                variant="contained"
+                variant='contained'
                 fullWidth
                 onClick={() => console.log('')}
-                type="submit"
+                type='submit'
                 disableElevation
                 sx={{
                   textTransform: 'none',

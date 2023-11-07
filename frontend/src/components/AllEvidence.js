@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import AllPhotosModal from './AllPhotosModal'
+import AllPhotosModal from './modals/AllPhotosModal'
 import { Link } from 'react-router-dom'
 import example from '../img/example.jpg'
 
@@ -31,7 +31,7 @@ const AllEvidence = ({ casesForUser }) => {
       }}
     >
       <Container
-        maxWidth="lg"
+        maxWidth='lg'
         sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -57,7 +57,7 @@ const AllEvidence = ({ casesForUser }) => {
             }}
           >
             <ArrowBackIcon />
-            <Typography variant="h6">Back to case</Typography>
+            <Typography variant='h6'>Back to case</Typography>
           </Box>
         </Link>
         <Box
@@ -76,13 +76,13 @@ const AllEvidence = ({ casesForUser }) => {
               color: '#313131',
             }}
           >
-            <Typography variant="h6">All photos</Typography>
+            <Typography variant='h6'>All photos</Typography>
             <ArrowForwardIcon />
           </Button>
         </Box>
       </Container>
       <Container
-        maxWidth="lg"
+        maxWidth='lg'
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -120,10 +120,10 @@ const AllEvidence = ({ casesForUser }) => {
                 >
                   <CardActionArea>
                     <CardMedia
-                      component="img"
-                      height="140"
+                      component='img'
+                      height='140'
                       image={e.photos.length > 0 ? e.photos[0].url : example}
-                      alt="green iguana"
+                      alt='green iguana'
                     />
                     <CardContent
                       sx={{
@@ -135,8 +135,8 @@ const AllEvidence = ({ casesForUser }) => {
                       <Typography
                         gutterBottom
                         noWrap
-                        variant="h5"
-                        component="div"
+                        variant='h5'
+                        component='div'
                         sx={{
                           fontFamily: 'Inter',
                           fontWeight: '400',
@@ -145,8 +145,8 @@ const AllEvidence = ({ casesForUser }) => {
                         {e.title}
                       </Typography>
                       <Typography
-                        variant="body2"
-                        color="text.secondary"
+                        variant='body2'
+                        color='text.secondary'
                         sx={{
                           fontFamily: 'Raleway',
                           overflow: 'hidden',

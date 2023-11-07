@@ -20,7 +20,7 @@ const getAll = async () => {
 const getCaseById = async (id) => {
   try {
     const token = getToken()
-    const res = await axios.get(`$[baseUrl}/${id}`, {
+    const res = await axios.get(`${baseUrl}/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     return res.data

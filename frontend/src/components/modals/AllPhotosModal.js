@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import MuiBackdrop from '@mui/material/Backdrop'
-import Backdrop from './misc/Backdrop'
+import Backdrop from '../misc/Backdrop'
 import { useParams } from 'react-router-dom'
 import {
   Button,
@@ -66,8 +66,8 @@ const AllPhotosModal = ({ evidence, open, setOpen }) => {
       <Backdrop loading={loading} />
       <Modal
         open={open}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
         onClose={handleClose}
         slots={{ backdrop: MuiBackdrop }}
         closeAfterTransition
@@ -78,11 +78,17 @@ const AllPhotosModal = ({ evidence, open, setOpen }) => {
         }}
       >
         <Box sx={style}>
-          <Box sx= {{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <TextField
-              id="standard-basic"
-              variant="standard"
-              label="Filter"
+              id='standard-basic'
+              variant='standard'
+              label='Filter'
               onChange={({ target }) => setFilter(target.value)}
             />
             <Button
@@ -94,18 +100,18 @@ const AllPhotosModal = ({ evidence, open, setOpen }) => {
                 justifyContent: 'flex-end',
               }}
             >
-              <CloseIcon fontSize="small" style={{ color: '#313131' }} />
+              <CloseIcon fontSize='small' style={{ color: '#313131' }} />
             </Button>
           </Box>
           <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
             {filteredPhotos.map((item) => (
               <ImageListItem key={item.publicId}>
-                <Zoom zoomMargin={35} overlayBgColorEnd="rgba(0, 0, 0, 0.85)">
+                <Zoom zoomMargin={35} overlayBgColorEnd='rgba(0, 0, 0, 0.85)'>
                   <div>
                     <img
                       src={`${item.url}`}
                       alt={item.publicId}
-                      loading="lazy"
+                      loading='lazy'
                       style={{
                         width: '100%',
                         height: '100%',

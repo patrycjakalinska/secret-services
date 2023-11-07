@@ -8,6 +8,8 @@ import RegisterForm from './components/RegisterForm.js'
 import Cases from './components/Cases'
 import Case from './components/Case'
 import CaseForm from './components/CaseForm'
+import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import AllEvidence from './components/AllEvidence'
 import Evidence from './components/Evidence'
 import Account from './components/Account'
@@ -32,7 +34,6 @@ function App() {
     } else {
       setToken(false)
       setCasesForUser([])
-      //setUser({})
     }
   }, [])
 
@@ -81,10 +82,7 @@ function App() {
         height: '120%',
       }}
     >
-      <Navbar
-        user={user}
-        handleLogout={handleLogout}
-      />
+      <Navbar user={user} handleLogout={handleLogout} />
       <Box
         sx={{
           position: 'fixed',
@@ -96,33 +94,33 @@ function App() {
         <ChatBot user={user} />
       </Box>
       <Routes>
+        <Route path='/' element={<FullpageWrapper />} />
         <Route
-          path="/"
-          element={<FullpageWrapper  />}
-        />
-        <Route
-          path="/login"
+          path='/login'
           element={
-            token ? <Navigate to="/" /> : <LoginForm setIsLogged={setToken} />
+            token ? <Navigate to='/' /> : <LoginForm setIsLogged={setToken} />
           }
         />
         <Route
-          path="/register"
+          path='/register'
           element={
             token ? (
-              <Navigate to="/" />
+              <Navigate to='/' />
             ) : (
               <RegisterForm setIsLogged={setToken} />
             )
           }
         />
+        <Route path='/blogs' element={<Blogs user={user} />} />
+        <Route path='/blogs/:id' element={<Blog />} />
+
         <Route element={<ProtectedRoute isUser={token} />}>
           <Route
-            path="/cases"
+            path='/cases'
             element={<Cases cases={casesForUser} user={user} />}
           />
           <Route
-            path="/cases/:id"
+            path='/cases/:id'
             element={
               <Case
                 casesForUser={casesForUser}
@@ -132,11 +130,11 @@ function App() {
             }
           />
           <Route
-            path="/cases/:id/evidence"
+            path='/cases/:id/evidence'
             element={<AllEvidence casesForUser={casesForUser} />}
           />
           <Route
-            path="/cases/:id/evidence/:evidenceId"
+            path='/cases/:id/evidence/:evidenceId'
             element={
               <Evidence
                 casesForUser={casesForUser}
@@ -146,30 +144,30 @@ function App() {
             }
           />
           <Route
-            path="/newcase"
+            path='/newcase'
             element={<CaseForm updateCases={setCasesForUser} />}
           />
           <Route
-            path="/user/:id"
+            path='/user/:id'
             element={
-              <Account user={user} updateUserInfo={setUser} formType="main" />
+              <Account user={user} updateUserInfo={setUser} formType='main' />
             }
           />
 
           <Route
-            path="/user/:id/info"
+            path='/user/:id/info'
             element={
               <Account
                 user={user}
                 updateUserInfo={setUser}
-                formType="profile"
+                formType='profile'
               />
             }
           />
           <Route
-            path="/user/:id/payments"
+            path='/user/:id/payments'
             element={
-              <Account user={user} updateUser={setUser} formType="payment" />
+              <Account user={user} updateUser={setUser} formType='payment' />
             }
           />
         </Route>

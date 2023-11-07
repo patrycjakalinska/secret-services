@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
+const Photo = require('./photo')
 
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
-    minLength: 8,
     required: true,
     unique: true,
   },
@@ -11,11 +11,18 @@ const blogSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  description: {
+  content: {
     type: String,
-    minLength: 100,
     required: true,
   },
-});
+  photo: Photo.schema,
+})
 
-module.exports = mongoose.model("Blog", blogSchema);
+blogSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject.__v
+  },
+})
+
+module.exports = mongoose.model('Blog', blogSchema)

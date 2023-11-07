@@ -7,11 +7,11 @@ const client = new vision.ImageAnnotatorClient({
 const classifyImage = async (fileBuffer) => {
   const [result] = await client.labelDetection(fileBuffer)
   const labels = result.labelAnnotations
-  return [
-    labels[0].description,
-    labels[1].description,
-    labels[2].description,
-  ]
+  const tags = []
+  for (let label of labels) {
+    tags.push(label.description)
+  }
+  return tags
 }
 
 module.exports = {

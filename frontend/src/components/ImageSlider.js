@@ -48,13 +48,13 @@ const ImageSlider = ({
           >
             <Zoom
               zoomMargin={35}
-              overlayBgColorEnd="rgba(0, 0, 0, 0.85)"
+              overlayBgColorEnd='rgba(0, 0, 0, 0.85)'
               objectFit={'cover'}
             >
               <img
                 src={image.url}
                 alt={`Image ${index + 1}`}
-                loading="lazy"
+                loading='lazy'
                 style={{
                   maxHeight: '100%',
                 }}
@@ -102,7 +102,7 @@ const ImageSlider = ({
                   justifyContent: 'space-between',
                 }}
               >
-                {image.tags.map((t, i) => (
+                {image.tags.slice(0, 3).map((t, i) => (
                   <span
                     key={i}
                     style={{

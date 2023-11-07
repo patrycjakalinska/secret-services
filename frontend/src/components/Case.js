@@ -4,9 +4,9 @@ import { Box, Button, Typography, Container } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import cases from '../services/cases'
 import ImageSlider from './ImageSlider'
-import ImageUploadModal from './ImageUploadModal'
-import UpdateModal from './UpdateModal'
-import { useState } from 'react'
+import ImageUploadModal from './modals/ImageUploadModal'
+import UpdateModal from './modals/UpdateModal'
+import { useEffect, useState } from 'react'
 import MapComponent from './MapComponent'
 
 const Case = ({ casesForUser, updateCases, user }) => {
@@ -16,6 +16,13 @@ const Case = ({ casesForUser, updateCases, user }) => {
   const [currentCase, setCurrentCase] = useState(
     casesForUser.find((c) => c._id === id)
   )
+
+  useEffect(() => {
+    cases
+      .getCaseById(id)
+      .then((foundCase) => setCurrentCase(foundCase))
+      .catch((err) => console.log(err))
+  }, [currentCase])
 
   const navigate = useNavigate()
 
@@ -27,7 +34,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: '100%' }}>
+    <Container maxWidth='lg' sx={{ height: '100%' }}>
       <ImageUploadModal
         caseToUpdate={currentCase}
         open={uploadModalOpen}
@@ -50,7 +57,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
           }}
         >
           <ArrowBackIcon />
-          <Typography variant="h6">ALL</Typography>
+          <Typography variant='h6'>ALL</Typography>
         </Box>
       </Link>
       <Box sx={{ width: '100%', height: '300px' }}>
@@ -83,7 +90,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
           >
             <Button
               onClick={handleDelete}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: '#3C404A',
                 borderRadius: '8px',
@@ -102,7 +109,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
             </Button>
             <Button
               onClick={() => setUpdateModalOpen(true)}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: '#3C404A',
                 borderRadius: '8px',
@@ -130,7 +137,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h5" sx={{ fontFamily: 'Raleway' }}>
+        <Typography variant='h5' sx={{ fontFamily: 'Raleway' }}>
           Person | Company of interest:<strong> {currentCase.interest}</strong>
         </Typography>
         <Link
@@ -149,7 +156,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
               alignItems: 'center',
             }}
           >
-            <Typography variant="h6">All evidence</Typography>
+            <Typography variant='h6'>All evidence</Typography>
           </Box>
         </Link>
       </Box>
@@ -174,7 +181,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
             caseId={currentCase._id}
           />
           <Button
-            variant="contained"
+            variant='contained'
             disableElevation
             onClick={() => setUploadModalOpen(true)}
             sx={{
@@ -192,7 +199,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
           </Button>
         </Box>
         <Box sx={{ width: '100%', height: '100$', flex: { xs: '2' } }}>
-          <Typography variant="body2">{currentCase.description}</Typography>
+          <Typography variant='body2'>{currentCase.description}</Typography>
         </Box>
       </Box>
     </Container>

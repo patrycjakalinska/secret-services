@@ -48,6 +48,7 @@ casesRouter.post(
         const uploadPromises = files.map(async (file) => {
           try {
             const classification = await classifyImage(file.buffer)
+
             let encoded = file.buffer.toString('base64')
             let imageDetails = await cloudinaryConfig.handleUpload(
               encoded,
@@ -141,19 +142,20 @@ casesRouter.put(
     await Promise.all(uploadPromises)
 
     const savedCase = await currentCase.save()
-    return res.status(200).json(savedCase)
+    const populatedCase = await savedCase.populate('evidence')
+    return res.status(200).json(populatedCase)
   }
 )
 
 casesRouter.get('/:id', verifyToken, async (req, res) => {
   try {
-    const caseForUser = await Case.findById(req.params.id)
+    const caseForUser = await Case.findById(req.params.id).populate('evidence')
     if (!caseForUser) {
       return res.status(404).json({ message: 'Case not found.' })
     }
     const user = await User.findById(req.user.userId)
     if (user.cases.includes(caseForUser._id)) {
-      res.status(200).json({ caseForUser })
+      res.status(200).json(caseForUser)
     } else {
       res.status(401).json({ message: 'Access denied.' })
     }
@@ -232,6 +234,7 @@ casesRouter.delete('/:id/:photoId', async (req, res) => {
     currentCase.photos = filtered
 
     await currentCase.save()
+    await currentCase.populate('evidence')
 
     res.status(200).json(currentCase)
   } catch (err) {

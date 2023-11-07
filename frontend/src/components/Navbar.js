@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -16,12 +16,13 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
 import '../styles.css'
 
-const pages = ['Blog', 'About', 'Services']
+const pages = ['About', 'Services']
 const Navbar = ({ user, fullpageApi, handleLogout }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleLogoutClick = () => {
     handleLogout()
@@ -47,8 +48,8 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
 
   return (
     <AppBar
-      position="static"
-      className="menu"
+      position='static'
+      className='menu'
       sx={{
         backgroundColor: '#F1F0F0',
         zIndex: 1000,
@@ -58,7 +59,7 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
       }}
       elevation={0}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth='xl'>
         <Toolbar
           disableGutters
           sx={{
@@ -67,11 +68,11 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Link to="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <Link to='/' style={{ textDecoration: 'none', display: 'flex' }}>
             <Typography
-              variant="h6"
+              variant='h6'
               noWrap
-              component="a"
+              component='a'
               sx={{
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: 'Inter',
@@ -82,9 +83,9 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
               SEC
             </Typography>
             <Typography
-              variant="h6"
+              variant='h6'
               noWrap
-              component="a"
+              component='a'
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -97,19 +98,24 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
             </Typography>
           </Link>
 
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, flex: { xs: 1 } }}>
+          <Box
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+              flex: { xs: 1 },
+            }}
+          >
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              color="#313131"
+              color='#313131'
             >
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -126,24 +132,42 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem key="home">
-                <Typography textAlign="center">Home</Typography>
+              <MenuItem key='home' data-meuanchor='home'>
+                <Typography textAlign='center'>
+                  <a
+                    href='#home'
+                    style={{
+                      textDecoration: 'none',
+                      color: '#EC6D62',
+                    }}
+                  >
+                    Home
+                  </a>
+                </Typography>
               </MenuItem>
               {pages.map((page) => (
                 <MenuItem key={page}>
-                  <Typography textAlign="center" color="#313131">
-                    {page}
+                  <Typography textAlign='center' color='#313131'>
+                    <a
+                      href={`#${page.toLowerCase()}`}
+                      style={{
+                        textDecoration: 'none',
+                        color: '#313131',
+                      }}
+                    >
+                      {page}
+                    </a>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <div className="Navbar__Items">
-            <Link to="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <div className='Navbar__Items'>
+            <Link to='/' style={{ textDecoration: 'none', display: 'flex' }}>
               <Typography
-                variant="h5"
+                variant='h5'
                 noWrap
-                component="a"
+                component='a'
                 sx={{
                   display: { xs: 'flex', md: 'none' },
                   mr: 0,
@@ -154,9 +178,9 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                 SEC
               </Typography>
               <Typography
-                variant="h5"
+                variant='h5'
                 noWrap
-                component="a"
+                component='a'
                 sx={{
                   display: { xs: 'flex', md: 'none' },
                   mr: 0,
@@ -169,33 +193,17 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
               </Typography>
             </Link>
           </div>
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              justifyContent: 'space-between',
-              marginRight: '1rem',
-            }}
-          >
-            <Button
-              key="home"
-              data-menuanchor="home"
+          {location.pathname === '/' && (
+            <Box
               sx={{
-                my: 2,
-                display: 'block',
-                textTransform: 'none',
+                display: { xs: 'none', md: 'flex' },
+                justifyContent: 'space-between',
+                marginRight: '1rem',
               }}
             >
-              <a
-                href="#home"
-                style={{ textDecoration: 'none', color: '#EC6D62' }}
-              >
-                Home
-              </a>
-            </Button>
-            {pages.map((page) => (
               <Button
-                key={page}
-                data-menuanchor={`${page.toLowerCase()}`}
+                key='home'
+                data-menuanchor='home'
                 sx={{
                   my: 2,
                   display: 'block',
@@ -203,14 +211,60 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                 }}
               >
                 <a
-                  href={`#${page.toLowerCase()}`}
-                  style={{ textDecoration: 'none', color: '#313131' }}
+                  href='#home'
+                  style={{
+                    textDecoration: 'none',
+                    color: '#EC6D62',
+                  }}
                 >
-                  {page}
+                  Home
                 </a>
               </Button>
-            ))}
-          </Box>
+              <Link to='/blogs'>
+                <Button
+                  key='blogs'
+                  sx={{
+                    my: 2,
+                    display: 'block',
+                    textTransform: 'none',
+                    textDecoration: 'none',
+                    color: '#313131',
+                  }}
+                >
+                  <span
+                    style={{
+                      textDecoration: 'none',
+                      color: '#313131',
+                    }}
+                  >
+                    Blog
+                  </span>
+                </Button>
+              </Link>
+
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  data-menuanchor={`${page.toLowerCase()}`}
+                  sx={{
+                    my: 2,
+                    display: 'block',
+                    textTransform: 'none',
+                  }}
+                >
+                  <a
+                    href={`#${page.toLowerCase()}`}
+                    style={{
+                      textDecoration: 'none',
+                      color: '#313131',
+                    }}
+                  >
+                    {page}
+                  </a>
+                </Button>
+              ))}
+            </Box>
+          )}
 
           {Object.keys(user).length !== 0 ? (
             <Box
@@ -221,19 +275,25 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                 borderRadius: '16px',
               }}
             >
-              <Tooltip title="Open settings">
+              <Tooltip title='Open settings'>
                 <Box
                   onClick={handleOpenUserMenu}
-                  sx={{ display: 'flex', flexDirection: 'row' }}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}
                 >
                   <IconButton sx={{ p: 0 }}>
                     <Avatar
-                      alt="Remy Sharp"
+                      alt='Remy Sharp'
                       src={`${user.profilePicture.url}`}
                     />
                     <Box
                       sx={{
-                        display: { xs: 'none', md: 'flex' },
+                        display: {
+                          xs: 'none',
+                          md: 'flex',
+                        },
                         flexDirection: 'column',
                         alignItems: 'start',
                         paddingX: '1em',
@@ -262,14 +322,20 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                     {isUserMenuOpen ? (
                       <KeyboardDoubleArrowDownIcon
                         sx={{
-                          display: { xs: 'none', md: 'flex' },
+                          display: {
+                            xs: 'none',
+                            md: 'flex',
+                          },
                           color: 'rgba(49, 49, 49, 0.50);',
                         }}
                       />
                     ) : (
                       <KeyboardDoubleArrowRightIcon
                         sx={{
-                          display: { xs: 'none', md: 'flex' },
+                          display: {
+                            xs: 'none',
+                            md: 'flex',
+                          },
                           color: 'rgba(49, 49, 49, 0.50);',
                         }}
                       />
@@ -279,7 +345,7 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
+                id='menu-appbar'
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
@@ -293,46 +359,58 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem key="account" onClick={handleCloseUserMenu}>
+                <MenuItem key='account' onClick={handleCloseUserMenu}>
                   <Link
                     to={`/user/${user.id}`}
-                    style={{ textDecoration: 'none', color: '#313131' }}
+                    style={{
+                      textDecoration: 'none',
+                      color: '#313131',
+                    }}
                   >
-                    <Typography textAlign="center">Account</Typography>
+                    <Typography textAlign='center'>Account</Typography>
                   </Link>
                 </MenuItem>
-                <MenuItem key="cases" onClick={handleCloseUserMenu}>
+                <MenuItem key='cases' onClick={handleCloseUserMenu}>
                   <Link
-                    to="/cases"
-                    style={{ textDecoration: 'none', color: '#313131' }}
+                    to='/cases'
+                    style={{
+                      textDecoration: 'none',
+                      color: '#313131',
+                    }}
                   >
                     <Typography
-                      textAlign="center"
-                      sx={{ textDecoration: 'none', textTransform: 'none' }}
+                      textAlign='center'
+                      sx={{
+                        textDecoration: 'none',
+                        textTransform: 'none',
+                      }}
                     >
                       My cases
                     </Typography>
                   </Link>
                 </MenuItem>
-                <MenuItem key="bookmarks" onClick={handleCloseUserMenu}>
+                <MenuItem key='bookmarks' onClick={handleCloseUserMenu}>
                   <Link
                     to={'/bookmarks'}
-                    style={{ textDecoration: 'none', color: '#313131' }}
+                    style={{
+                      textDecoration: 'none',
+                      color: '#313131',
+                    }}
                   >
-                    <Typography textAlign="center">Bookmarks</Typography>
+                    <Typography textAlign='center'>Bookmarks</Typography>
                   </Link>
                 </MenuItem>
-                <MenuItem key="logout" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={handleLogoutClick}>
+                <MenuItem key='logout' onClick={handleCloseUserMenu}>
+                  <Typography textAlign='center' onClick={handleLogoutClick}>
                     Logout
                   </Typography>
                 </MenuItem>
               </Menu>
             </Box>
           ) : (
-            <Link to="/login">
+            <Link to='/login'>
               <Button
-                variant="contained"
+                variant='contained'
                 disableElevation
                 sx={{
                   borderRadius: '16px',

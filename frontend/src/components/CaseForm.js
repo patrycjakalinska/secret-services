@@ -32,7 +32,7 @@ const CaseForm = ({ updateCases }) => {
     setFileName('Selected ' + e.target.files.length + ' photos')
   }
 
-  const addNewCase = async (event) => {
+  const handleAddCase = async (event) => {
     event.preventDefault()
     try {
       if (selectedFiles) {
@@ -65,8 +65,8 @@ const CaseForm = ({ updateCases }) => {
 
   return (
     <Container
-      maxWidth="xl"
-      id="home"
+      maxWidth='xl'
+      id='home'
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -96,7 +96,7 @@ const CaseForm = ({ updateCases }) => {
         >
           <Box>
             <Typography
-              variant="h3"
+              variant='h3'
               sx={{
                 fontFamily: 'Playfair Display',
                 fontWeight: '900',
@@ -107,12 +107,12 @@ const CaseForm = ({ updateCases }) => {
             >
               Create new case
             </Typography>
-            <form onSubmit={addNewCase}>
+            <form onSubmit={handleAddCase}>
               <Grid container spacing={4} sx={{ marginTop: '2em' }}>
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setName(target.value)}
-                    label="Case name"
+                    label='Case name'
                     fullWidth
                     autoFocus
                     sx={{
@@ -124,7 +124,7 @@ const CaseForm = ({ updateCases }) => {
                   <TextField
                     onChange={({ target }) => setInterest(target.value)}
                     inputProps={{ minLength: 3 }}
-                    label="Person|Company of interest"
+                    label='Person|Company of interest'
                     fullWidth
                     sx={{
                       marginBottom: '.5em',
@@ -134,7 +134,7 @@ const CaseForm = ({ updateCases }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setLocation(target.value)}
-                    label="Location"
+                    label='Location'
                     fullWidth
                     sx={{
                       marginBottom: { xs: '0', md: '.5em' },
@@ -143,8 +143,8 @@ const CaseForm = ({ updateCases }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Button
-                    component="label"
-                    variant="contained"
+                    component='label'
+                    variant='contained'
                     disableElevation
                     sx={{
                       textTransform: 'none',
@@ -160,7 +160,7 @@ const CaseForm = ({ updateCases }) => {
                   >
                     {fileName || 'Attach images'}
                     <VisuallyHiddenInput
-                      type="file"
+                      type='file'
                       multiple
                       onChange={handleSelectImages}
                     />
@@ -169,7 +169,7 @@ const CaseForm = ({ updateCases }) => {
                 <Grid item xs={12}>
                   <TextField
                     onChange={({ target }) => setDescription(target.value)}
-                    label="Description"
+                    label='Description'
                     fullWidth
                     multiline
                     rows={3}
@@ -189,8 +189,8 @@ const CaseForm = ({ updateCases }) => {
                 >
                   <Button
                     disableElevation
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     sx={{
                       fontWeight: '700',
                       backgroundColor: '#EC6D62',

@@ -3,10 +3,10 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import VisuallyHiddenInput from './misc/VisuallyHiddenInput'
-import Backdrop from './misc/Backdrop'
+import VisuallyHiddenInput from '../misc/VisuallyHiddenInput'
+import Backdrop from '../misc/Backdrop'
 import MuiBackdrop from '@mui/material/Backdrop'
-import cases from '../services/cases'
+import cases from '../../services/cases'
 
 const style = {
   position: 'absolute',
@@ -37,7 +37,7 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
     try {
       setLoading(true)
       setOpen(false)
-        const data = new FormData()
+      const data = new FormData()
       if (selectedFiles) {
         data.append('caseName', caseToUpdate.name)
         for (let i = 0; i < selectedFiles.length; i++) {
@@ -61,8 +61,8 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
       <Backdrop loading={loading} />
       <Modal
         open={open}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
         onClose={handleClose}
         slots={{ backdrop: MuiBackdrop }}
         closeAfterTransition
@@ -75,14 +75,14 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
         <form onSubmit={handleUploadImages}>
           <Box sx={style}>
             <Typography
-              id="modal-modal-title"
-              variant="h5"
+              id='modal-modal-title'
+              variant='h5'
               sx={{
                 textAlign: 'center',
                 fontFamily: 'Raleway',
                 fontWeight: '500',
               }}
-              component="h2"
+              component='h2'
             >
               Add photos to case
             </Typography>
@@ -94,8 +94,8 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
               }}
             >
               <Button
-                component="label"
-                variant="contained"
+                component='label'
+                variant='contained'
                 disableElevation
                 sx={{
                   textTransform: 'none',
@@ -111,15 +111,15 @@ const ImageUploadModal = ({ caseToUpdate, open, setOpen, updateCaseInfo }) => {
               >
                 {fileName || 'Attach images'}
                 <VisuallyHiddenInput
-                  type="file"
+                  type='file'
                   multiple
                   onChange={handleSelectImages}
                 />
               </Button>
               <Button
-                variant="contained"
+                variant='contained'
                 onClick={() => console.log('A')}
-                type="submit"
+                type='submit'
                 disableElevation
                 sx={{
                   textTransform: 'none',
