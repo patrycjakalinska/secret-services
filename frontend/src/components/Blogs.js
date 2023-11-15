@@ -18,21 +18,6 @@ import blog from '../services/blogs'
 import example from '../img/example.jpg'
 import { useEffect, useState } from 'react'
 
-// const blogs = [
-//   {
-//     title: 'My girlfriend was killed',
-//     content: 'Lorem',
-//     url: 'https://images.unsplash.com/photo-1695760676457-03fe7b0f8024?q=80&w=3165&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-//     _id: '1',
-//   },
-//   {
-//     title: 'I have followed my best friend for 20 years',
-//     content: 'llskadhakfgisudfandsfufd',
-//     url: 'https://images.unsplash.com/photo-1695760676457-03fe7b0f8024?q=80&w=3165&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-//     _id: '2',
-//   },
-// ]
-
 const Blogs = ({ user }) => {
   const [blogs, setBlogs] = useState([])
   const [blogAddModalOpen, setBlogAddModalOpen] = useState(false)
@@ -43,6 +28,7 @@ const Blogs = ({ user }) => {
       .then((foundBlogs) => setBlogs(foundBlogs))
       .catch((err) => console.log(err))
   }, [])
+
   return (
     <Container
       maxWidth='lg'

@@ -107,6 +107,7 @@ const ImageSlider = ({
                     key={i}
                     style={{
                       fontFamily: 'Raleway',
+                      fontSize: '12px',
                       fontWeight: '700',
                       padding: '5px',
                     }}

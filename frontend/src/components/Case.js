@@ -13,6 +13,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false)
   const [updateModalOpen, setUpdateModalOpen] = useState(false)
   const id = useParams().id
+  const navigate = useNavigate()
   const [currentCase, setCurrentCase] = useState(
     casesForUser.find((c) => c._id === id)
   )
@@ -22,9 +23,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
       .getCaseById(id)
       .then((foundCase) => setCurrentCase(foundCase))
       .catch((err) => console.log(err))
-  }, [currentCase])
-
-  const navigate = useNavigate()
+  }, [id])
 
   const handleDelete = async () => {
     await cases.deleteCase(id)

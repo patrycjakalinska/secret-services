@@ -20,7 +20,6 @@ import VisuallyHiddenInput from '../misc/VisuallyHiddenInput'
 
 const genders = ['Woman', 'Man', 'Other']
 
-
 const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
   const [name, setName] = useState(user.name)
   const [surname, setSurname] = useState(user.surname)
@@ -95,7 +94,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
 
   return (
     <Container
-      maxWidth="xl"
+      maxWidth='xl'
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -116,23 +115,23 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
         >
           <Box>
             <Typography
-              variant="h3"
+              variant='h3'
               sx={{
                 fontFamily: 'Inter',
                 fontWeight: '300',
-                fontSize: { lg: '26px', md: '24px', sm: '22px', xs: '20px' },
+                fontSize: { lg: '26px', md: '24px', sm: '22px', xs: '12px' },
                 color: '#313131',
                 textAlign: 'left',
               }}
             >
               Update your <strong>profile info</strong>
             </Typography>
-            <form onSubmit={updateCurrentUser} encType="multipart/form-data">
+            <form onSubmit={updateCurrentUser} encType='multipart/form-data'>
               <Grid container spacing={4} sx={{ marginTop: '2em' }}>
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setName(target.value)}
-                    label="Name"
+                    label='Name'
                     defaultValue={user.name}
                     fullWidth
                     autoFocus
@@ -144,7 +143,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setSurname(target.value)}
-                    label="Surname"
+                    label='Surname'
                     defaultValue={user.surname}
                     fullWidth
                     sx={{
@@ -155,7 +154,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setMail(target.value)}
-                    label="E-mail address"
+                    label='E-mail address'
                     defaultValue={user.mail}
                     fullWidth
                     sx={{
@@ -165,15 +164,15 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
+                    <InputLabel id='demo-simple-select-label'>
                       Gender
                     </InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
+                      labelId='demo-simple-select-label'
+                      id='demo-simple-select'
                       value={gender}
                       defaultValue={user.gender}
-                      label="Gender"
+                      label='Gender'
                       onChange={({ target }) =>
                         handleGenderChange(target.value)
                       }
@@ -189,7 +188,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     onChange={({ target }) => setNumber(target.value)}
-                    label="Phone number"
+                    label='Phone number'
                     defaultValue={user.number}
                     fullWidth
                     sx={{
@@ -199,8 +198,8 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Button
-                    component="label"
-                    variant="contained"
+                    component='label'
+                    variant='contained'
                     disableElevation
                     sx={{
                       textTransform: 'none',
@@ -216,7 +215,7 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                   >
                     {fileName || 'Select profile picture'}
                     <VisuallyHiddenInput
-                      type="file"
+                      type='file'
                       onChange={handleImageChange}
                     />
                   </Button>
@@ -232,8 +231,8 @@ const PersonDetailsForm = ({ user, updateUserInfo, show }) => {
                 >
                   <Button
                     disableElevation
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     sx={{
                       fontWeight: '700',
                       backgroundColor: '#EC6D62',

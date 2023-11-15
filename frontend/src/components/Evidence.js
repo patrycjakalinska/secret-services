@@ -34,7 +34,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: '100vh'}}>
+    <Container maxWidth='lg' sx={{ height: '100vh' }}>
       <Link
         to={`/cases/${id}/evidence`}
         style={{ textDecoration: 'none', color: '#313131' }}
@@ -42,7 +42,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
         <Box
           sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
         >
-          <ArrowBackIcon color="#313131" />
+          <ArrowBackIcon color='#313131' />
         </Box>
       </Link>
       <Box
@@ -85,7 +85,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
           {user.userType === 'admin' && (
             <Button
               onClick={handleDelete}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: '#EC6D62',
                 borderRadius: '8px',
@@ -114,7 +114,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h5" sx={{ fontFamily: 'Raleway' }}>
+        <Typography variant='h5' sx={{ fontFamily: 'Raleway' }}>
           Location: <strong> {evidence.location}</strong>
         </Typography>
       </Box>
@@ -155,7 +155,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant='body2'
                 sx={{
                   padding: '2rem',
                   fontFamily: 'Raleway',

@@ -20,7 +20,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
   }
   return (
     <Container
-      maxWidth="xl"
+      maxWidth='xl'
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -38,7 +38,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
           paddingY: '3em',
           paddingX: '2em',
           width: '80%',
-          height: '50%',
+          height: { xs: '80%', md: '28rem' },
           borderRadius: '25px',
         }}
       >
@@ -68,7 +68,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
         >
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <Avatar
-              alt="Remy Sharp"
+              alt='Remy Sharp'
               src={`${user.profilePicture.url}`}
               sx={{ marginRight: '1rem', height: '4rem', width: '4rem' }}
             />
@@ -83,7 +83,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                 }}
               >
                 <Typography
-                  variant="h7"
+                  variant='h7'
                   sx={{
                     fontFamily: 'Inter',
                     fontWeight: '500',
@@ -103,7 +103,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                 }}
               >
                 <Typography
-                  variant="h7"
+                  variant='h7'
                   sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
                 >
                   {user.mail}
@@ -129,7 +129,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                   justifyContent: 'center',
                 }}
               >
-                <PersonOutlineOutlinedIcon fontSize="medium" />
+                <PersonOutlineOutlinedIcon fontSize='medium' />
               </Box>
               <Box>
                 <Typography

@@ -8,8 +8,6 @@ const verifyToken = require('../utils/auth')
 const config = require('../utils/config')
 
 usersRouter.get('/', verifyToken, async (req, res) => {
-  //TODO:
-  // check if admin has all cases
   try {
     const user = await User.findOne({ mail: req.user.mail })
     if (!user) {

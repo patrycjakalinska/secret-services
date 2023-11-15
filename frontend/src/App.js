@@ -115,10 +115,7 @@ function App() {
         <Route path='/blogs/:id' element={<Blog />} />
 
         <Route element={<ProtectedRoute isUser={token} />}>
-          <Route
-            path='/cases'
-            element={<Cases cases={casesForUser} user={user} />}
-          />
+          <Route path='/cases' element={<Cases user={user} />} />
           <Route
             path='/cases/:id'
             element={

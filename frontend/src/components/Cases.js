@@ -8,10 +8,23 @@ import {
   Container,
   Typography,
 } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import cases from '../services/cases'
 import example from '../img/example.jpg'
 
-const Cases = ({ cases, user }) => {
+const Cases = ({ user }) => {
+  const [userCases, setUserCases] = useState([])
+
+  useEffect(() => {
+    cases
+      .getAll()
+      .then((foundCases) => {
+        setUserCases(foundCases)
+      })
+      .catch((err) => console.log(err))
+  }, [])
+
   return (
     <div
       style={{
@@ -19,7 +32,7 @@ const Cases = ({ cases, user }) => {
       }}
     >
       <Container
-        maxWidth="lg"
+        maxWidth='lg'
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -31,8 +44,8 @@ const Cases = ({ cases, user }) => {
         {user.userType !== 'admin' && (
           <Button
             disableElevation
-            type="submit"
-            variant="contained"
+            type='submit'
+            variant='contained'
             sx={{
               fontWeight: '700',
               backgroundColor: '#EC6D62',
@@ -45,7 +58,7 @@ const Cases = ({ cases, user }) => {
             }}
           >
             <Link
-              to="/newcase"
+              to='/newcase'
               style={{
                 padding: '.5rem',
                 textDecoration: 'none',
@@ -58,7 +71,7 @@ const Cases = ({ cases, user }) => {
         )}
       </Container>
       <Container
-        maxWidth="lg"
+        maxWidth='lg'
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -67,7 +80,7 @@ const Cases = ({ cases, user }) => {
         }}
       >
         <Grid container spacing={2}>
-          {cases.map((c) => (
+          {userCases.map((c) => (
             <Grid
               item
               xs={12}
@@ -96,10 +109,10 @@ const Cases = ({ cases, user }) => {
                 >
                   <CardActionArea>
                     <CardMedia
-                      component="img"
-                      height="140"
+                      component='img'
+                      height='140'
                       image={c.photos.length > 0 ? c.photos[0].url : example}
-                      alt="green iguana"
+                      alt='green iguana'
                     />
                     <CardContent
                       sx={{
@@ -111,8 +124,8 @@ const Cases = ({ cases, user }) => {
                       <Typography
                         gutterBottom
                         noWrap
-                        variant="h5"
-                        component="div"
+                        variant='h5'
+                        component='div'
                         sx={{
                           fontFamily: 'Raleway',
                           fontWeight: '500',
@@ -121,8 +134,8 @@ const Cases = ({ cases, user }) => {
                         {c.name}
                       </Typography>
                       <Typography
-                        variant="body2"
-                        color="text.secondary"
+                        variant='body2'
+                        color='text.secondary'
                         sx={{
                           fontFamily: 'Raleway',
                           overflow: 'hidden',

@@ -155,6 +155,7 @@ casesRouter.get('/:id', verifyToken, async (req, res) => {
     }
     const user = await User.findById(req.user.userId)
     if (user.cases.includes(caseForUser._id)) {
+      console.log(caseForUser)
       res.status(200).json(caseForUser)
     } else {
       res.status(401).json({ message: 'Access denied.' })
