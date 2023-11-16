@@ -16,7 +16,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import AllPhotosModal from './modals/AllPhotosModal'
 import { Link } from 'react-router-dom'
 import cases from '../services/cases'
-import example from '../img/example.jpg'
+import example from '../../public/assets/example.jpg'
 
 const AllEvidence = () => {
   const id = useParams().id

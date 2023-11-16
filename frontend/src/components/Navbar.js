@@ -389,17 +389,6 @@ const Navbar = ({ user, fullpageApi, handleLogout }) => {
                     </Typography>
                   </Link>
                 </MenuItem>
-                <MenuItem key='bookmarks' onClick={handleCloseUserMenu}>
-                  <Link
-                    to={'/bookmarks'}
-                    style={{
-                      textDecoration: 'none',
-                      color: '#313131',
-                    }}
-                  >
-                    <Typography textAlign='center'>Bookmarks</Typography>
-                  </Link>
-                </MenuItem>
                 <MenuItem key='logout' onClick={handleCloseUserMenu}>
                   <Typography textAlign='center' onClick={handleLogoutClick}>
                     Logout

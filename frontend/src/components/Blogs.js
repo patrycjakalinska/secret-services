@@ -15,7 +15,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark'
 import { Link } from 'react-router-dom'
 import AddBlogModal from './modals/AddBlogModal'
 import blog from '../services/blogs'
-import example from '../img/example.jpg'
+import example from '../../public/assets/example.jpg'
 import { useEffect, useState } from 'react'
 
 const Blogs = ({ user }) => {
@@ -179,7 +179,7 @@ const Blogs = ({ user }) => {
                     justifyContent: 'flex-end',
                   }}
                 >
-                  <BookmarkBorderIcon color='#313131' />
+                  {/* <BookmarkBorderIcon color='#313131' /> */}
                 </Box>
                 <Link to={`/blogs/${blog._id}`}>
                   <Button

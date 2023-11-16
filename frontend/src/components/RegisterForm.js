@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import signLogo from '../img/sign.png'
+import signLogo from '../assets/sign.png'
 import users from '../services/users'
 
 const RegisterForm = ({ setIsLogged }) => {
@@ -39,8 +39,8 @@ const RegisterForm = ({ setIsLogged }) => {
 
   return (
     <Container
-      maxWidth="xl"
-      id="home"
+      maxWidth='xl'
+      id='home'
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -75,7 +75,7 @@ const RegisterForm = ({ setIsLogged }) => {
         >
           <Box>
             <Typography
-              variant="h3"
+              variant='h3'
               sx={{
                 fontFamily: 'Playfair Display',
                 fontWeight: '900',
@@ -94,7 +94,7 @@ const RegisterForm = ({ setIsLogged }) => {
                     required
                     fullWidth
                     autoFocus
-                    placeholder="Jane"
+                    placeholder='Jane'
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -102,7 +102,7 @@ const RegisterForm = ({ setIsLogged }) => {
                     onChange={({ target }) => setSurname(target.value)}
                     required
                     fullWidth
-                    placeholder="Doe"
+                    placeholder='Doe'
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -110,21 +110,21 @@ const RegisterForm = ({ setIsLogged }) => {
                     onChange={({ target }) => setMail(target.value)}
                     required
                     fullWidth
-                    placeholder="jane.doe@mail.com"
+                    placeholder='jane.doe@mail.com'
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     onChange={({ target }) => setPassword(target.value)}
-                    type="password"
+                    type='password'
                     required
                     fullWidth
-                    placeholder="●●●●●●●●●●"
+                    placeholder='●●●●●●●●●●'
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <Typography
-                    variant="h6"
+                    variant='h6'
                     sx={{
                       color: '#5A4E4ECC',
                       fontSize: '.8rem',
@@ -133,7 +133,7 @@ const RegisterForm = ({ setIsLogged }) => {
                     Already have an account?{' '}
                     <strong style={{ color: '#313131' }}>
                       <Link
-                        to="/login"
+                        to='/login'
                         style={{ textDecoration: 'none', color: '#313131' }}
                       >
                         Login in.
@@ -144,8 +144,8 @@ const RegisterForm = ({ setIsLogged }) => {
                 <Grid item xs={12}>
                   <Button
                     disableElevation
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     fullWidth
                     sx={{
                       fontWeight: '700',
@@ -172,7 +172,7 @@ const RegisterForm = ({ setIsLogged }) => {
         >
           <img
             src={signLogo}
-            alt="logo"
+            alt='logo'
             style={{ maxWidth: '100%', height: 'auto', padding: 0, margin: 0 }}
           />
         </Box>

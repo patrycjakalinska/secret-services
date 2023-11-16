@@ -3,13 +3,13 @@ import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import logo from '../../img/lady.png'
+import logo from '../../../public/assets/lady.png'
 
 const WelcomeSection = () => {
   return (
-    <div id="blog">
+    <div id='blog'>
       <Container
-        maxWidth="xl"
+        maxWidth='xl'
         sx={{
           display: 'flex',
           flexDirection: { lg: 'row', md: 'row', sm: 'column', xs: 'column' },
@@ -22,7 +22,7 @@ const WelcomeSection = () => {
         }}
       >
         <Box sx={{ display: { md: 'flex', sm: 'none', xs: 'none' } }}>
-          <img src={logo} alt="logo" className="Logo" />
+          <img src={logo} alt='logo' className='Logo' />
         </Box>
         <Container
           sx={{
@@ -40,7 +40,7 @@ const WelcomeSection = () => {
         >
           <Container>
             <Typography
-              variant="h2"
+              variant='h2'
               sx={{
                 fontFamily: 'Playfair Display',
                 paddingRight: {
@@ -61,7 +61,7 @@ const WelcomeSection = () => {
               Lorem Ipsum <span style={{ color: '#EC6D62' }}>firten</span>, si.
             </Typography>
             <Typography
-              variant="body1"
+              variant='body1'
               sx={{
                 paddingRight: { lg: '8rem', md: '2.5rem', sm: '2rem' },
                 lineHeight: 'normal',
@@ -75,9 +75,9 @@ const WelcomeSection = () => {
           </Container>
           <Container sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
-              variant="contained"
+              variant='contained'
               disableElevantion
-              size="large"
+              size='large'
               sx={{
                 display: 'flex',
                 borderRadius: '30px',

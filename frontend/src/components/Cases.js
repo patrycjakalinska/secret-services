@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import cases from '../services/cases'
-import example from '../img/example.jpg'
+import example from '../../public/assets/example.jpg'
 
 const Cases = ({ user }) => {
   const [userCases, setUserCases] = useState([])

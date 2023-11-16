@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import '../styles.css'
 import { Typography } from '@mui/material'
-import example from '../img/example.jpg'
+import example from '../../public/assets/example.jpg'
 
 const MapComponent = ({ evidence }) => {
   const [mapCenter, setMapCenter] = useState(

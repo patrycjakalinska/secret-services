@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import signLogo from '../img/sign.png'
+import signLogo from '../../public/assets/sign.png'
 import login from '../services/login'
 import AlertDialog from './misc/AlertDialog'
 
@@ -41,8 +41,8 @@ const LoginForm = ({ setIsLogged }) => {
 
   return (
     <Container
-      maxWidth="xl"
-      id="home"
+      maxWidth='xl'
+      id='home'
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -77,7 +77,7 @@ const LoginForm = ({ setIsLogged }) => {
         >
           <Box>
             <Typography
-              variant="h3"
+              variant='h3'
               sx={{
                 fontFamily: 'Playfair Display',
                 fontWeight: '900',
@@ -89,7 +89,7 @@ const LoginForm = ({ setIsLogged }) => {
               Sign in
             </Typography>
             <Typography
-              variant="body1"
+              variant='body1'
               sx={{
                 textAlign: 'center',
                 marginTop: '1em',
@@ -111,25 +111,25 @@ const LoginForm = ({ setIsLogged }) => {
                   <TextField
                     autoFocus
                     onChange={({ target }) => setMail(target.value)}
-                    placeholder="jane.doe@mail.com"
+                    placeholder='jane.doe@mail.com'
                     required
                     fullWidth
-                    color="grey"
+                    color='grey'
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    placeholder="●●●●●●●●●●"
-                    type="password"
+                    placeholder='●●●●●●●●●●'
+                    type='password'
                     onChange={({ target }) => setPassword(target.value)}
                     fullWidth
                     required
-                    color="grey"
+                    color='grey'
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <Typography
-                    variant="h6"
+                    variant='h6'
                     sx={{
                       color: '#5A4E4ECC',
                       fontSize: '.8rem',
@@ -138,7 +138,7 @@ const LoginForm = ({ setIsLogged }) => {
                     Don’t have account yet?{' '}
                     <strong style={{ color: '#313131' }}>
                       <Link
-                        to="/register"
+                        to='/register'
                         style={{ textDecoration: 'none', color: '#313131' }}
                       >
                         Register now.
@@ -149,8 +149,8 @@ const LoginForm = ({ setIsLogged }) => {
                 <Grid item xs={12}>
                   <Button
                     disableElevation
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     fullWidth
                     sx={{
                       fontWeight: '700',
@@ -183,7 +183,7 @@ const LoginForm = ({ setIsLogged }) => {
         >
           <img
             src={signLogo}
-            alt="logo"
+            alt='logo'
             style={{ maxWidth: '100%', height: 'auto', padding: 0, margin: 0 }}
           />
         </Box>

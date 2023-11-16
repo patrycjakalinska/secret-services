@@ -2,15 +2,14 @@ import React from 'react'
 import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import logo from '../../img/access.png'
+import logo from '../../../public/assets/access.png'
 import '../../styles.css'
-
 
 const AboutSection = () => {
   return (
     <div id='about'>
       <Container
-        maxWidth="xl"
+        maxWidth='xl'
         sx={{
           display: 'flex',
           flexDirection: { lg: 'row', md: 'row', sm: 'column', xs: 'column' },
@@ -43,7 +42,7 @@ const AboutSection = () => {
             }}
           >
             <Typography
-              variant="h2"
+              variant='h2'
               sx={{
                 fontFamily: 'Playfair Display',
                 fontSize: '38px',
@@ -54,7 +53,7 @@ const AboutSection = () => {
               About us
             </Typography>
             <Typography
-              variant="body1"
+              variant='body1'
               sx={{
                 paddingRight: { lg: '2rem', md: '1rem', sm: '1rem' },
                 lineHeight: 'normal',
@@ -64,11 +63,15 @@ const AboutSection = () => {
             >
               <p>
                 Ut enim ad minima veniam, quis nostrum{' '}
-                <strong style={{color:'#EC6D62'}}>exercitationem ullam </strong> 
+                <strong style={{ color: '#EC6D62' }}>
+                  exercitationem ullam{' '}
+                </strong>
                 corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
                 consequatur?
               </p>{' '}
-              <p><strong>Voluptatem.</strong></p>
+              <p>
+                <strong>Voluptatem.</strong>
+              </p>
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                 accusantium doloremque laudantium
@@ -82,7 +85,7 @@ const AboutSection = () => {
             marginLeft: '4rem',
           }}
         >
-          <img src={logo} alt="logo" className="Logo" />
+          <img src={logo} alt='logo' className='Logo' />
         </Box>
       </Container>
     </div>
