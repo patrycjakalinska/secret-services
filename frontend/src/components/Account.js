@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles'
 import cases from '../services/cases'
 import PersonDetailsForm from './account-forms/PersonDetailsForm'
 import PaymentsDetailsForm from './account-forms/PaymentsDetailsForm'
+import AccountBalance from './account-forms/AccountBalance'
 
 const Account = ({ user, updateUserInfo, formType = 'main' }) => {
   const navigate = useNavigate()
@@ -151,7 +152,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
           </Grid>
           <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Link
-              to={`/user/${user.id}/payments`}
+              to={`/user/${user.id}/balance`}
               style={{
                 textDecoration: 'none',
                 color: '#313131',
@@ -177,7 +178,45 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                     fontSize: '16px',
                   }}
                 >
-                  Payments
+                  Balance
+                </Typography>
+                <Typography
+                  sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
+                >
+                  Check your current account balance
+                </Typography>
+              </Box>
+            </Link>
+          </Grid>
+          <Grid item xs={12} sx={{}}>
+            <Link
+              to={`/user/${user.id}/payments`}
+              style={{
+                textDecoration: 'none',
+                color: '#313131',
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+            >
+              <Box
+                sx={{
+                  marginRight: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}
+              >
+                <PaymentsOutlinedIcon fontSize='medium' />
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    fontFamily: 'Inter',
+                    fontWeight: '500',
+                    fontSize: '16px',
+                  }}
+                >
+                  Billing
                 </Typography>
                 <Typography
                   sx={{ fontSize: '14px', color: 'rgba(49, 49, 49, 0.50)' }}
@@ -292,6 +331,11 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
             user={user}
             updateUserInfo={updateUserInfo}
             show={formType === 'payment'}
+          />
+          <AccountBalance
+            user={user}
+            updateUserInfo={updateUserInfo}
+            show={formType === 'balance'}
           />
         </Box>
         {/* </Box> */}

@@ -42,5 +42,17 @@ const updateUser = async (details) => {
   }
 }
 
+const buyService = async (tier) => {
+  try {
+    const token = getToken()
+    const res = await axios.post(`${baseUrl}/buy`, tier, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log('Error updating user info: ', err)
+  }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { register, getUserInfo, updateUser }
+export default { register, getUserInfo, updateUser, buyService }

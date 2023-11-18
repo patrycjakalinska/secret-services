@@ -8,7 +8,7 @@ import ServicePanel from '../ServicePanel'
 
 const ServicesSection = ({ tiers }) => {
   return (
-    <div id="services">
+    <div id='services'>
       <Container
         sx={{
           display: 'flex',
@@ -35,7 +35,7 @@ const ServicesSection = ({ tiers }) => {
         <Container sx={{ display: { lg: 'none', md: 'none' } }}>
           <ReactFullpage.Wrapper>
             {tiers.map((tier, idx) => (
-              <div key={idx} className="slide">
+              <div key={idx} className='slide'>
                 <Container>
                   <ServicePanel tier={tier} />
                 </Container>

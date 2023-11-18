@@ -5,8 +5,16 @@ import {
   CardContent,
   CardActions,
 } from '@mui/material'
+import users from '../services/users'
 
 const ServicePanel = ({ tier }) => {
+  const handleBuy = (service) => {
+    users
+      .buyService(service)
+      .then((updatedUser) => console.log(updatedUser))
+      .catch((err) => console.log(err))
+  }
+
   return (
     <Card
       sx={{
@@ -16,7 +24,7 @@ const ServicePanel = ({ tier }) => {
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyConerent: 'space-between',
         backgroundColor: tier.color,
         alignItems: 'center',
         textAlign: 'center',
@@ -36,26 +44,35 @@ const ServicePanel = ({ tier }) => {
       >
         <div>
           <Typography
-            variant="h4"
-            sx={{ fontFamily: 'Playfair Display', mb: '3rem', fontSize:{lg:'32px', md:'32px', sm:'42px', xs:'38px'} }}
+            variant='h4'
+            sx={{
+              fontFamily: 'Playfair Display',
+              mb: '3rem',
+              fontSize: { lg: '32px', md: '32px', sm: '42px', xs: '38px' },
+            }}
           >
             {tier.title}
           </Typography>
-          <Typography variant="body2" sx={{fontSize:{md:'16px',sm:'18px', xs:'20px'}}}>{tier.description}</Typography>
+          <Typography
+            variant='body2'
+            sx={{ fontSize: { md: '16px', sm: '18px', xs: '20px' } }}
+          >
+            {tier.description}
+          </Typography>
         </div>
         <div>
           <Typography
-            variant="h4"
+            variant='h4'
             sx={{
               letterSpacing: '0.16px',
               fontSize: '32px',
-              marginTop: { lg: '2rem', md: '1rem', sm:'0rem',xs:'0rem' },
+              marginTop: { lg: '2rem', md: '1rem', sm: '0rem', xs: '0rem' },
             }}
           >
             {tier.price}
           </Typography>
           <Typography
-            variant="h6"
+            variant='h6'
             sx={{ fontSize: '16px', m: 0, color: 'rgba(254, 253, 253, 0.60)' }}
           >
             per hour
@@ -64,8 +81,9 @@ const ServicePanel = ({ tier }) => {
       </CardContent>
       <CardActions>
         <Button
-          size="medium"
-          variant="contained"
+          size='medium'
+          variant='contained'
+          onClick={() => handleBuy(tier)}
           disableElevation
           sx={{
             borderRadius: '16px',

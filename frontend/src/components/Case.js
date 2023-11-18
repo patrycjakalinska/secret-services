@@ -164,6 +164,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'center',
+          minHeight: '100vh',
           marginTop: '2rem',
         }}
       >

@@ -56,6 +56,7 @@ function App() {
               tags: data.tags,
             },
             id: data.id,
+            bought: data.bought,
           })
         })
         .catch((err) => {
@@ -165,6 +166,12 @@ function App() {
             path='/user/:id/payments'
             element={
               <Account user={user} updateUser={setUser} formType='payment' />
+            }
+          />
+          <Route
+            path='/user/:id/balance'
+            element={
+              <Account user={user} updateUser={setUser} formType='balance' />
             }
           />
         </Route>

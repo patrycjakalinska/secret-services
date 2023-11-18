@@ -92,4 +92,15 @@ usersRouter.put('/', verifyToken, async (req, res) => {
   }
 })
 
+usersRouter.post('/buy', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findOne({ mail: req.user.mail })
+    user.bought.push(req.body)
+    const savedUser = await user.save()
+    res.status(201).json(savedUser)
+  } catch (err) {
+    res.status(400).json({ messgae: 'Something went wrong.' })
+  }
+})
+
 module.exports = usersRouter

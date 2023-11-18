@@ -23,7 +23,6 @@ const getCaseById = async (id) => {
     const res = await axios.get(`${baseUrl}/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    console.log(res.data)
     return res.data
   } catch (err) {
     console.log(err)

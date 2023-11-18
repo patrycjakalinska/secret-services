@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Service = require('./service')
 
 const userSchema = new mongoose.Schema({
   mail: {
@@ -47,6 +48,7 @@ const userSchema = new mongoose.Schema({
     enum: ['Woman', 'Man', 'Other'],
     default: 'Other',
   },
+  bought: [Service.schema],
 })
 
 userSchema.set('toJSON', {

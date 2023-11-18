@@ -15,13 +15,19 @@ import Zoom from 'react-medium-image-zoom'
 
 const AllPhotosModal = ({ evidence, open, setOpen }) => {
   const id = useParams().id
-  const [photos, setPhotos] = useState(evidence.flatMap((e) => e.photos))
+  const [photos, setPhotos] = useState([])
   const [loading, setLoading] = useState(false)
   const [uniqueTags, setUniqueTags] = useState([])
   const [filteredPhotos, setFilteredPhotos] = useState(
-    evidence.flatMap((e) => e.photos)
+    evidence.reduce((accumulator, currentEvidence) => {
+      return accumulator.concat(currentEvidence.photos)
+    }, [])
   )
   const [filter, setFilter] = useState('all_photos')
+
+  console.log(evidence)
+  console.log(photos)
+  console.log(filteredPhotos)
 
   const style = {
     position: 'absolute',
@@ -47,6 +53,13 @@ const AllPhotosModal = ({ evidence, open, setOpen }) => {
       setFilteredPhotos(filteredPhotos)
     }
   }
+
+  useEffect(() => {
+    const allPhotos = evidence.reduce((accumulator, currentEvidence) => {
+      return accumulator.concat(currentEvidence.photos)
+    }, [])
+    setPhotos(allPhotos)
+  }, [])
 
   useEffect(() => {
     const allTags = photos.reduce((tags, photo) => {

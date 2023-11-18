@@ -16,6 +16,10 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     default: '#FEFDFD',
   },
+  isPayed: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 module.exports = mongoose.model('Service', serviceSchema)

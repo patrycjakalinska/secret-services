@@ -1,5 +1,15 @@
-import { CardContent, Typography } from '@mui/material'
+import {
+  CardContent,
+  Typography,
+  Container,
+  Box,
+  Button,
+  CardActions,
+  Grid,
+} from '@mui/material'
+import Backdrop from '../misc/Backdrop'
 import { useState } from 'react'
+import users from '../../services/users'
 
 const exampleBills = [
   {
@@ -19,10 +29,15 @@ const exampleBills = [
   },
 ]
 
-const AccountBalance = () => {
-  const [bills, setBills] = useState(exampleBills)
+const AccountBalance = ({ user, updateUserInfo, show }) => {
+  const [bills, setBills] = useState(user.bought)
+  const [loading, setLoading] = useState(false)
   // TODO: sum bills balance (even minus)
   // const [balance, setBalance] = useState()
+
+  if (!show) {
+    return null
+  }
 
   const handlePay = (id) => {
     users
@@ -94,12 +109,13 @@ const AccountBalance = () => {
                 }}
               >
                 <Typography variant='h6' sx={{ fontFamily: 'Raleway' }}>
-                  {bill.amount}
+                  {bill.price}
                 </Typography>
                 {bill.isPayed ? (
                   <Button
                     size='small'
                     disabled
+                    onClick={() => console.log('payed')}
                     sx={{
                       color: '#FEFDFD',
                       backgroundColor: '#EC6D62',

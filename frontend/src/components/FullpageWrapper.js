@@ -35,7 +35,7 @@ const FullpageWrapper = () => {
         loopHorizontal={true}
         licenseKey={'GPLv3'}
         activeClass={'active'} //adds an active class to the correct menu button
-        anchors={[ 'home', 'blog', 'about', 'services']}
+        anchors={['home', 'blog', 'about', 'services']}
         lockAnchors={true} //anchor feature
         navigation={true} //enables cool dots
         arrowNavigation={true} //enables arrows for slides
@@ -46,17 +46,17 @@ const FullpageWrapper = () => {
         loopBottom={true}
         render={({ state, fullpageApi }) => {
           return (
-            <div id="fullpage-wrapper" className="Fullpage__Scroll">
-              <div className="section section1">
+            <div id='fullpage-wrapper' className='Fullpage__Scroll'>
+              <div className='section section1'>
                 <LogoSection />
               </div>
-              <div className="section section2">
+              <div className='section section2'>
                 <WelcomeSection />
               </div>
-              <div className="section section3">
+              <div className='section section3'>
                 <AboutSection />
               </div>
-              <div className="section section4">
+              <div className='section section4'>
                 <ServicesSection tiers={tiers} />
               </div>
             </div>
