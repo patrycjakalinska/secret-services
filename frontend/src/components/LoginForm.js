@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import signLogo from '../../public/assets/sign.png'
+import signLogo from '../assets/sign.png'
 import login from '../services/login'
 import AlertDialog from './misc/AlertDialog'
 

@@ -15,7 +15,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark'
 import { Link } from 'react-router-dom'
 import AddBlogModal from './modals/AddBlogModal'
 import blog from '../services/blogs'
-import example from '../../public/assets/example.jpg'
+import example from '../assets/example.jpg'
 import { useEffect, useState } from 'react'
 
 const Blogs = ({ user }) => {
@@ -109,100 +109,104 @@ const Blogs = ({ user }) => {
           </Box>
         )}
       </Box>
-      <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
-        {blogs.map((blog) => (
-          <Grid item xs={12}>
-            <Card
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderRadius: '20px',
-              }}
-            >
-              <CardMedia
-                component='img'
-                height='140'
-                image={blog.photo !== undefined ? blog.photo.url : example}
-                sx={{ flex: 1 }}
-                alt='green iguana'
-              />
-              <CardContent
+      <Box sx={{ minHeight: '100vh' }}>
+        <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+          {blogs.map((blog) => (
+            <Grid item xs={12} id={blog.title}>
+              <Card
                 sx={{
+                  width: '100%',
                   display: 'flex',
-                  flex: 2,
-                  flexDirection: 'column',
-                  height: '100%',
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  noWrap
-                  variant='h5'
-                  component='div'
-                  sx={{
-                    fontFamily: 'Raleway',
-                    fontWeight: '500',
-                  }}
-                >
-                  {blog.title}
-                </Typography>
-                <Typography
-                  variant='body2'
-                  color='text.secondary'
-                  sx={{
-                    fontFamily: 'Raleway',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  {blog.content}
-                </Typography>
-              </CardContent>
-              <CardActions
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'row',
                   justifyContent: 'space-between',
+                  borderRadius: '20px',
                 }}
               >
-                <Box
+                <CardMedia
+                  component='img'
+                  height='140'
+                  image={blog.photo !== undefined ? blog.photo.url : example}
+                  sx={{ flex: 1 }}
+                  alt='green iguana'
+                />
+                <CardContent
                   sx={{
-                    width: '80%',
-                    paddingY: '1rem',
                     display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    flex: 2,
+                    flexDirection: 'column',
+                    height: '100%',
                   }}
                 >
-                  {/* <BookmarkBorderIcon color='#313131' /> */}
-                </Box>
-                <Link to={`/blogs/${blog._id}`}>
-                  <Button
-                    size='small'
+                  <Typography
+                    gutterBottom
+                    noWrap
+                    variant='h5'
+                    component='div'
                     sx={{
-                      color: '#FEFDFD',
-                      backgroundColor: '#EC6D62',
-                      borderRadius: '8px',
-                      margin: '1rem',
-                      paddingX: '2.5rem',
-                      paddingY: '.5rem',
-                      textTransform: 'none',
-                      '&:hover': { backgroundColor: '#313131' },
+                      fontFamily: 'Raleway',
+                      fontWeight: '500',
                     }}
                   >
-                    <Typography sx={{ fontSize: '14px' }}>Read more</Typography>
-                  </Button>
-                </Link>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                    {blog.title}
+                  </Typography>
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
+                    sx={{
+                      fontFamily: 'Raleway',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
+                    {blog.content}
+                  </Typography>
+                </CardContent>
+                <CardActions
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: '80%',
+                      paddingY: '1rem',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                    }}
+                  >
+                    {/* <BookmarkBorderIcon color='#313131' /> */}
+                  </Box>
+                  <Link to={`/blogs/${blog._id}`}>
+                    <Button
+                      size='small'
+                      sx={{
+                        color: '#FEFDFD',
+                        backgroundColor: '#EC6D62',
+                        borderRadius: '8px',
+                        margin: '1rem',
+                        paddingX: '2.5rem',
+                        paddingY: '.5rem',
+                        textTransform: 'none',
+                        '&:hover': { backgroundColor: '#313131' },
+                      }}
+                    >
+                      <Typography sx={{ fontSize: '14px' }}>
+                        Read more
+                      </Typography>
+                    </Button>
+                  </Link>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Container>
   )
 }

@@ -3,7 +3,7 @@ import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import logo from '../../../public/assets/lady.png'
+import logo from '../../assets/lady.png'
 
 const WelcomeSection = () => {
   return (

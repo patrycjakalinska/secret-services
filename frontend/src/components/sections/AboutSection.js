@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from '@mui/system'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import logo from '../../../public/assets/access.png'
+import logo from '../../assets/access.png'
 import '../../styles.css'
 
 const AboutSection = () => {

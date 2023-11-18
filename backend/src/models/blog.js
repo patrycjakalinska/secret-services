@@ -15,6 +15,14 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  titleColor: {
+    type: String,
+    default: '#FEFDFD',
+  },
+  dateColor: {
+    type: String,
+    default: 'rgba(254, 253, 253, 0.70)',
+  },
   photo: Photo.schema,
 })
 
