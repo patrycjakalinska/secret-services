@@ -34,7 +34,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
   }
 
   return (
-    <Container maxWidth='lg' sx={{ height: '100vh' }}>
+    <Container maxWidth='lg' sx={{ minHeight: '100vh' }}>
       <Link
         to={`/cases/${id}/evidence`}
         style={{ textDecoration: 'none', color: '#313131' }}
@@ -48,24 +48,28 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: '1rem',
         }}
       >
-        <Box sx={{ display: 'flex' }}>
-          <Typography
-            sx={{
-              fontSize: { xs: '36px', md: '50px' },
+        <Box
+          sx={{
+            display: 'flex',
+            fontSize: { xs: '32px', md: '40px' },
+            justifyContent: 'flex-start',
+          }}
+        >
+          <span
+            style={{
               fontFamily: 'Playfair Display',
             }}
           >
             Update:
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: { xs: '36px', md: '50px' },
+          </span>
+          <span
+            style={{
               marginLeft: '1rem',
               fontFamily: 'Playfair Display',
               fontWeight: '400',
@@ -73,7 +77,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
             }}
           >
             {evidence.title}
-          </Typography>
+          </span>
         </Box>
         <Box
           sx={{
@@ -94,6 +98,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
                 paddingY: '.5rem',
                 marginX: '1rem',
                 height: '100%',
+                marginTop: { xs: '1rem', md: '0rem' },
                 fontFamily: 'Inter',
                 fontWeight: '700',
                 textTransform: 'none',
@@ -169,7 +174,7 @@ const Evidence = ({ casesForUser, updateCases, user }) => {
         </Box>
         <Box
           sx={{
-            width: '50%',
+            width: { xs: '100%', md: '50%' },
             flex: '1',
             marginRight: '2rem',
           }}

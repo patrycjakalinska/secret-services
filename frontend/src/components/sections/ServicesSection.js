@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import React from 'react'
 import ServicePanel from '../ServicePanel'
 
-const ServicesSection = ({ tiers }) => {
+const ServicesSection = ({ tiers, setUser }) => {
   return (
     <div id='services'>
       <Container
@@ -18,6 +18,7 @@ const ServicesSection = ({ tiers }) => {
           alignItems: 'center',
           paddingX: { lg: '3rem', md: '3rem', xs: '1rem' },
           height: '100vh',
+          marginBottom: '1rem',
         }}
       >
         <CssBaseline />
@@ -37,7 +38,7 @@ const ServicesSection = ({ tiers }) => {
             {tiers.map((tier, idx) => (
               <div key={idx} className='slide'>
                 <Container>
-                  <ServicePanel tier={tier} />
+                  <ServicePanel setUser={setUser} tier={tier} />
                 </Container>
               </div>
             ))}

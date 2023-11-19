@@ -99,7 +99,12 @@ const AllEvidence = () => {
             }}
           >
             <ArrowBackIcon />
-            <Typography variant='h6'>Back to case</Typography>
+            <Typography
+              variant='h6'
+              sx={{ fontSize: { xs: '16px', md: '24pxx' } }}
+            >
+              Back to case
+            </Typography>
           </Button>
         </Link>
         <Box
@@ -112,7 +117,7 @@ const AllEvidence = () => {
                 textDecoration: 'none',
                 textTransform: 'none',
                 color: newestButtonColor,
-                fontSize: '18px',
+                fontSize: { xs: '16px', md: '18px' },
               }}
               onClick={() => handleSort('newest')}
             >
@@ -124,7 +129,7 @@ const AllEvidence = () => {
                 textDecoration: 'none',
                 textTransform: 'none',
                 color: oldestButtonColor,
-                fontSize: '18px',
+                fontSize: { xs: '16px', md: '18px' },
               }}
               onClick={() => handleSort('oldest')}
             >
@@ -148,7 +153,12 @@ const AllEvidence = () => {
               color: '#313131',
             }}
           >
-            <Typography variant='h6'>All photos</Typography>
+            <Typography
+              variant='h6'
+              sx={{ fontSize: { xs: '16px', md: '24pxx' } }}
+            >
+              All photos
+            </Typography>
             <ArrowForwardIcon />
           </Button>
         </Box>

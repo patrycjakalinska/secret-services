@@ -38,34 +38,32 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (token && Object.keys(user).length === 0) {
-      users
-        .getUserInfo()
-        .then((data) => {
-          setUser({
-            name: data.name,
-            surname: data.surname,
-            mail: data.mail,
-            userType: data.userType,
-            bookmarks: data.bookmarks,
-            number: data.number,
-            gender: data.gender,
-            profilePicture: {
-              url: data.profilePicture.url,
-              profileId: data.profilePicture.profileId,
-              tags: data.tags,
-            },
-            id: data.id,
-            bought: data.bought,
-          })
+    users
+      .getUserInfo()
+      .then((data) => {
+        setUser({
+          name: data.name,
+          surname: data.surname,
+          mail: data.mail,
+          userType: data.userType,
+          bookmarks: data.bookmarks,
+          number: data.number,
+          gender: data.gender,
+          profilePicture: {
+            url: data.profilePicture.url,
+            profileId: data.profilePicture.profileId,
+            tags: data.tags,
+          },
+          id: data.id,
+          bought: data.bought,
         })
-        .catch((err) => {
-          console.log(err)
-        })
-      cases.getAll().then((data) => {
-        setCasesForUser(data)
       })
-    }
+      .catch((err) => {
+        console.log(err)
+      })
+    cases.getAll().then((data) => {
+      setCasesForUser(data)
+    })
   }, [token, user])
 
   const handleLogout = () => {
@@ -95,7 +93,7 @@ function App() {
         <ChatBot user={user} />
       </Box>
       <Routes>
-        <Route path='/' element={<FullpageWrapper />} />
+        <Route path='/' element={<FullpageWrapper setUser={setUser} />} />
         <Route
           path='/login'
           element={

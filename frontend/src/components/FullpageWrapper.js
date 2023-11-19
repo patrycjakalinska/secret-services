@@ -8,7 +8,7 @@ import services from '../services/service'
 import { useEffect, useState } from 'react'
 import '../styles.css'
 
-const FullpageWrapper = () => {
+const FullpageWrapper = ({ setUser }) => {
   const [tiers, setTiers] = useState([])
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const FullpageWrapper = () => {
                 <AboutSection />
               </div>
               <div className='section section4'>
-                <ServicesSection tiers={tiers} />
+                <ServicesSection setUser={setUser} tiers={tiers} />
               </div>
             </div>
           )

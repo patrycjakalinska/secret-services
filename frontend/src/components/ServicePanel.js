@@ -7,11 +7,11 @@ import {
 } from '@mui/material'
 import users from '../services/users'
 
-const ServicePanel = ({ tier }) => {
+const ServicePanel = ({ tier, setUser }) => {
   const handleBuy = (service) => {
     users
       .buyService(service)
-      .then((updatedUser) => console.log(updatedUser))
+      .then((updatedUser) => setUser(updatedUser))
       .catch((err) => console.log(err))
   }
 
@@ -35,7 +35,7 @@ const ServicePanel = ({ tier }) => {
     >
       <CardContent
         sx={{
-          padding: '40px 50px 0 50px',
+          padding: { xs: '1rem 1.2rem 0 1.2rem', md: '40px 50px 0 50px' },
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -47,15 +47,15 @@ const ServicePanel = ({ tier }) => {
             variant='h4'
             sx={{
               fontFamily: 'Playfair Display',
-              mb: '3rem',
-              fontSize: { lg: '32px', md: '32px', sm: '42px', xs: '38px' },
+              mb: { xs: '1rem', md: '3rem' },
+              fontSize: { lg: '32px', md: '32px', sm: '20px', xs: '20px' },
             }}
           >
             {tier.title}
           </Typography>
           <Typography
             variant='body2'
-            sx={{ fontSize: { md: '16px', sm: '18px', xs: '20px' } }}
+            sx={{ fontSize: { md: '16px', sm: '16px', xs: '16px' } }}
           >
             {tier.description}
           </Typography>
@@ -65,7 +65,7 @@ const ServicePanel = ({ tier }) => {
             variant='h4'
             sx={{
               letterSpacing: '0.16px',
-              fontSize: '32px',
+              fontSize: { xs: '16px', md: '32px' },
               marginTop: { lg: '2rem', md: '1rem', sm: '0rem', xs: '0rem' },
             }}
           >

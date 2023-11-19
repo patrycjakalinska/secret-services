@@ -54,5 +54,17 @@ const buyService = async (tier) => {
   }
 }
 
+const payBill = async (billId) => {
+  try {
+    const token = getToken()
+    const res = await axios.delete(`${baseUrl}/pay`, billId, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return res.data
+  } catch (err) {
+    console.log('Error updating user info: ', err)
+  }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { register, getUserInfo, updateUser, buyService }
+export default { register, getUserInfo, updateUser, buyService, payBill }

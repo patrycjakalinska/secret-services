@@ -103,4 +103,16 @@ usersRouter.post('/buy', verifyToken, async (req, res) => {
   }
 })
 
+usersRouter.delete('/pay', verifyToken, async (req, res) => {
+  try {
+    console.log(user)
+    const user = await User.findOne({ mail: req.user.mail })
+    user.bought.pull(req.body)
+    const savedUser = await user.save()
+    res.status(201).json(savedUser)
+  } catch (err) {
+    res.status(400).json({ messgae: 'Something went wrong.' })
+  }
+})
+
 module.exports = usersRouter

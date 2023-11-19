@@ -65,7 +65,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: '1rem',
@@ -85,6 +85,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
               display: 'flex',
               flexDirection: 'row-reverse',
               justifyContent: 'center',
+              marginTop: { xs: '1rem', md: '0' },
             }}
           >
             <Button
@@ -97,6 +98,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
                 paddingX: '2rem',
                 paddingY: '.5rem',
                 marginX: '1rem',
+                minWidth: '8rem',
                 height: '100%',
                 fontFamily: 'Inter',
                 fontWeight: '700',
@@ -113,8 +115,10 @@ const Case = ({ casesForUser, updateCases, user }) => {
                 backgroundColor: '#3C404A',
                 borderRadius: '8px',
                 color: '#FEFEFE',
-                paddingX: '2rem',
-                paddingY: '.5rem',
+                paddingX: { xs: '.5rem', md: '.5rem' },
+                paddingY: { xs: '0.625rem', md: '.5rem' },
+                minWidth: '8rem',
+                marginLeft: '1rem',
                 height: '100%',
                 fontFamily: 'Inter',
                 fontWeight: '700',
@@ -132,7 +136,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
           borderTop: '1px solid #313131',
           paddingTop: '1rem',
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'space-between',
         }}
       >
@@ -145,6 +149,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
             textDecoration: 'none',
             color: '#313131',
             display: 'flex',
+            justifyContent: 'flex-end',
           }}
         >
           <Box
@@ -170,7 +175,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
       >
         <Box
           sx={{
-            width: '50%',
+            width: { xs: '100%', md: '50%' },
             flex: '1',
             marginRight: '2rem',
           }}
@@ -198,7 +203,7 @@ const Case = ({ casesForUser, updateCases, user }) => {
             Add photos
           </Button>
         </Box>
-        <Box sx={{ width: '100%', height: '100$', flex: { xs: '2' } }}>
+        <Box sx={{ width: '100%', height: '100$', flex: { xs: '2', md: '1' } }}>
           <Typography variant='body2'>{currentCase.description}</Typography>
         </Box>
       </Box>

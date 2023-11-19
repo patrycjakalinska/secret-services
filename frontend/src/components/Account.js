@@ -4,6 +4,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined'
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined'
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
@@ -206,7 +207,7 @@ const Account = ({ user, updateUserInfo, formType = 'main' }) => {
                   justifyContent: 'center',
                 }}
               >
-                <PaymentsOutlinedIcon fontSize='medium' />
+                <CreditCardIcon fontSize='medium' />
               </Box>
               <Box>
                 <Typography
