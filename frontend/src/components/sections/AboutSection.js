@@ -62,7 +62,7 @@ const AboutSection = () => {
               }}
             >
               <p>
-                We are with us since{" "}
+                We are with You since{" "}
                 <strong style={{ color: "#EC6D62" }}>2005</strong> and still
                 priding ourselves on ensuring professionalism and
                 confidentiality in every case we handle. We work from Monday to
