@@ -65,5 +65,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001/"
+  "proxy": "http://localhost:3001/",
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.11"
+  }
 }
