@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://secret-services-agh.onrender.com/api/users'
+const baseUrl = '/api/users'
 
 const getToken = () => {
   return window.localStorage.getItem('user-token')
