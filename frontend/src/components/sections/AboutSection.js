@@ -30,7 +30,7 @@ const AboutSection = () => {
             backgroundColor: "#3C404A",
             borderRadius: "0 100px 0 100px ",
             color: "#F1F0F0",
-            width: { lg: "60%", md: "60%", sm: "85%", xs: "85%" },
+            width: { lg: "40%", md: "60%", sm: "85%", xs: "85%" },
             height: "30rem",
           }}
         >
@@ -79,10 +79,18 @@ const AboutSection = () => {
         <Box
           sx={{
             display: { md: "flex", sm: "none", xs: "none" },
-            marginLeft: "4rem",
+            marginLeft: "3rem",
           }}
         >
-          <img src={logo} alt="logo" className="Logo" />
+          <img
+            src={logo}
+            alt="logo"
+            className="Logo"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+            }}
+          />
         </Box>
       </Container>
     </div>

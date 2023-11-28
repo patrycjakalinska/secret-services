@@ -22,7 +22,15 @@ const WelcomeSection = () => {
         }}
       >
         <Box sx={{ display: { md: "flex", sm: "none", xs: "none" } }}>
-          <img src={logo} alt="logo" className="Logo" />
+          <img
+            src={logo}
+            alt="logo"
+            className="Logo"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+            }}
+          />
         </Box>
         <Container
           sx={{
@@ -33,7 +41,7 @@ const WelcomeSection = () => {
             backgroundColor: "#3C404A",
             borderRadius: "100px 0 100px 0",
             color: "#F1F0F0",
-            width: "85%",
+            width: { lg: "50%", md: "60%", sm: "85%", xs: "85%" },
             height: "30rem",
             marginLeft: { lg: "8rem", md: "5rem", sm: "2.5rem", xs: "0.8rem" },
           }}
