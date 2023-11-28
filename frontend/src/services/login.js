@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/login'
+const baseUrl = `${process.env.SITE_URL}/api/login`
 
 const login = async (credentials) => {
   try {

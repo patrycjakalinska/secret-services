@@ -1,7 +1,5 @@
-// TODO:
-// export getToken somewhere
 import axios from 'axios'
-const baseUrl = '/api/upload'
+const baseUrl = `${process.env.SITE_URL}/api/upload`
 
 const uploadProfilePic = async (image) => {
   try {

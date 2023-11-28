@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/services'
+const baseUrl = `${process.env.SITE_URL}/api/services`
 
 const getToken = () => {
   return window.localStorage.getItem('user-token')

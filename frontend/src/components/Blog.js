@@ -41,7 +41,7 @@ const Blog = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundImage: `url(${example})`,
+            backgroundImage: currentBlog.photo ? `url(${currentBlog.photo.url})``url(${example})`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             textAlign: 'left',
