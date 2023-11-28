@@ -26,6 +26,9 @@ function App() {
   const [error, setError] = useState('')
 
   const fullpageApiRef = useRef(null)
+  console.log(process.env.REACT_SITE_URL)
+  console.log('?A')
+  console.log(process.env.REACT_MAPBOX_TOKEN)
 
   useEffect(() => {
     const token = window.localStorage.getItem('user-token')

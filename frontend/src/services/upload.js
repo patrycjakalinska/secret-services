@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = `${process.env.SITE_URL}/api/upload`
+//const baseUrl = `${process.env.REACT_SITE_URL}/api/upload`
+const baseUrl = `https://secret-services-agh.onrender.com/api/upload`
 
 const uploadProfilePic = async (image) => {
   try {

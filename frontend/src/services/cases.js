@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = `${process.env.SITE_URL}/api/cases`
+//const baseUrl = `${process.env.REACT_SITE_URL}/api/cases`
+const baseUrl = `https://secret-services-agh.onrender.com/api/blogs`
 
 const getToken = () => {
   return window.localStorage.getItem('user-token')
