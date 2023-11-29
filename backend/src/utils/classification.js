@@ -1,7 +1,11 @@
 const vision = require('@google-cloud/vision')
+const config = require('./config')
 
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: './src/utils/googleAPIKey.json',
+  credentials: {
+    client_email: config.GOOGLE_CLIENT_EMAIL,
+    private_key: config.GOOGLE_PRIVATE_KEY,
+  },
 })
 
 const classifyImage = async (fileBuffer) => {

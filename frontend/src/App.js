@@ -64,7 +64,7 @@ function App() {
     cases.getAll().then((data) => {
       setCasesForUser(data)
     })
-  }, [token, user])
+  }, [token])
 
   const handleLogout = () => {
     window.localStorage.removeItem('user-token')
